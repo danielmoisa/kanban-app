@@ -61,4 +61,4 @@ func DeleteUser(c *fiber.Ctx) {
 	c.Send("User Successfully deleted")
 }
 
-// TODO: implenet preloader on all cases if needed?
+// TODO: implement preloader on all cases if needed?
