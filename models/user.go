@@ -19,7 +19,8 @@ type User struct {
 func GetUsers(c *fiber.Ctx) {
 	db := database.DBConn
 	var users []User
-	db.Find(&users)
+	// db.Find(&users)
+	db.Preload("Issues").Find(&users)
 	c.JSON(users)
 }
 
@@ -28,7 +29,8 @@ func GetUser(c *fiber.Ctx) {
 	id := c.Params("id")
 	db := database.DBConn
 	var user User
-	db.Find(&user, id)
+	// db.Find(&user, id)
+	db.Preload("Issues").Find(&user, id)
 	c.JSON(user)
 }
 
@@ -58,3 +60,5 @@ func DeleteUser(c *fiber.Ctx) {
 	db.Delete(&user)
 	c.Send("User Successfully deleted")
 }
+
+// TODO: implenet preloader on all cases if needed?

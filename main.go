@@ -29,7 +29,7 @@ func initDatabase() {
 	var err error
 	database.DBConn, err = gorm.Open("sqlite3", "database.db")
 	if err != nil {
-		panic("failed to connect database")
+		panic("Failed to connect database")
 	}
 	fmt.Println("Connection Opened to Database")
 	database.DBConn.AutoMigrate(&models.Issue{}, &models.User{})
