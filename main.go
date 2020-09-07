@@ -23,6 +23,12 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/api/users/:id", models.GetUser)
 	app.Post("/api/users", models.NewUser)
 	app.Delete("/api/users/:id", models.DeleteUser)
+
+	// Comments
+	app.Get("/api/comments", models.GetComments)
+	app.Get("/api/comments/:id", models.GetComment)
+	app.Post("/api/comments", models.NewComment)
+	app.Delete("/api/comments/:id", models.DeleteComment)
 }
 
 func initDatabase() {
@@ -32,7 +38,7 @@ func initDatabase() {
 		panic("Failed to connect database")
 	}
 	fmt.Println("Connection Opened to Database")
-	database.DBConn.AutoMigrate(&models.Issue{}, &models.User{})
+	database.DBConn.AutoMigrate(&models.Issue{}, &models.User{}, &models.Comment{})
 	fmt.Println("Database Migrated")
 }
 
