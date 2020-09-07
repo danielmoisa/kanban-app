@@ -20,7 +20,7 @@ function App() {
 	return (
 		<div className="app">
 			{data.map((user) => (
-				<>
+				<div key={user.ID}>
 					<h2>Logged user: {user.name}</h2>
 					<div>
 						{user.Issues.map((issue) => (
@@ -31,8 +31,9 @@ function App() {
 									justifyContent: 'center',
 									alignItems: 'center',
 									flexDirection: 'column',
+									border: '1px solid #ccc',
 								}}>
-								<hp>Issue title: {issue.title}</hp>
+								<p>Issue title: {issue.title}</p>
 								<p>Description: {issue.description}</p>
 								<p>CreatedAt: {issue.CreatedAt}</p>
 								<p>Id: {issue.ID}</p>
@@ -41,10 +42,18 @@ function App() {
 								<p>Timelog: {issue.timelog}</p>
 								<p>Progress: {issue.progress}</p>
 								<p>Priority: {issue.priority}</p>
+								<div>
+									<h3>Comments:</h3>
+									{issue.Comments.map((comment) => (
+										<div key={comment.ID}>
+											<p>{comment.content}</p>
+										</div>
+									))}
+								</div>
 							</div>
 						))}
 					</div>
-				</>
+				</div>
 			))}
 		</div>
 	);

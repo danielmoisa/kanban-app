@@ -19,12 +19,13 @@ type Issue struct {
 	Progress    string `json:"progress"`
 	Priority    string `json:"priority"`
 	UserID      uint
+	Comments    []Comment
 }
 
 func GetIssues(c *fiber.Ctx) {
 	db := database.DBConn
 	var issues []Issue
-	db.Find(&issues)
+	db.Preload("Comments").Find(&issues)
 	c.JSON(issues)
 }
 
@@ -32,7 +33,7 @@ func GetIssue(c *fiber.Ctx) {
 	id := c.Params("id")
 	db := database.DBConn
 	var issue Issue
-	db.Find(&issue, id)
+	db.Preload("Comments").Find(&issue, id)
 	c.JSON(issue)
 }
 

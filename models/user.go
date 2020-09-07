@@ -19,8 +19,7 @@ type User struct {
 func GetUsers(c *fiber.Ctx) {
 	db := database.DBConn
 	var users []User
-	// db.Find(&users)
-	db.Preload("Issues").Find(&users)
+	db.Preload("Issues.Comments").Find(&users)
 	c.JSON(users)
 }
 
@@ -29,8 +28,7 @@ func GetUser(c *fiber.Ctx) {
 	id := c.Params("id")
 	db := database.DBConn
 	var user User
-	// db.Find(&user, id)
-	db.Preload("Issues").Find(&user, id)
+	db.Preload("Issues.Comments").Find(&user, id)
 	c.JSON(user)
 }
 

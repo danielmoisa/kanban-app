@@ -11,6 +11,7 @@ import (
 type Comment struct {
 	gorm.Model
 	Content string `json:"content"`
+	IssueID uint
 }
 
 func GetComments(c *fiber.Ctx) {
@@ -18,13 +19,6 @@ func GetComments(c *fiber.Ctx) {
 	var comments []Comment
 	db.Find(&comments)
 	c.JSON(comments)
-}
-
-func GetIssues(c *fiber.Ctx) {
-	db := database.DBConn
-	var issues []Issue
-	db.Find(&issues)
-	c.JSON(issues)
 }
 
 func GetComment(c *fiber.Ctx) {

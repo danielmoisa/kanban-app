@@ -6,4 +6,5 @@ require (
 	github.com/gofiber/cors v0.2.2
 	github.com/gofiber/fiber v1.14.5
 	github.com/jinzhu/gorm v1.9.16
+	gorm.io/gorm v1.20.0
 )
