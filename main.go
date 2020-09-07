@@ -4,11 +4,13 @@ import (
 	"fmt"
 	"jira-clone/database"
 	"jira-clone/models"
+	"os"
 
 	"github.com/gofiber/cors"
 	"github.com/gofiber/fiber"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
+	_ "github.com/joho/godotenv/autoload"
 )
 
 func setupRoutes(app *fiber.App) {
@@ -48,7 +50,7 @@ func main() {
 	initDatabase()
 
 	setupRoutes(app)
-	app.Listen("127.0.0.1:8080")
+	app.Listen("127.0.0.1:" + os.Getenv("PORT"))
 
 	defer database.DBConn.Close()
 }
