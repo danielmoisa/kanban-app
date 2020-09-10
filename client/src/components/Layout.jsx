@@ -1,7 +1,8 @@
 import React from 'react'
-import { TiThMenuOutline } from 'react-icons/ti'
-import { BsPeople, BsListCheck } from 'react-icons/bs'
+
+import { BsPeople, BsSearch } from 'react-icons/bs'
 import { FcGenealogy } from 'react-icons/fc'
+import { AiOutlinePlus } from 'react-icons/ai'
 
 import './Layout.scss'
 
@@ -15,9 +16,9 @@ const Layout = ({ children }) => (
 				<div className="menu-wrapper">
 					<ul>
 						<li className="logo"><a><FcGenealogy /></a></li>
-						<li><a><TiThMenuOutline /></a></li>
-						<li><a><BsPeople /></a></li>
-						<li><a><BsListCheck /></a></li>
+						<li><a><BsSearch /> <span>Search issues</span> </a></li>
+						<li><a><AiOutlinePlus /> <span>Add task</span> </a></li>
+						<li><a><BsPeople /> <span>Account</span> </a></li>
 					</ul>
 				</div>
 			</div>
