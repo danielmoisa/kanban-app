@@ -16,7 +16,7 @@ const KanbanBoard = () => {
 
 	console.log(data);
     return (
-        <div>
+        <>
             {data.map((user) => (
 				<div key={user.ID}>
 					<h2>Logged user: {user.name}</h2>
@@ -53,7 +53,7 @@ const KanbanBoard = () => {
 					</div>
 				</div>
 			))}
-        </div>
+        </>
     )
 }
 
