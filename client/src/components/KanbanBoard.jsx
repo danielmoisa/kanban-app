@@ -1,12 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const KanbanBoard = () => {
-    const [data, setData] = useState([]);
+	const [data, setData] = useState([]);
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await axios('http://127.0.0.1:8080/api/users');
+			const result = await axios('http://127.0.0.1:8080/api/users/1');
 
 			setData(result.data);
 		};
@@ -15,13 +15,13 @@ const KanbanBoard = () => {
 	}, []);
 
 	console.log(data);
-    return (
-        <>
-            {data.map((user) => (
-				<div key={user.ID}>
-					<h2>Logged user: {user.name}</h2>
-					<div>
-						{user.Issues.map((issue) => (
+
+	return (
+		<div>
+			{data.Projects &&
+				data.Projects.map((project) => (
+					<>
+						{project.Issues.map((issue) => (
 							<div
 								key={issue.ID}
 								style={{
@@ -50,11 +50,10 @@ const KanbanBoard = () => {
 								</div>
 							</div>
 						))}
-					</div>
-				</div>
-			))}
-        </>
-    )
-}
+					</>
+				))}
+		</div>
+	);
+};
 
-export default KanbanBoard
+export default KanbanBoard;

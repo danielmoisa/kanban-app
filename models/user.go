@@ -11,15 +11,15 @@ import (
 // User model
 type User struct {
 	gorm.Model
-	Name   string `json:"name"`
-	Issues []Issue
+	Name     string `json:"name"`
+	Projects []Project
 }
 
 // GetUsers handler
 func GetUsers(c *fiber.Ctx) {
 	db := database.DBConn
 	var users []User
-	db.Preload("Issues.Comments").Find(&users)
+	db.Preload("Projects.Issues.Comments").Find(&users)
 	c.JSON(users)
 }
 
@@ -28,7 +28,7 @@ func GetUser(c *fiber.Ctx) {
 	id := c.Params("id")
 	db := database.DBConn
 	var user User
-	db.Preload("Issues.Comments").Find(&user, id)
+	db.Preload("Projects.Issues.Comments").Find(&user, id)
 	c.JSON(user)
 }
 
