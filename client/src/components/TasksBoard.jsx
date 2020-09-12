@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
  
 import axios from 'axios'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import NaturalDragAnimation from 'natural-drag-animation-rbdnd';
 
 
 import { BsPlus } from 'react-icons/bs'
@@ -91,9 +92,9 @@ const TasksBoard = () => {
                 <DragDropContext onDragEnd={ result => onDragEnd(result, columns, setColumns) } >
                    { Object.entries(columns).map(([id, column]) => {
                        return (
-                            <div className="board-single-column">
+                            <div className="board-single-column" key={id}>
                                 <h3>{ column.name }</h3>
-                                <Droppable droppableId={id} key={id}>
+                                <Droppable droppableId={id}>
                                     {(provided, snapshot) => {
                                         return (
                                             <div className="column-tasks-wrapper" 
@@ -110,8 +111,12 @@ const TasksBoard = () => {
                                             {column.items.map((item, index) => {
                                                 return (
                                                     <Draggable key={ item.id } draggableId={ item.id } index={ index }>
-                                                        {(provided, snapshot) => {
-                                                            return (
+                                                        {(provided, snapshot) => (
+                                                             <NaturalDragAnimation
+                                                             style={provided.draggableProps.style}
+                                                             snapshot={snapshot}
+                                                           >                                                              
+                                                                {style => (
                                                                 <div className="task-card" 
                                                                     ref={ provided.innerRef }
                                                                     { ...provided.draggableProps }
@@ -122,13 +127,15 @@ const TasksBoard = () => {
                                                                         margin: '0 0 8px 0',
                                                                         minHeight: '50px',
                                                                         backgroundColor: snapshot.isDragging ? '#f5f6f8' : '#fff',
-                                                                        ...provided.draggableProps.style
+                                                                        ...style
                                                                     }}
                                                                 >
                                                                     { item.content }
                                                                 </div>
-                                                            );
-                                                        }
+                                                                )}
+                                                           
+                                                            </NaturalDragAnimation>
+                                                        )
                                                         }
                                                     </Draggable>
                                                 );
