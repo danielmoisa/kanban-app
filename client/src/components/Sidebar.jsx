@@ -1,14 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, NavLink  } from 'react-router-dom'
 
-import './Sidebar.scss'
+import axios from 'axios';
+import './Sidebar.scss';
 
-import { FcTrademark } from 'react-icons/fc'
-import { BsChevronDown, BsChevronUp, BsGrid3X3, BsSearch } from 'react-icons/bs'
-import { GrClose } from 'react-icons/gr'
+import { FcTrademark } from 'react-icons/fc';
+import {
+	BsChevronDown,
+	BsChevronUp,
+	BsGrid3X3,
+	BsSearch,
+} from 'react-icons/bs';
+import { GrClose } from 'react-icons/gr';
 
 const Sidebar = () => {
-
+	
     const [userInfo, setUserInfo] = useState(false)
     const [searchIssues, setSearchIssues] = useState(false)
 
