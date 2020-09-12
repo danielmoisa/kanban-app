@@ -28,7 +28,7 @@ const KanbanBoard = () => {
 									display: 'flex',
 									justifyContent: 'center',
 									alignItems: 'center',
-									flexDirection: 'column',
+									flexDirection: 'row',
 									border: '1px solid #ccc',
 								}}>
 								<p>Issue title: {issue.title}</p>

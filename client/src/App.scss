@@ -1,5 +1,21 @@
+* {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
 .center {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+a {
+    text-decoration: none;
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.active-link {
+    background: #2a60e4!important;
+    color: #fff!important;
 }

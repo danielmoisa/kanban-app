@@ -1,13 +1,17 @@
 
 .main {
-    background-color: #fff;
+    background: linear-gradient(90deg, rgba(247,254,255,1) 0%, rgba(241,247,252,1) 90%);
     display: flex;
     .side {
         display: flex;
         flex: 1;
+        background-color: #fff;
+        border-right: 2px solid #f7f8fa;
         .side-menu {
+            background-color: #f5f6f8;
             border-right: 2px solid #f7f8fa;
             width: 5vw;
+            transition: all .1s ease-in;
             .menu-wrapper {
                 ul {
                     list-style: none;
@@ -27,19 +31,39 @@
                         font-size: 20px;
                         display: flex;
                         align-items: center;
-                        justify-content: center;
                         margin: 10px 0;
                         a {
                             display: flex;
                             align-items: center;
                             justify-content: center;
-                            padding: 4px;
-                            border-radius: 5px;
-                            transition: all .3s ease-in-out;
+                            padding: 8px 20px;
+                            width: 100%;
+                            span {
+                                font-size: 14px;
+                                opacity: 0;
+                                text-transform: uppercase;
+                                width: 0;
+                                transition: all .1s ease-in;
+                            }
                             &:hover {
                                 cursor: pointer;
                                 background-color: #2a60e4;
                                 color: #fff;
+                            }
+                        }
+                    }
+                }
+            }
+            &:hover {
+                width: 15vw;
+                .menu-wrapper {
+                    ul {
+                        li {
+                            a {
+                                span {
+                                    opacity: 1;
+                                    width: 100%;
+                                }
                             }
                         }
                     }

@@ -1,7 +1,9 @@
 import React from 'react'
-import { TiThMenuOutline } from 'react-icons/ti'
-import { BsPeople, BsListCheck } from 'react-icons/bs'
+import { Link, NavLink } from 'react-router-dom'
+
+import { BsPeople, BsSearch } from 'react-icons/bs'
 import { FcGenealogy } from 'react-icons/fc'
+import { AiOutlinePlus } from 'react-icons/ai'
 
 import './Layout.scss'
 
@@ -14,10 +16,10 @@ const Layout = ({ children }) => (
 			<div className="side-menu">
 				<div className="menu-wrapper">
 					<ul>
-						<li className="logo"><a><FcGenealogy /></a></li>
-						<li><a><TiThMenuOutline /></a></li>
-						<li><a><BsPeople /></a></li>
-						<li><a><BsListCheck /></a></li>
+						<li className="logo"><Link to="/" ><FcGenealogy /></Link></li>
+						<li><a><BsSearch /> <span>Search issues</span> </a></li>
+						<li><NavLink to="/add-task" activeClassName="active-link" ><AiOutlinePlus /> <span>Add task</span> </NavLink></li>
+						<li><a><BsPeople /> <span>Account</span> </a></li>
 					</ul>
 				</div>
 			</div>
