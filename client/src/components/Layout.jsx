@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link, NavLink } from 'react-router-dom'
 
 import { BsPeople, BsSearch } from 'react-icons/bs'
 import { FcGenealogy } from 'react-icons/fc'
@@ -15,9 +16,9 @@ const Layout = ({ children }) => (
 			<div className="side-menu">
 				<div className="menu-wrapper">
 					<ul>
-						<li className="logo"><a><FcGenealogy /></a></li>
+						<li className="logo"><Link to="/" ><FcGenealogy /></Link></li>
 						<li><a><BsSearch /> <span>Search issues</span> </a></li>
-						<li><a><AiOutlinePlus /> <span>Add task</span> </a></li>
+						<li><NavLink to="/add-task" activeClassName="active-link" ><AiOutlinePlus /> <span>Add task</span> </NavLink></li>
 						<li><a><BsPeople /> <span>Account</span> </a></li>
 					</ul>
 				</div>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import './Header.scss'
  
@@ -15,9 +16,9 @@ const Header = () => {
         <div className="header">
             <div className="header-wrapper">
                 <div className="header-left">
-                    <div className="arrow">
+                    <Link to="/" className="arrow">
                         <HiOutlineArrowLeft />
-                    </div>
+                    </Link>
                     <div className="avatar-wrapper">
                         <div className="avatar">
                             <FcRegisteredTrademark />
@@ -41,10 +42,10 @@ const Header = () => {
                             <BsPeople />
                         </div>
                     </div>
-                    <div className="add-task center">
+                    <Link to="/add-task" className="add-task center">
                         <BsPlus />
                         <span>Add Task</span>
-                    </div>
+                    </Link>
                     <div className="settings center" onClick={ () => setSettings(!settings) }>
                         <AiOutlineSetting />
                     </div>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link, NavLink  } from 'react-router-dom'
 
 import './Sidebar.scss'
 
@@ -31,10 +32,10 @@ const Sidebar = () => {
                     <a>Item 3</a>
                 </div>
             }
-            <div className="sidebar-item board">
+            <NavLink exact to="/" activeClassName="active-link" className="sidebar-item board">
                 <BsGrid3X3 />
                 <span>Kanban Board</span>
-            </div>
+            </NavLink>
             <div className={`sidebar-item search-issues ${ searchIssues ?  'dropdown-active' : '' }`} onClick={ () => setSearchIssues(!searchIssues) }>
                 {searchIssues ? <div><GrClose /> <span>Close search</span></div> : <div><BsSearch /> <span>Search issues</span></div> }
             </div>

@@ -3,6 +3,8 @@ import './App.scss';
 import axios from 'axios';
 import Layout from './components/Layout'
 import KanbanBoard from './components/KanbanBoard'
+import TasksBoard from './components/TasksBoard'
+import AddTask from './components/AddTask'
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -16,8 +18,12 @@ function App() {
 					<Route
 						exact
 						path="/"
-						component={KanbanBoard}
-
+						component={TasksBoard}
+					/>
+					<Route
+						exact
+						path="/add-task"
+						component={AddTask}
 					/>
 				</Switch>
 			</Layout>
