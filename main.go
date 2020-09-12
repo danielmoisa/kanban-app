@@ -14,17 +14,24 @@ import (
 )
 
 func setupRoutes(app *fiber.App) {
-	// Issues
-	app.Get("/api/issues", models.GetIssues)
-	app.Get("/api/issues/:id", models.GetIssue)
-	app.Post("/api/issues", models.NewIssue)
-	app.Delete("/api/issues/:id", models.DeleteIssue)
+
+	// Projects
+	app.Get("/api/projects", models.GetProjects)
+	app.Get("/api/projects/:id", models.GetProject)
+	app.Post("/api/projects", models.NewProject)
+	app.Delete("/api/projects/:id", models.DeleteProject)
 
 	// Users
 	app.Get("/api/users", models.GetUsers)
 	app.Get("/api/users/:id", models.GetUser)
 	app.Post("/api/users", models.NewUser)
 	app.Delete("/api/users/:id", models.DeleteUser)
+
+	// Issues
+	app.Get("/api/issues", models.GetIssues)
+	app.Get("/api/issues/:id", models.GetIssue)
+	app.Post("/api/issues", models.NewIssue)
+	app.Delete("/api/issues/:id", models.DeleteIssue)
 
 	// Comments
 	app.Get("/api/comments", models.GetComments)
@@ -40,7 +47,7 @@ func initDatabase() {
 		panic("Failed to connect database")
 	}
 	fmt.Println("Connection Opened to Database")
-	database.DBConn.AutoMigrate(&models.Issue{}, &models.User{}, &models.Comment{})
+	database.DBConn.AutoMigrate(&models.Project{}, &models.Issue{}, &models.User{}, &models.Comment{})
 	fmt.Println("Database Migrated")
 }
 

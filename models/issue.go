@@ -18,7 +18,7 @@ type Issue struct {
 	Estimated   int    `json:"estimated"`
 	Progress    string `json:"progress"`
 	Priority    string `json:"priority"`
-	UserID      uint
+	ProjectID   uint
 	Comments    []Comment
 }
 
