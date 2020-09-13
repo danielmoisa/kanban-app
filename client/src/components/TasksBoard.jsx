@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 
-import axios from 'axios';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import React, {useState, useEffect} from 'react'
+import { Link } from 'react-router-dom'
+import axios from 'axios'
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import NaturalDragAnimation from 'natural-drag-animation-rbdnd';
 
 import { BsPlus } from 'react-icons/bs';
 
@@ -77,107 +78,83 @@ const onDragEnd = (result, columns, setColumns) => {
 };
 
 const TasksBoard = () => {
-	const [columns, setColumns] = useState(columnsFromBackend);
-
-	return (
-		<>
-			<div className="board-columns">
-				<DragDropContext
-					onDragEnd={(result) =>
-						onDragEnd(result, columns, setColumns)
-					}>
-					{Object.entries(columns).map(([id, column]) => {
-						return (
-							<div className="board-single-column">
-								<h3>{column.name}</h3>
-								<Droppable droppableId={id} key={id}>
-									{(provided, snapshot) => {
-										return (
-											<div
-												className="column-tasks-wrapper"
-												{...provided.droppableProps}
-												ref={provided.innerRef}
-												style={{
-													backgroundColor: snapshot.isDraggingOver
-														? '#afb8ea'
-														: '#e0e3f5',
-													padding: 10,
-													minHeight: 500,
-													boxShadow: snapshot.isDraggingOver
-														? '0px 2px 7px 1px rgba(0, 0, 0, 0.1)'
-														: 'none',
-												}}>
-												{column.items.map(
-													(item, index) => {
-														return (
-															<Draggable
-																key={item.id}
-																draggableId={
-																	item.id
-																}
-																index={index}>
-																{(
-																	provided,
-																	snapshot
-																) => {
-																	return (
-																		<div
-																			className="task-card"
-																			ref={
-																				provided.innerRef
-																			}
-																			{...provided.draggableProps}
-																			{...provided.dragHandleProps}
-																			style={{
-																				userSelect:
-																					'none',
-																				padding: 16,
-																				margin:
-																					'0 0 8px 0',
-																				minHeight:
-																					'50px',
-																				backgroundColor: snapshot.isDragging
-																					? '#f5f6f8'
-																					: '#fff',
-																				...provided
-																					.draggableProps
-																					.style,
-																			}}>
-																			{
-																				item.content
-																			}
-																		</div>
-																	);
-																}}
-															</Draggable>
-														);
-													}
-												)}
-												{provided.placeholder}
-												{/* Add task button on every column*/}
-												{column.items.length > 0 ? (
-													<Link
-														to="/add-task"
-														className="add-task center">
-														<BsPlus />
-														<span>
-															Add another task
-														</span>
-													</Link>
-												) : (
-													''
-												)}
-											</div>
-										);
-									}}
-								</Droppable>
-							</div>
-						);
-					})}
-				</DragDropContext>
-			</div>
-		</>
-	);
-};
+    
+    const [columns, setColumns] = useState(columnsFromBackend)
+    
+    return (
+        <>
+            <div className="board-columns">
+                <DragDropContext onDragEnd={ result => onDragEnd(result, columns, setColumns) } >
+                   { Object.entries(columns).map(([id, column]) => {
+                       return (
+                            <div className="board-single-column" key={id}>
+                                <h3>{ column.name }</h3>
+                                <Droppable droppableId={id} >
+                                    {(provided, snapshot) => {
+                                        return (
+                                            <div className="column-tasks-wrapper" 
+                                                { ...provided.droppableProps } 
+                                                ref={ provided.innerRef }
+                                                style={{
+                                                    backgroundColor: snapshot.isDraggingOver ? '#afb8ea' : '#e0e3f5',
+                                                    padding: 10,
+                                                    minHeight: 500,
+                                                    boxShadow: snapshot.isDraggingOver ? '0px 2px 7px 1px rgba(0, 0, 0, 0.1)' : 'none',
+                                                }}
+                                            >
+                                            
+                                            {column.items.map((item, index) => {
+                                                return (
+                                                    <Draggable key={ item.id } draggableId={ item.id } index={ index }>
+                                                        {(provided, snapshot) => (
+                                                             <NaturalDragAnimation
+                                                             style={provided.draggableProps.style}
+                                                             snapshot={snapshot}
+                                                           >                                                              
+                                                                {style => (
+                                                                <div className="task-card" 
+                                                                    ref={ provided.innerRef }
+                                                                    { ...provided.draggableProps }
+                                                                    { ...provided.dragHandleProps }
+                                                                    style={{
+                                                                        userSelect: 'none',
+                                                                        padding: 16,
+                                                                        margin: '0 0 8px 0',
+                                                                        minHeight: '50px',
+                                                                        backgroundColor: snapshot.isDragging ? '#f5f6f8' : '#fff',
+                                                                        ...style
+                                                                    }}
+                                                                >
+                                                                    { item.content }
+                                                                </div>
+                                                                )}
+                                                           
+                                                            </NaturalDragAnimation>
+                                                        )
+                                                        }
+                                                    </Draggable>
+                                                );
+                                            })
+                                            }
+                                            { provided.placeholder }
+                                            {/* Add task button on every column*/}
+                                           {column.items.length > 0 ?  <Link to="/add-task" className="add-task center">
+                                                <BsPlus />
+                                                <span>Add another task</span>
+                                            </Link> : ''}
+                                            </div>
+                                        )
+                                    }
+                                    }
+                                </Droppable>
+                            </div>
+                            )
+                    })  
+                   }
+                </DragDropContext>
+            </div>
+        </>
+    )
+}
 
 export default TasksBoard;
