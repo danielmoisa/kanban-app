@@ -11,15 +11,18 @@
 		flex: 1;
 		background-color: #fff;
 		border-right: 2px solid #f7f8fa;
-		position: absolute;
-		height: 100vh;
-		top: 0;
-		left: 0;
 		.side-menu {
-			background-color: #f5f6f8;
-			border-right: 2px solid #f7f8fa;
+			background-color: rgb(7, 71, 166);
+			color: #fff;
 			width: 5vw;
-			transition: all 0.2s ease-in-out;
+			transition: all 0.1s ease-in-out;
+			position: absolute;
+			height: 100vh;
+			top: 0;
+			left: 0;
+			-webkit-box-shadow: 9px 0px 11px -4px rgba(0, 0, 0, 0.15);
+			-moz-box-shadow: 9px 0px 11px -4px rgba(0, 0, 0, 0.15);
+			box-shadow: 9px 0px 11px -4px rgba(0, 0, 0, 0.15);
 			.menu-wrapper {
 				ul {
 					list-style: none;
@@ -63,7 +66,7 @@
 				}
 			}
 			&:hover {
-				width: 15vw;
+				width: 12vw;
 				.menu-wrapper {
 					ul {
 						li {
@@ -82,6 +85,5 @@
 	.content {
 		flex: 4;
 		padding: 20px;
-		margin-left: 22vw;
 	}
 }
