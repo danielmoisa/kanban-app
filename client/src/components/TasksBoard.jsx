@@ -94,7 +94,7 @@ const TasksBoard = () => {
                        return (
                             <div className="board-single-column" key={id}>
                                 <h3>{ column.name }</h3>
-                                <Droppable droppableId={id}>
+                                <Droppable droppableId={id} >
                                     {(provided, snapshot) => {
                                         return (
                                             <div className="column-tasks-wrapper" 
