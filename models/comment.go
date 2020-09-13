@@ -58,9 +58,6 @@ func UpdateComment(c *fiber.Ctx) {
 		return
 	}
 
-	// comment = Comment{
-	// 	Content: dataUB.Content,
-	// }
 	db.Model(&comment).Update("content", dataUB.Content)
 	c.JSON(comment)
 }
