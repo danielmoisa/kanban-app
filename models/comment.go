@@ -53,11 +53,15 @@ func UpdateComment(c *fiber.Ctx) {
 	id := c.Params("id")
 	db := database.DBConn
 	db.First(&comment, id)
-
-	comment = Comment{
-		Content: dataUB.Content,
+	if comment.Content == "" {
+		c.Status(500).Send("No comment Found with ID")
+		return
 	}
-	db.Save(&comment)
+
+	// comment = Comment{
+	// 	Content: dataUB.Content,
+	// }
+	db.Model(&comment).Update("content", dataUB.Content)
 	c.JSON(comment)
 }
 
