@@ -40,6 +40,27 @@ func NewComment(c *fiber.Ctx) {
 	c.JSON(comment)
 }
 
+func UpdateComment(c *fiber.Ctx) {
+	type DataUpdateComment struct {
+		Content string `json:"content"`
+	}
+	var dataUB DataUpdateComment
+	if err := c.BodyParser(&dataUB); err != nil {
+		c.Status(503).Send(err)
+		return
+	}
+	var comment Comment
+	id := c.Params("id")
+	db := database.DBConn
+	db.First(&comment, id)
+
+	comment = Comment{
+		Content: dataUB.Content,
+	}
+	db.Save(&comment)
+	c.JSON(comment)
+}
+
 func DeleteComment(c *fiber.Ctx) {
 	id := c.Params("id")
 	db := database.DBConn
