@@ -1,78 +1,87 @@
-
 .main {
-    background: linear-gradient(90deg, rgba(247,254,255,1) 0%, rgba(241,247,252,1) 90%);
-    display: flex;
-    .side {
-        display: flex;
-        flex: 1;
-        background-color: #fff;
-        border-right: 2px solid #f7f8fa;
-        .side-menu {
-            background-color: #f5f6f8;
-            border-right: 2px solid #f7f8fa;
-            width: 5vw;
-            transition: all .1s ease-in;
-            .menu-wrapper {
-                ul {
-                    list-style: none;
-                    margin: 0;
-                    padding: 0;
-                    text-align: center;
-                    .logo {
-                        margin-bottom: 25px;
-                        font-size: 30px;
-                        a {
-                            &:hover {
-                                background-color: transparent;
-                            }
-                        }
-                    }
-                    li {
-                        font-size: 20px;
-                        display: flex;
-                        align-items: center;
-                        margin: 10px 0;
-                        a {
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            padding: 8px 20px;
-                            width: 100%;
-                            span {
-                                font-size: 14px;
-                                opacity: 0;
-                                text-transform: uppercase;
-                                width: 0;
-                                transition: all .1s ease-in;
-                            }
-                            &:hover {
-                                cursor: pointer;
-                                background-color: #2a60e4;
-                                color: #fff;
-                            }
-                        }
-                    }
-                }
-            }
-            &:hover {
-                width: 15vw;
-                .menu-wrapper {
-                    ul {
-                        li {
-                            a {
-                                span {
-                                    opacity: 1;
-                                    width: 100%;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    .content {
-        flex: 4;
-        padding: 20px;
-    }
+	background: linear-gradient(
+		90deg,
+		rgba(247, 254, 255, 1) 0%,
+		rgba(241, 247, 252, 1) 90%
+	);
+	display: flex;
+	height: 100vh;
+	.side {
+		display: flex;
+		flex: 1;
+		background-color: #fff;
+		border-right: 2px solid #f7f8fa;
+		position: absolute;
+		height: 100vh;
+		top: 0;
+		left: 0;
+		.side-menu {
+			background-color: #f5f6f8;
+			border-right: 2px solid #f7f8fa;
+			width: 5vw;
+			transition: all 0.1s ease-in;
+			.menu-wrapper {
+				ul {
+					list-style: none;
+					margin: 0;
+					padding: 0;
+					text-align: center;
+					.logo {
+						margin-bottom: 25px;
+						font-size: 30px;
+						a {
+							&:hover {
+								background-color: transparent;
+							}
+						}
+					}
+					li {
+						font-size: 20px;
+						display: flex;
+						align-items: center;
+						margin: 10px 0;
+						a {
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							padding: 8px 20px;
+							width: 100%;
+							span {
+								font-size: 14px;
+								opacity: 0;
+								text-transform: uppercase;
+								width: 0;
+								transition: all 0.1s ease-in;
+							}
+							&:hover {
+								cursor: pointer;
+								background-color: #2a60e4;
+								color: #fff;
+							}
+						}
+					}
+				}
+			}
+			&:hover {
+				width: 15vw;
+				.menu-wrapper {
+					ul {
+						li {
+							a {
+								span {
+									opacity: 1;
+									width: 100%;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	.content {
+		flex: 4;
+		padding: 20px;
+		margin-left: 22vw;
+	}
 }
