@@ -48,6 +48,34 @@ func NewIssue(c *fiber.Ctx) {
 	c.JSON(issue)
 }
 
+func UpdateIssue(c *fiber.Ctx) {
+	type DataUpdateIssue struct {
+		Title       string `json:"title"`
+		Description string `json:"description"`
+		Reporter    string `json:"reporter"`
+		Timelog     int    `json:"timelog"`
+		Estimated   int    `json:"estimated"`
+		Progress    string `json:"progress"`
+		Priority    string `json:"priority"`
+	}
+	var dataUB DataUpdateIssue
+	if err := c.BodyParser(&dataUB); err != nil {
+		c.Status(503).Send(err)
+		return
+	}
+	var issue Issue
+	id := c.Params("id")
+	db := database.DBConn
+	db.First(&issue, id)
+	if issue.Title == "" {
+		c.Status(500).Send("No issue Found with ID")
+		return
+	}
+
+	db.Model(&issue).Updates(Issue{Title: dataUB.Title, Description: dataUB.Description, Reporter: dataUB.Reporter, Timelog: dataUB.Timelog, Estimated: dataUB.Estimated, Progress: dataUB.Progress, Priority: dataUB.Priority})
+	c.JSON(issue)
+}
+
 func DeleteIssue(c *fiber.Ctx) {
 	id := c.Params("id")
 	db := database.DBConn
