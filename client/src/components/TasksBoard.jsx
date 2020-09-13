@@ -1,86 +1,81 @@
+
 import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
- 
 import axios from 'axios'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import NaturalDragAnimation from 'natural-drag-animation-rbdnd';
 
+import { BsPlus } from 'react-icons/bs';
 
-import { BsPlus } from 'react-icons/bs'
+import TasksBoardColumn from './TasksBoardColumn';
 
-import TasksBoardColumn from './TasksBoardColumn'
-
-import './TasksBoard.scss'
+import './TasksBoard.scss';
 
 const itemsFromBackend = [
-    { id: 'task-1', content: "First task" },
-    { id: 'task-2', content: "Second task" },
-    { id: 'task-3', content: "Third task" },
-    { id: 'task-4', content: "Fourth task" },
-    { id: 'task-5', content: "Fifth task" }
-  ];
-  
-  const columnsFromBackend = {
-    ['column-1']: {
-      name: "Requested",
-      items: itemsFromBackend
-    },
-    ['column-2']: {
-        name: "To do",
-        items: []
-      },
-      ['column-3']: {
-        name: "In Progress",
-        items: []
-      },
-      ['column-4']: {
-        name: "Done",
-        items: []
-      }
-  };
+	{ id: 'task-1', content: 'First task' },
+	{ id: 'task-2', content: 'Second task' },
+	{ id: 'task-3', content: 'Third task' },
+	{ id: 'task-4', content: 'Fourth task' },
+	{ id: 'task-5', content: 'Fifth task' },
+];
 
-  const onDragEnd = (result, columns, setColumns) => {
-        if(!result.destination) return;
-        const { source, destination } = result;
-      
-        if( source.droppableId !== destination.droppableId ) {
+const columnsFromBackend = {
+	['column-1']: {
+		name: 'Requested',
+		items: itemsFromBackend,
+	},
+	['column-2']: {
+		name: 'To do',
+		items: [],
+	},
+	['column-3']: {
+		name: 'In Progress',
+		items: [],
+	},
+	['column-4']: {
+		name: 'Done',
+		items: [],
+	},
+};
 
-            const sourceColumn = columns[source.droppableId];
-            const destColumn = columns[destination.droppableId];
-            const sourceItems = [...sourceColumn.items];
-            const destItems = [...destColumn.items];
-            const [removed] = sourceItems.splice(source.index, 1);
-            destItems.splice(destination.index, 0, removed);
+const onDragEnd = (result, columns, setColumns) => {
+	if (!result.destination) return;
+	const { source, destination } = result;
 
-            setColumns({
-                ...columns,
-                [source.droppableId]: {
-                    ...sourceColumn,
-                    items: sourceItems
-                },
-                [destination.droppableId]: {
-                    ...destColumn,
-                    items: destItems
-                }
-            })
+	if (source.droppableId !== destination.droppableId) {
+		const sourceColumn = columns[source.droppableId];
+		const destColumn = columns[destination.droppableId];
+		const sourceItems = [...sourceColumn.items];
+		const destItems = [...destColumn.items];
+		const [removed] = sourceItems.splice(source.index, 1);
+		destItems.splice(destination.index, 0, removed);
 
-        } else {
+		setColumns({
+			...columns,
+			[source.droppableId]: {
+				...sourceColumn,
+				items: sourceItems,
+			},
+			[destination.droppableId]: {
+				...destColumn,
+				items: destItems,
+			},
+		});
+	} else {
+		const column = columns[source.droppableId];
+		const copiedItems = [...column.items];
+		const [removed] = copiedItems.splice(source.index, 1);
+		copiedItems.splice(destination.index, 0, removed);
 
-            const column = columns[source.droppableId];
-            const copiedItems = [...column.items];
-            const [removed] = copiedItems.splice(source.index, 1);
-            copiedItems.splice(destination.index, 0, removed);
-    
-            setColumns({
-                ...columns,
-                [source.droppableId]: {
-                    ...column,
-                    items: copiedItems
-                }
-            })
-
-        }
-  }
+		setColumns({
+			...columns,
+			[source.droppableId]: {
+				...column,
+				items: copiedItems,
+			},
+		});
+	}
+};
 
 const TasksBoard = () => {
     
@@ -162,4 +157,4 @@ const TasksBoard = () => {
     )
 }
 
-export default TasksBoard
+export default TasksBoard;

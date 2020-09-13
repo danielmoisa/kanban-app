@@ -47,6 +47,30 @@ func NewProject(c *fiber.Ctx) {
 	c.JSON(project)
 }
 
+func UpdateProject(c *fiber.Ctx) {
+	type DataUpdateProject struct {
+		Name        string `json:"name"`
+		Description string `json:"description"`
+		Category    string `json:"category"`
+	}
+	var dataUB DataUpdateProject
+	if err := c.BodyParser(&dataUB); err != nil {
+		c.Status(503).Send(err)
+		return
+	}
+	var project Project
+	id := c.Params("id")
+	db := database.DBConn
+	db.First(&project, id)
+	if project.Name == "" {
+		c.Status(500).Send("No project Found with ID")
+		return
+	}
+
+	db.Model(&project).Updates(Project{Name: dataUB.Name, Description: dataUB.Description, Category: dataUB.Category})
+	c.JSON(project)
+}
+
 //DeleteProject handler
 func DeleteProject(c *fiber.Ctx) {
 	id := c.Params("id")

@@ -44,6 +44,28 @@ func NewUser(c *fiber.Ctx) {
 	c.JSON(user)
 }
 
+func UpdateUser(c *fiber.Ctx) {
+	type DataUpdateUser struct {
+		Name string `json:"name"`
+	}
+	var dataUB DataUpdateUser
+	if err := c.BodyParser(&dataUB); err != nil {
+		c.Status(503).Send(err)
+		return
+	}
+	var user User
+	id := c.Params("id")
+	db := database.DBConn
+	db.First(&user, id)
+	if user.Name == "" {
+		c.Status(500).Send("No user Found with ID")
+		return
+	}
+
+	db.Model(&user).Update("name", dataUB.Name)
+	c.JSON(user)
+}
+
 //DeleteUser handler
 func DeleteUser(c *fiber.Ctx) {
 	id := c.Params("id")

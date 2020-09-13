@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"jira-clone/database"
 	"jira-clone/models"
+	"jira-clone/router"
 	"os"
 
 	"github.com/gofiber/cors"
@@ -12,33 +13,6 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	_ "github.com/joho/godotenv/autoload"
 )
-
-func setupRoutes(app *fiber.App) {
-
-	// Projects
-	app.Get("/api/projects", models.GetProjects)
-	app.Get("/api/projects/:id", models.GetProject)
-	app.Post("/api/projects", models.NewProject)
-	app.Delete("/api/projects/:id", models.DeleteProject)
-
-	// Users
-	app.Get("/api/users", models.GetUsers)
-	app.Get("/api/users/:id", models.GetUser)
-	app.Post("/api/users", models.NewUser)
-	app.Delete("/api/users/:id", models.DeleteUser)
-
-	// Issues
-	app.Get("/api/issues", models.GetIssues)
-	app.Get("/api/issues/:id", models.GetIssue)
-	app.Post("/api/issues", models.NewIssue)
-	app.Delete("/api/issues/:id", models.DeleteIssue)
-
-	// Comments
-	app.Get("/api/comments", models.GetComments)
-	app.Get("/api/comments/:id", models.GetComment)
-	app.Post("/api/comments", models.NewComment)
-	app.Delete("/api/comments/:id", models.DeleteComment)
-}
 
 func initDatabase() {
 	var err error
@@ -54,9 +28,10 @@ func initDatabase() {
 func main() {
 	app := fiber.New()
 	app.Use(cors.New())
-	initDatabase()
 
-	setupRoutes(app)
+	initDatabase()
+	router.SetupRoutes(app)
+
 	app.Listen("127.0.0.1:" + os.Getenv("PORT"))
 
 	defer database.DBConn.Close()
