@@ -1,160 +1,142 @@
-
-import React, {useState, useEffect} from 'react'
-import { Link } from 'react-router-dom'
-import axios from 'axios'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import NaturalDragAnimation from 'natural-drag-animation-rbdnd';
-
-import { BsPlus } from 'react-icons/bs';
-
-import TasksBoardColumn from './TasksBoardColumn';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
+import { DndProvider, useDrag, useDrop } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import update from 'immutability-helper';
+import axios from 'axios';
 
 import './TasksBoard.scss';
 
-const itemsFromBackend = [
-	{ id: 'task-1', content: 'First task' },
-	{ id: 'task-2', content: 'Second task' },
-	{ id: 'task-3', content: 'Third task' },
-	{ id: 'task-4', content: 'Fourth task' },
-	{ id: 'task-5', content: 'Fifth task' },
-];
+const channels = ['backlog', 'new', 'In progress', 'Done'];
 
-const columnsFromBackend = {
-	['column-1']: {
-		name: 'Requested',
-		items: itemsFromBackend,
+const labelsMap = {
+	backlog: 'Backlog',
+	new: 'To Do',
+	'In progress': 'In Progress',
+	Done: 'Done',
+};
+
+const classes = {
+	board: {
+		display: 'flex',
+		margin: '0 auto',
 	},
-	['column-2']: {
-		name: 'To do',
-		items: [],
+	column: {
+		minWidth: 200,
+		width: '18vw',
+		height: '80vh',
+		margin: '0 auto',
+		backgroundColor: '#FCC8B2',
+		border: '1px solid #fff',
 	},
-	['column-3']: {
-		name: 'In Progress',
-		items: [],
+	columnHead: {
+		textAlign: 'center',
+		padding: 10,
+		fontSize: '1.2em',
+		backgroundColor: '#C6D8AF',
 	},
-	['column-4']: {
-		name: 'Done',
-		items: [],
+	item: {
+		padding: 10,
+		margin: 10,
+		fontSize: '0.8em',
+		cursor: 'pointer',
+		backgroundColor: 'white',
 	},
 };
 
-const onDragEnd = (result, columns, setColumns) => {
-	if (!result.destination) return;
-	const { source, destination } = result;
+const Kanban = () => {
+	const [tasks, setTaskStatus] = useState();
 
-	if (source.droppableId !== destination.droppableId) {
-		const sourceColumn = columns[source.droppableId];
-		const destColumn = columns[destination.droppableId];
-		const sourceItems = [...sourceColumn.items];
-		const destItems = [...destColumn.items];
-		const [removed] = sourceItems.splice(source.index, 1);
-		destItems.splice(destination.index, 0, removed);
+	useEffect(() => {
+		const fetchData = async () => {
+			const result = await axios('http://127.0.0.1:8080/api/projects/1');
 
-		setColumns({
-			...columns,
-			[source.droppableId]: {
-				...sourceColumn,
-				items: sourceItems,
-			},
-			[destination.droppableId]: {
-				...destColumn,
-				items: destItems,
-			},
-		});
-	} else {
-		const column = columns[source.droppableId];
-		const copiedItems = [...column.items];
-		const [removed] = copiedItems.splice(source.index, 1);
-		copiedItems.splice(destination.index, 0, removed);
+			setTaskStatus(result.data.Issues);
+		};
 
-		setColumns({
-			...columns,
-			[source.droppableId]: {
-				...column,
-				items: copiedItems,
-			},
-		});
-	}
+		fetchData();
+	}, []);
+
+	const changeTaskStatus = useCallback(
+		(id, progress) => {
+			let task = tasks.find((task) => task.ID === id);
+			const taskIndex = tasks.indexOf(task);
+			task = { ...task, progress };
+			let newTasks = update(tasks, {
+				[taskIndex]: { $set: task },
+			});
+			setTaskStatus(newTasks);
+		},
+		[tasks]
+	);
+
+	return (
+		<main>
+			<DndProvider backend={HTML5Backend}>
+				<section className="board-columns">
+					{channels.map((channel) => (
+						<KanbanColumn
+							key={channel}
+							status={channel}
+							changeTaskStatus={changeTaskStatus}>
+							<div className="board-single-column">
+								<h3>{labelsMap[channel]}</h3>
+
+								<div>
+									{tasks &&
+										tasks
+											.filter(
+												(item) =>
+													item.progress === channel
+											)
+											.map((item) => (
+												<KanbanItem
+													key={item.ID}
+													id={item.ID}>
+													<div className="column-tasks-wrapper">
+														<div className="task-card">
+															{item.title} <br />
+															{item.description}
+														</div>
+													</div>
+												</KanbanItem>
+											))}
+								</div>
+							</div>
+						</KanbanColumn>
+					))}
+				</section>
+			</DndProvider>
+		</main>
+	);
 };
 
-const TasksBoard = () => {
-    
-    const [columns, setColumns] = useState(columnsFromBackend)
-    
-    return (
-        <>
-            <div className="board-columns">
-                <DragDropContext onDragEnd={ result => onDragEnd(result, columns, setColumns) } >
-                   { Object.entries(columns).map(([id, column]) => {
-                       return (
-                            <div className="board-single-column" key={id}>
-                                <h3>{ column.name }</h3>
-                                <Droppable droppableId={id} >
-                                    {(provided, snapshot) => {
-                                        return (
-                                            <div className="column-tasks-wrapper" 
-                                                { ...provided.droppableProps } 
-                                                ref={ provided.innerRef }
-                                                style={{
-                                                    backgroundColor: snapshot.isDraggingOver ? '#afb8ea' : '#e0e3f5',
-                                                    padding: 10,
-                                                    minHeight: 500,
-                                                    boxShadow: snapshot.isDraggingOver ? '0px 2px 7px 1px rgba(0, 0, 0, 0.1)' : 'none',
-                                                }}
-                                            >
-                                            
-                                            {column.items.map((item, index) => {
-                                                return (
-                                                    <Draggable key={ item.id } draggableId={ item.id } index={ index }>
-                                                        {(provided, snapshot) => (
-                                                             <NaturalDragAnimation
-                                                             style={provided.draggableProps.style}
-                                                             snapshot={snapshot}
-                                                           >                                                              
-                                                                {style => (
-                                                                <div className="task-card" 
-                                                                    ref={ provided.innerRef }
-                                                                    { ...provided.draggableProps }
-                                                                    { ...provided.dragHandleProps }
-                                                                    style={{
-                                                                        userSelect: 'none',
-                                                                        padding: 16,
-                                                                        margin: '0 0 8px 0',
-                                                                        minHeight: '50px',
-                                                                        backgroundColor: snapshot.isDragging ? '#f5f6f8' : '#fff',
-                                                                        ...style
-                                                                    }}
-                                                                >
-                                                                    { item.content }
-                                                                </div>
-                                                                )}
-                                                           
-                                                            </NaturalDragAnimation>
-                                                        )
-                                                        }
-                                                    </Draggable>
-                                                );
-                                            })
-                                            }
-                                            { provided.placeholder }
-                                            {/* Add task button on every column*/}
-                                           {column.items.length > 0 ?  <Link to="/add-task" className="add-task center">
-                                                <BsPlus />
-                                                <span>Add another task</span>
-                                            </Link> : ''}
-                                            </div>
-                                        )
-                                    }
-                                    }
-                                </Droppable>
-                            </div>
-                            )
-                    })  
-                   }
-                </DragDropContext>
-            </div>
-        </>
-    )
-}
+export default Kanban;
 
-export default TasksBoard;
+const KanbanColumn = ({ status, changeTaskStatus, children }) => {
+	const ref = useRef(null);
+	const [, drop] = useDrop({
+		accept: 'card',
+		drop(item) {
+			changeTaskStatus(item.id, status);
+		},
+	});
+	drop(ref);
+	return <div ref={ref}> {children}</div>;
+};
+
+const KanbanItem = ({ id, children }) => {
+	const ref = useRef(null);
+	const [{ isDragging }, drag] = useDrag({
+		item: { type: 'card', id },
+		collect: (monitor) => ({
+			isDragging: monitor.isDragging(),
+		}),
+	});
+	const opacity = isDragging ? 0 : 1;
+	drag(ref);
+	return (
+		<div ref={ref} style={{ opacity }}>
+			{children}
+		</div>
+	);
+};
