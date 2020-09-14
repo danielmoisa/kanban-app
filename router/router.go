@@ -3,7 +3,7 @@ package router
 import (
 	"jira-clone/models"
 
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 )
 
 func SetupRoutes(app *fiber.App) {

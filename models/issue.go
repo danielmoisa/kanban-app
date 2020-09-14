@@ -3,7 +3,7 @@ package models
 import (
 	"jira-clone/database"
 
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
@@ -22,33 +22,32 @@ type Issue struct {
 	Comments    []Comment
 }
 
-func GetIssues(c *fiber.Ctx) {
+func GetIssues(c *fiber.Ctx) error {
 	db := database.DBConn
 	var issues []Issue
 	db.Preload("Comments").Find(&issues)
-	c.JSON(issues)
+	return c.JSON(issues)
 }
 
-func GetIssue(c *fiber.Ctx) {
+func GetIssue(c *fiber.Ctx) error {
 	id := c.Params("id")
 	db := database.DBConn
 	var issue Issue
 	db.Preload("Comments").Find(&issue, id)
-	c.JSON(issue)
+	return c.JSON(issue)
 }
 
-func NewIssue(c *fiber.Ctx) {
+func NewIssue(c *fiber.Ctx) error {
 	db := database.DBConn
 	issue := new(Issue)
 	if err := c.BodyParser(issue); err != nil {
-		c.Status(503).Send(err)
-		return
+		c.SendStatus(503)
 	}
 	db.Create(&issue)
-	c.JSON(issue)
+	return c.JSON(issue)
 }
 
-func UpdateIssue(c *fiber.Ctx) {
+func UpdateIssue(c *fiber.Ctx) error {
 	type DataUpdateIssue struct {
 		Title       string `json:"title"`
 		Description string `json:"description"`
@@ -60,32 +59,32 @@ func UpdateIssue(c *fiber.Ctx) {
 	}
 	var dataUB DataUpdateIssue
 	if err := c.BodyParser(&dataUB); err != nil {
-		c.Status(503).Send(err)
-		return
+		c.SendStatus(503)
+
 	}
 	var issue Issue
 	id := c.Params("id")
 	db := database.DBConn
 	db.First(&issue, id)
 	if issue.Title == "" {
-		c.Status(500).Send("No issue Found with ID")
-		return
+		c.SendString("No issue Found with ID")
+
 	}
 
 	db.Model(&issue).Updates(Issue{Title: dataUB.Title, Description: dataUB.Description, Reporter: dataUB.Reporter, Timelog: dataUB.Timelog, Estimated: dataUB.Estimated, Progress: dataUB.Progress, Priority: dataUB.Priority})
-	c.JSON(issue)
+	return c.JSON(issue)
 }
 
-func DeleteIssue(c *fiber.Ctx) {
+func DeleteIssue(c *fiber.Ctx) error {
 	id := c.Params("id")
 	db := database.DBConn
 
 	var issue Issue
 	db.First(&issue, id)
 	if issue.Title == "" {
-		c.Status(500).Send("No issue Found with ID")
-		return
+		c.SendString("No issue Found with ID")
+
 	}
 	db.Delete(&issue)
-	c.Send("Issue Successfully deleted")
+	return c.SendString("Issue Successfully deleted")
 }

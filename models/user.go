@@ -3,7 +3,7 @@ package models
 import (
 	"jira-clone/database"
 
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
@@ -16,69 +16,69 @@ type User struct {
 }
 
 // GetUsers handler
-func GetUsers(c *fiber.Ctx) {
+func GetUsers(c *fiber.Ctx) error {
 	db := database.DBConn
 	var users []User
 	db.Preload("Projects.Issues.Comments").Find(&users)
-	c.JSON(users)
+	return c.JSON(users)
 }
 
 //GetUser handler
-func GetUser(c *fiber.Ctx) {
+func GetUser(c *fiber.Ctx) error {
 	id := c.Params("id")
 	db := database.DBConn
 	var user User
 	db.Preload("Projects.Issues.Comments").Find(&user, id)
-	c.JSON(user)
+	return c.JSON(user)
 }
 
 // NewUser create handler
-func NewUser(c *fiber.Ctx) {
+func NewUser(c *fiber.Ctx) error {
 	db := database.DBConn
 	user := new(User)
 	if err := c.BodyParser(user); err != nil {
-		c.Status(503).Send(err)
-		return
+		c.SendStatus(503)
+
 	}
 	db.Create(&user)
-	c.JSON(user)
+	return c.JSON(user)
 }
 
-func UpdateUser(c *fiber.Ctx) {
+func UpdateUser(c *fiber.Ctx) error {
 	type DataUpdateUser struct {
 		Name string `json:"name"`
 	}
 	var dataUB DataUpdateUser
 	if err := c.BodyParser(&dataUB); err != nil {
-		c.Status(503).Send(err)
-		return
+		c.SendStatus(503)
+
 	}
 	var user User
 	id := c.Params("id")
 	db := database.DBConn
 	db.First(&user, id)
 	if user.Name == "" {
-		c.Status(500).Send("No user Found with ID")
-		return
+		c.SendString("No user Found with ID")
+
 	}
 
 	db.Model(&user).Update("name", dataUB.Name)
-	c.JSON(user)
+	return c.JSON(user)
 }
 
 //DeleteUser handler
-func DeleteUser(c *fiber.Ctx) {
+func DeleteUser(c *fiber.Ctx) error {
 	id := c.Params("id")
 	db := database.DBConn
 
 	var user User
 	db.First(&user, id)
 	if user.Name == "" {
-		c.Status(500).Send("No user Found with ID")
-		return
+		c.SendString("No user Found with ID")
+
 	}
 	db.Delete(&user)
-	c.Send("User Successfully deleted")
+	return c.SendString("User Successfully deleted")
 }
 
 // TODO: implement preloader on all cases if needed?
