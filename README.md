@@ -1,1 +1,2 @@
-# Task management web app made with React js and Golang
+## Task management jira like web app
+React js and a REST API made with Golang
