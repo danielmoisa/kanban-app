@@ -2,18 +2,26 @@ package router
 
 import (
 	"jira-clone/controllers"
+	middleware "jira-clone/middlewares"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 func SetupRoutes(app *fiber.App) {
+	// Middleware
+	api := app.Group("/api")
+
+	// Auth
+	auth := api.Group("/auth")
+	auth.Post("/login", controllers.Login)
 
 	// Users
-	app.Get("/api/users", controllers.GetUsers)
-	app.Get("/api/users/:id", controllers.GetUser)
-	app.Post("/api/users", controllers.NewUser)
-	app.Patch("/api/users/:id", controllers.UpdateUser)
-	app.Delete("/api/users/:id", controllers.DeleteUser)
+	users := api.Group("/users")
+	users.Get("/", middleware.Protected(), controllers.GetUsers)
+	users.Get("/:id", controllers.GetUser)
+	users.Post("/", controllers.NewUser)
+	users.Patch("/:id", middleware.Protected(), controllers.UpdateUser)
+	users.Delete("/:id", middleware.Protected(), controllers.DeleteUser)
 
 	// Projects
 	app.Get("/api/projects", controllers.GetProjects)

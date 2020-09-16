@@ -38,7 +38,9 @@ func NewUser(c *fiber.Ctx) error {
 
 func UpdateUser(c *fiber.Ctx) error {
 	type DataUpdateUser struct {
-		Name string `json:"name"`
+		Username string `gorm:"unique_index;not null" json:"username"`
+		Email    string `gorm:"unique_index;not null" json:"email"`
+		Password string `gorm:"not null" json:"password"`
 	}
 	var dataUB DataUpdateUser
 	if err := c.BodyParser(&dataUB); err != nil {
@@ -49,12 +51,11 @@ func UpdateUser(c *fiber.Ctx) error {
 	id := c.Params("id")
 	db := database.DBConn
 	db.First(&user, id)
-	if user.Name == "" {
+	if user.Username == "" {
 		c.SendString("No user Found with ID")
 
 	}
-
-	db.Model(&user).Update("name", dataUB.Name)
+	db.Model(&user).Updates(models.User{Username: dataUB.Username, Email: dataUB.Email, Password: dataUB.Password})
 	return c.JSON(user)
 }
 
@@ -65,7 +66,7 @@ func DeleteUser(c *fiber.Ctx) error {
 
 	var user models.User
 	db.First(&user, id)
-	if user.Name == "" {
+	if user.Username == "" {
 		c.SendString("No user Found with ID")
 
 	}
