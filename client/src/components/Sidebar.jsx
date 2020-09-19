@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
+import SearchProjects from './projects/SearchProjects'
+
 import axios from 'axios';
 import './Sidebar.scss';
 
 import { FcTrademark } from 'react-icons/fc';
 import {
-	BsChevronDown,
-	BsChevronUp,
 	BsGrid3X3,
 	BsSearch,
 } from 'react-icons/bs';
 import { GrClose } from 'react-icons/gr';
 
 const Sidebar = () => {
-	const [userInfo, setUserInfo] = useState(false);
-	const [searchIssues, setSearchIssues] = useState(false);
+	const [searchProjectsInput, setSearchProjectsInput] = useState(false);
+	const [searchProjects, setSearchProjects] = useState('');
 	const [data, setData] = useState([]);
 
 	useEffect(() => {
@@ -28,30 +28,33 @@ const Sidebar = () => {
 		fetchData();
 	}, []);
 
-	console.log(data);
+	const handleProjectsSearch = (e) => {
+		setSearchProjects(e.target.value)
+	  }
+	  const userProjects = data.Projects
+
+	  const results = () => {
+		if(searchProjects === '') {
+		  return userProjects;
+		}
+		return [...userProjects].filter(
+			project => project.name.toLowerCase().includes(searchProjects.toLowerCase())
+		)
+	  }
 
 	return (
 		<>
 			<div
-				className={`account ${userInfo ? 'dropdown-active' : ''}`}
-				onClick={() => setUserInfo(!userInfo)}>
+				className="account">
 				<div className="account-wrapper">
 					<div className="avatar">
 						<div className="info center">
 							<FcTrademark />
 							<p>{data.name}</p>
 						</div>
-						{userInfo ? <BsChevronUp /> : <BsChevronDown />}
 					</div>
 				</div>
 			</div>
-			{userInfo && (
-				<div className="account-dropdown">
-					<a>Item 1</a>
-					<a>Item 2</a>
-					<a>Item 3</a>
-				</div>
-			)}
 			<NavLink
 				exact
 				to="/"
@@ -62,33 +65,32 @@ const Sidebar = () => {
 			</NavLink>
 			<div
 				className={`sidebar-item search-issues ${
-					searchIssues ? 'dropdown-active' : ''
+					searchProjectsInput ? 'dropdown-active' : ''
 				}`}
-				onClick={() => setSearchIssues(!searchIssues)}>
-				{searchIssues ? (
+				onClick={() => setSearchProjectsInput(!searchProjectsInput)}>
+				{searchProjectsInput ? (
 					<div>
 						<GrClose /> <span>Close search</span>
 					</div>
 				) : (
 					<div>
-						<BsSearch /> <span>Search issues</span>
+						<BsSearch /> <span>Search projects</span>
 					</div>
 				)}
 			</div>
 			<div className="search-dropdown">
-				{searchIssues && (
+				{searchProjectsInput && (
 					<input
 						type="text"
 						autoFocus
-						placeholder="Search issues here..."
+						placeholder="Search projects here..."
+						value={ searchProjects }
+						onChange={ handleProjectsSearch }
 					/>
 				)}
 			</div>
 
-			<div className="projects">
-				{data.Projects &&
-					data.Projects.map((project) => <p>{project.name}</p>)}
-			</div>
+			<SearchProjects userProjects={results()} />
 		</>
 	);
 };
