@@ -1,9 +1,9 @@
 package main
 
 import (
+	"jira-clone/config"
 	"jira-clone/database"
 	"jira-clone/router"
-	"os"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -19,7 +19,7 @@ func main() {
 	database.InitDatabase()
 	router.SetupRoutes(app)
 
-	app.Listen("127.0.0.1:" + os.Getenv("PORT"))
+	app.Listen("127.0.0.1:" + config.Config("PORT"))
 
 	defer database.DBConn.Close()
 }
