@@ -19,7 +19,7 @@ const SingleProject = ({ match }) => {
 
     return (
         <div className="single-project-wrapper">
-           <h1>{ project.name }</h1>
+           <h1>{ projectId }</h1>
         </div>
     )
 }
