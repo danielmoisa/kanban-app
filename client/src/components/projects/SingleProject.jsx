@@ -19,16 +19,7 @@ const SingleProject = ({ match }) => {
 		fetchData();
 	}, [projectId]);
 
-<<<<<<< HEAD
-    return (
-        <div className="single-project-wrapper">
-           <h1>{ projectId }</h1>
-        </div>
-    )
-}
-=======
 	console.log(project);
->>>>>>> 0178e0dd84365f12588c1716dc85c5a0cc4d967b
 
 	return (
 		<>
