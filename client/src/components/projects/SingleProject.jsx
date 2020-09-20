@@ -1,27 +1,52 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const SingleProject = ({ match }) => {
-    const [project, setProject] = useState();
-    const {
-        params: { projectId },
-    } = match;
+	const [project, setProject] = useState();
+	const {
+		params: { projectId },
+	} = match;
 
-    useEffect(() => {
+	useEffect(() => {
 		const fetchData = async () => {
-			const result = await axios(`http://localhost:8080/api/projects/${projectId}`);
+			const result = await axios(
+				`http://localhost:8080/api/projects/${projectId}`
+			);
 
-            setProject(result.project);
+			setProject(result.data);
 		};
 
 		fetchData();
 	}, [projectId]);
 
+<<<<<<< HEAD
     return (
         <div className="single-project-wrapper">
            <h1>{ projectId }</h1>
         </div>
     )
 }
+=======
+	console.log(project);
+>>>>>>> 0178e0dd84365f12588c1716dc85c5a0cc4d967b
 
-export default SingleProject
+	return (
+		<>
+			{project && (
+				<div className="single-project-wrapper">
+					<h1>{project.name}</h1>
+					<p>{project.category}</p>
+					<p>{project.description}</p>
+					{project.Issues &&
+						project.Issues.map((issue) => (
+							<div key={issue.ID}>
+								<p>{issue.title}</p>
+							</div>
+						))}
+				</div>
+			)}
+		</>
+	);
+};
+
+export default SingleProject;
