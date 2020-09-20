@@ -5,6 +5,7 @@ import './IssuesSearch.scss'
 import IssuesResults from './IssuesResults'
 
 import { BsSearch } from 'react-icons/bs'
+import { VscFilter } from 'react-icons/vsc'
 
 const IssuesSearch = () => {
     const [data, setData] = useState([]);
@@ -24,9 +25,9 @@ const IssuesSearch = () => {
         setSearchIssues(e.target.value)
     }
     
-    const userIssues = data.Issues
+    const userIssues = data
     
-    const results = () => {
+    const results = (e) => {
         if(searchIssues === '') {
             return userIssues;
         } 
@@ -34,6 +35,7 @@ const IssuesSearch = () => {
         return [...userIssues].filter(
             issue => issue.title.toLowerCase().includes(searchIssues.toLowerCase())
         );
+        
     }
 
     return (
@@ -45,12 +47,18 @@ const IssuesSearch = () => {
                 <input 
                     type="text" 
                     autoFocus 
-                    placeholder="Search issues here..." 
+                    placeholder="Search issues by title..." 
                     value={ searchIssues } 
                     onChange={ handleIssuesSearch }
                 />
             </div>
-            <IssuesResults userIssues={ results() } />
+            <h4 className="issues-title">
+                { searchIssues === '' ? 
+                    <span><VscFilter /> All issues</span> :
+                    <span className="active-search"><VscFilter /> Matching issues</span>
+                }
+            </h4>
+                <IssuesResults userIssues={ results() } /> 
         </div>
     )
 }
