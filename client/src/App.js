@@ -8,6 +8,7 @@ import TasksBoard from './components/TasksBoard'
 import TasksBoard2 from './components/TasksBoard2'
 import AddTask from './components/AddTask'
 import SingleProject from './components/projects/SingleProject'
+import SingleIssue from './components/issues/SingleIssue'
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -36,6 +37,11 @@ function App() {
 						exact
 						path="/project/:projectId"
 						component={SingleProject}
+					/>
+					<Route 
+						exact 
+						path="/issue/:issueId"
+						component={SingleIssue}
 					/>
 				</Switch>
 			</Layout>

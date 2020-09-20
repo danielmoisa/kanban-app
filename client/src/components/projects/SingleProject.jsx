@@ -19,7 +19,6 @@ const SingleProject = ({ match }) => {
 		fetchData();
 	}, [projectId]);
 
-	console.log(project);
 
 	return (
 		<>

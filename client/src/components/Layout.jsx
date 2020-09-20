@@ -15,7 +15,7 @@ import IssuesSearch from './issues/IssuesSearch'
 
 const Layout = ({ children }) => {
 	const [spinner, setSpinner] = useState(true);
-	const [searchIssues, setSearchIssues] = useState(false)
+	const [issuesModal, setIssuesModal] = useState(false)
 
 	useEffect(() => {
 		setTimeout(() => setSpinner(false), 1000);
@@ -32,7 +32,7 @@ const Layout = ({ children }) => {
 									<FcGenealogy />
 								</Link>
 							</li>
-							<li onClick={ () => setSearchIssues(!searchIssues) }>
+							<li onClick={ () => setIssuesModal(!issuesModal) }>
 								<a>
 									<BsSearch /> <span>Search issues</span>
 								</a>
@@ -58,16 +58,16 @@ const Layout = ({ children }) => {
 			</div>
 			<div className="content">
 				<Header />
-				{ searchIssues && 
+				{ issuesModal && 
 					<div className={ `search-issues-modal ${
-						searchIssues ? 'open-issues-modal' : ''
+						issuesModal ? 'open-issues-modal' : ''
 					}` }>
 						<div className="overlay"></div>
 						<div className="search-issues-wrapper">
-							<div className="close-modal center" onClick={ () => setSearchIssues(false) }>
+							<div className="close-modal center" onClick={ () => setIssuesModal(false) }>
 								<GrClose />
 							</div>
-							<IssuesSearch />
+							<IssuesSearch setIssuesModal={ setIssuesModal } />
 						</div>
 					</div>
 				}

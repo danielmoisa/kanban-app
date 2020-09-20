@@ -7,7 +7,7 @@ import IssuesResults from './IssuesResults'
 import { BsSearch } from 'react-icons/bs'
 import { VscFilter } from 'react-icons/vsc'
 
-const IssuesSearch = () => {
+const IssuesSearch = ({ setIssuesModal }) => {
     const [data, setData] = useState([]);
     const [searchIssues, setSearchIssues] = useState('');
 
@@ -58,7 +58,7 @@ const IssuesSearch = () => {
                     <span className="active-search"><VscFilter /> Matching issues</span>
                 }
             </h4>
-                <IssuesResults userIssues={ results() } /> 
+                <IssuesResults userIssues={ results() } setIssuesModal={ setIssuesModal }/> 
         </div>
     )
 }
