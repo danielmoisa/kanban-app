@@ -1,0 +1,72 @@
+.single-issue-wrapper {
+    display: flex;
+    margin-top: 35px;
+    .main-col {
+        flex: 2;
+        .title, .description textarea {
+            font-weight: 400;
+            font-size: 24px;
+            margin: 0;
+            margin-bottom: 25px;
+            resize: none;
+            width: 100%!important;
+            height: 37px!important;
+            background-color: transparent;
+            border: 2px solid transparent;
+            border-radius: 5px;
+            &:focus, &:hover {
+                outline: none;
+                border: 2px solid #2a60e4;
+            }
+        }
+        .description textarea {
+            height: 100px!important;
+            font-weight: 400;
+            font-size: 14px;
+            margin-top: 5px;
+            padding: 5px;
+        }
+    }
+    .side-col {
+        flex: 1;
+        padding-left: 60px;
+        .side-title {
+            text-transform: uppercase;
+            font-size: 14px;
+            color: #0d0c22;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+        .side-content {
+            margin-bottom: 30px;
+        }
+        .side-btn {
+            background-color: rgba(9, 30, 66, 0.54);
+            max-width: 150px;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            text-transform: uppercase;
+            color: #fff;
+            cursor: pointer;
+        }
+        .copy-url {
+           .copy {
+                svg {
+                    font-size: 20px;
+                    margin-right: 5px;
+                }
+            }
+            .copy.copied {
+                background-color: #2a60e4;
+            }
+            input {
+                opacity: 0;
+               height: 0;
+            }
+        }
+        .status {
+            
+        }
+    }
+}
