@@ -30,11 +30,14 @@ const AddTask = () => {
             title: newTitle,
             description: newDescription,
             reporter: newReporter,
+            timelog: 0,
             estimated: newEstimate,
+            progress: 'In progress',
             priority: newPriority,
+            ProjectID: 1,
         }
 
-        services.addIssue(addNewIssue)
+        services.addIssue(newIssue)
         .then(response => {
             setIssues(issues.concat(response.data))
         });
