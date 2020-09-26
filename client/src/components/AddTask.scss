@@ -1,0 +1,62 @@
+.add-issue {
+    padding: 30px 10%;
+    .add-issue-form {
+        form {
+            display: flex;
+            flex-direction: column;
+            label {
+                color: #0d0c22;
+                text-transform: uppercase;
+                font-size: 13px;
+                font-weight: 800;
+                margin-bottom: 8px;
+            }
+            input, textarea {
+                border: 1px solid #0d0c22;
+                padding: 8px;
+                margin-bottom: 20px;
+                border-radius: 2px;
+                background-color: #f5f6f8;
+                &:focus {
+                    outline: none;
+                    background-color: #e2e8f5;
+                    border: 1px solid #2a60e4;
+                }
+            }
+            textarea {
+                resize: none;
+                min-height: 100px;
+            }
+            button[type="submit"] {
+                background-color: rgba(9, 30, 66, 1);
+                color: #2a60e4;
+                border: none;
+                padding: 10px 0;
+                border-radius: 2px;
+                font-size: 16px;
+                text-transform: uppercase;
+                font-weight: 600;
+                letter-spacing: 1.5px;
+                transition: all .3s ease-in-out;
+                .icon {
+                    background-color: #2a60e4;
+                    color: #fff;
+                    font-size: 23px;
+                    display: flex;
+                    margin-right: 10px;
+                    border-radius: 50%;
+                    transition: all .3s ease-in-out;
+                }
+                &:hover {
+                    background-color: #2a60e4;
+                    color: #fff;
+                    cursor: pointer;
+                    .icon {
+                        background-color: #fff;
+                        color: #2a60e4;
+                    }
+                }
+            }
+        }
+    }
+}

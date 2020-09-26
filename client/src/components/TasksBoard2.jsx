@@ -10,89 +10,53 @@ import { BsPlus } from 'react-icons/bs'
 
 import './TasksBoard.scss'
 
-const itemsFromBackend = [
-    { id: 'task-1', content: "First task" },
-    { id: 'task-2', content: "Second task" },
-    { id: 'task-3', content: "Third task" },
-    { id: 'task-4', content: "Fourth task" },
-    { id: 'task-5', content: "Fifth task" }
-  ];
-  
-  const columnsFromBackend = {
-    ['column-1']: {
-      name: "Requested",
-      items: itemsFromBackend
-    },
-    ['column-2']: {
-        name: "To do",
-        items: []
-      },
-      ['column-3']: {
-        name: "In Progress",
-        items: []
-      },
-      ['column-4']: {
-        name: "Done",
-        items: []
-      }
-  };
-
-  const onDragEnd = (result, columns, setColumns) => {
-        if(!result.destination) return;
-        const { source, destination } = result;
-      
-        if( source.droppableId !== destination.droppableId ) {
-
-            const sourceColumn = columns[source.droppableId];
-            const destColumn = columns[destination.droppableId];
-            const sourceItems = [...sourceColumn.items];
-            const destItems = [...destColumn.items];
-            const [removed] = sourceItems.splice(source.index, 1);
-            destItems.splice(destination.index, 0, removed);
-
-            setColumns({
-                ...columns,
-                [source.droppableId]: {
-                    ...sourceColumn,
-                    items: sourceItems
-                },
-                [destination.droppableId]: {
-                    ...destColumn,
-                    items: destItems
-                }
-            })
-
-        } else {
-
-            const column = columns[source.droppableId];
-            const copiedItems = [...column.items];
-            const [removed] = copiedItems.splice(source.index, 1);
-            copiedItems.splice(destination.index, 0, removed);
-    
-            setColumns({
-                ...columns,
-                [source.droppableId]: {
-                    ...column,
-                    items: copiedItems
-                }
-            })
-
-        }
-  }
 
 const TasksBoard2 = () => {
     
-    const [columns, setColumns] = useState(columnsFromBackend)
+    const issues = [
+        { id: 'task-1', content: "First task", status: 'Requested' },
+        { id: 'task-2', content: "Second task", status: 'To do' },
+        { id: 'task-3', content: "Third task", status: 'In progress' },
+        { id: 'task-4', content: "Fourth task", status: 'Done' },
+        { id: 'task-5', content: "Fifth task", status: 'Requested' }
+      ];
+      
+      const cols = [
+        {   
+            name: "Requested"
+        },
+    
+        {   
+            name: "To do"
+        },
+    
+        {   
+           name: "In Progress"
+        },
+        {   
+            name: "Done" 
+        }
+    ];
+    
+    const [columns, setColumns] = useState(cols)
+    const [ data, setData ] = useState(issues)
+
+    
+    
+
+      const onDragEnd = (result, columns, setColumns, data, setData) => {
+
+      }
+
     
     return (
         <>
             <div className="board-columns">
                 <DragDropContext onDragEnd={ result => onDragEnd(result, columns, setColumns) } >
-                   { Object.entries(columns).map(([id, column]) => {
-                       return (
-                            <div className="board-single-column" key={id}>
-                                <h3>{ column.name }</h3>
-                                <Droppable droppableId={id} >
+                        { cols.map(singleCol => (
+                              <div className="board-single-column" key={singleCol.name}>
+                              <h3>{ singleCol.name }</h3>
+                              <Droppable droppableId={singleCol.name} >
                                     {(provided, snapshot) => {
                                         return (
                                             <div className="column-tasks-wrapper" 
@@ -106,9 +70,12 @@ const TasksBoard2 = () => {
                                                 }}
                                             >
                                             
-                                            {column.items.map((item, index) => {
+                                            {issues.map((item, index) => {
+
                                                 return (
-                                                    <Draggable key={ item.id } draggableId={ item.id } index={ index }>
+                                                    <div key={ item.id }>
+                                                    { item.status === singleCol.name &&
+                                                    <Draggable draggableId={ item.id } index={ index }>
                                                         {(provided, snapshot) => (
                                                              <NaturalDragAnimation
                                                              style={provided.draggableProps.style}
@@ -136,28 +103,27 @@ const TasksBoard2 = () => {
                                                         )
                                                         }
                                                     </Draggable>
+                                                    }
+                                                </div>
                                                 );
+                                            
                                             })
                                             }
                                             { provided.placeholder }
-                                            {/* Add task button on every column*/}
-                                           {column.items.length > 0 ?  <Link to="/add-task" className="add-task center">
-                                                <BsPlus />
-                                                <span>Add another task</span>
-                                            </Link> : ''}
+
                                             </div>
                                         )
                                     }
                                     }
                                 </Droppable>
-                            </div>
-                            )
-                    })  
-                   }
+                          </div>
+                          )
+                        )
+                        }
+                         
                 </DragDropContext>
             </div>
         </>
     )
 }
-
 export default TasksBoard2
