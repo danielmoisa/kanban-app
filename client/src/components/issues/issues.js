@@ -10,4 +10,9 @@ const addIssue = (newIssue) => {
     return axios.post(url, newIssue)
 }
 
-export default { getIssues, addIssue }
+const deleteIssue = (issueId) => {
+    const request = axios.delete(`${url}/${issueId}`);
+    return request.then(response => response.data)
+}
+
+export default { getIssues, addIssue, deleteIssue }

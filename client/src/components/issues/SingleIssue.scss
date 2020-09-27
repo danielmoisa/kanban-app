@@ -2,7 +2,7 @@
     display: flex;
     margin-top: 35px;
     .main-col {
-        flex: 2;
+        flex: 3;
         .title, .description textarea {
             font-weight: 400;
             font-size: 24px;
@@ -43,26 +43,51 @@
         .side-btn {
             background-color: rgba(9, 30, 66, 0.54);
             max-width: 150px;
-            padding: 10px;
+            padding: 10px 20px;
             border-radius: 5px;
             font-size: 14px;
             text-transform: uppercase;
             color: #fff;
             cursor: pointer;
         }
-        .copy-url {
-           .copy {
-                svg {
-                    font-size: 20px;
-                    margin-right: 5px;
+        .copy-delete {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            .copy-url {
+               .copy {
+                    svg {
+                        font-size: 20px;
+                        margin-right: 5px;
+                    }
+                }
+                .copy.copied {
+                    background-color: #2a60e4;
+                }
+                input {
+                    opacity: 0;
+                    height: 0;
+                    width: 0;
                 }
             }
-            .copy.copied {
-                background-color: #2a60e4;
+            .delete-issue {
+                font-size: 25px;
+                color: #da0000;
+                transition: all .3s ease-in-out;
+                padding: 8px;
+                &:hover {
+                    background-color: #c7d6f5;
+                    border-radius: 3px;
+                    cursor: pointer;
+                }
             }
-            input {
-                opacity: 0;
-               height: 0;
+            .delete-issues-modal {
+                position: absolute;
+                right: 6%;
+                background: #fff;
+                box-shadow: 0px 2px 7px 1px rgba(0, 0, 0, 0.1);
+                border-radius: 5px;
+                padding: 15px;
             }
         }
         .status {

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+
 import Spinner from '../widgets/Spinner';
+import Notification from '../widgets/Notification'
 
 import { BsPeople, BsSearch } from 'react-icons/bs';
 import { FcGenealogy } from 'react-icons/fc';
@@ -15,7 +17,8 @@ import IssuesSearch from './issues/IssuesSearch'
 
 const Layout = ({ children }) => {
 	const [spinner, setSpinner] = useState(true);
-	const [issuesModal, setIssuesModal] = useState(false)
+	const [issuesModal, setIssuesModal] = useState(false);
+	const [notification, setNotification] = useState({content: null, type: null });
 
 	useEffect(() => {
 		setTimeout(() => setSpinner(false), 1000);
@@ -73,6 +76,7 @@ const Layout = ({ children }) => {
 				}
 				{spinner ? <Spinner /> : children}
 			</div>
+			<Notification notification={ notification } setNotification={ setNotification }/>
 		</div>
 	);
 };
