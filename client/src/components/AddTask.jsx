@@ -48,7 +48,10 @@ const AddTask = () => {
         setNewEstimate('')
         setNewPriority('')
 
-        console.log('New issue added successfully!')
+        // setNotification({ content: 'Issue successfully added.', type: 'success' });
+        // setTimeout(() => {
+        //     setNotification({content: null})
+        //   }, 3000);
     }
 
     return (
@@ -72,7 +75,7 @@ const AddTask = () => {
                     <label htmlFor="priority">Issue priority</label>
                     <input type="text" name="priority" id="priority" value={newPriority} onChange={ e => setNewPriority(e.target.value) }/>
                     {/* submit */}
-                    <button type="submit" className="center"><div className="icon"><BsPlus /></div> Add issue</button>
+                    <button type="submit" className="submit-btn center"><div className="icon"><BsPlus /></div> Add issue</button>
                 </form>
             </div>
         </div>

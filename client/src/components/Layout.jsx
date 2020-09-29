@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation  } from 'react-router-dom';
 
 import Spinner from '../widgets/Spinner';
-import Notification from '../widgets/Notification'
 
 import { BsPeople, BsSearch } from 'react-icons/bs';
 import { FcGenealogy } from 'react-icons/fc';
@@ -18,15 +17,18 @@ import IssuesSearch from './issues/IssuesSearch'
 const Layout = ({ children }) => {
 	const [spinner, setSpinner] = useState(true);
 	const [issuesModal, setIssuesModal] = useState(false);
-	const [notification, setNotification] = useState({content: null, type: null });
 
 	useEffect(() => {
 		setTimeout(() => setSpinner(false), 1000);
 	}, []);
 
+	//Get current path
+	const location = useLocation();
+
 	return (
 		<div className="main">
-			<div className="side">
+			{ location.pathname !== '/login' &&
+				<div className="side">
 				<div className="side-menu">
 					<div className="menu-wrapper">
 						<ul>
@@ -59,8 +61,9 @@ const Layout = ({ children }) => {
 					<Sidebar />
 				</div>
 			</div>
+			}
 			<div className="content">
-				<Header />
+			{ location.pathname !== '/login' && <Header /> }
 				{ issuesModal && 
 					<div className={ `search-issues-modal ${
 						issuesModal ? 'open-issues-modal' : ''
@@ -76,7 +79,6 @@ const Layout = ({ children }) => {
 				}
 				{spinner ? <Spinner /> : children}
 			</div>
-			<Notification notification={ notification } setNotification={ setNotification }/>
 		</div>
 	);
 };

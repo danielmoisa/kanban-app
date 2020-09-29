@@ -19,6 +19,9 @@ a {
 	background: #2a60e4 !important;
 	color: #fff !important;
 }
+.active-project {
+	background: #f5f6f8;
+}
 
 .loader-wrapper {
 	width: 100%;
@@ -105,4 +108,34 @@ a {
 }
 .notification.success {
 	color: #029002;
+}
+.submit-btn {
+	background-color: rgba(9, 30, 66, 1);
+	color: #2a60e4;
+	border: none;
+	padding: 10px 0;
+	border-radius: 2px;
+	font-size: 16px;
+	text-transform: uppercase;
+	font-weight: 600;
+	letter-spacing: 1.5px;
+	transition: all .3s ease-in-out;
+	.icon {
+		background-color: #2a60e4;
+		color: #fff;
+		font-size: 23px;
+		display: flex;
+		margin-right: 10px;
+		border-radius: 50%;
+		transition: all .3s ease-in-out;
+	}
+	&:hover {
+		background-color: #2a60e4;
+		color: #fff;
+		cursor: pointer;
+		.icon {
+			background-color: #fff;
+			color: #2a60e4;
+		}
+	}
 }

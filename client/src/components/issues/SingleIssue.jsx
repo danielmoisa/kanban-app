@@ -20,7 +20,6 @@ const SingleIssue = ({  match }) => {
         params: { issueId },
     } = match;
     const [deleteModal, setDeleteModal] = useState(false);
-    const [notification, setNotification] = useState({content: null, type: null });
 
     //Copy page url
     const [copySuccess, setCopySuccess] = useState(false);
@@ -53,10 +52,6 @@ const SingleIssue = ({  match }) => {
         services.deleteIssue(issueId).then(response => {
             setIssue(issue.issueId !== issue.ID)
         });
-        setNotification({ content: 'Issue successfully deleted.', type: 'success' });
-        setTimeout(() => {
-            setNotification({content: null})
-          }, 3000);
     }
 
     return (
@@ -94,11 +89,11 @@ const SingleIssue = ({  match }) => {
                             </div>
                         }
                         {/* Delete issue */}
-                       <div className="delete-issue center" onClick={ () => setDeleteModal(!deleteModal) }>
+                       <div className={`delete-issue center ${deleteModal ? 'delete-active': ''}`} onClick={ () => setDeleteModal(!deleteModal) }>
                                 <AiOutlineDelete />
                             </div>
                             { deleteModal && 
-                                <div className={`delete-issues-modal ${deleteModal ? 'delete-active': ''}`}>
+                                <div className="delete-issues-modal">
                                     <h4>Are you sure you want to delete this issue?</h4>
                                     <div className="buttons center">
                                         <button className="cancel secondary-btn" onClick={ () => setDeleteModal(false) }>Cancel</button>

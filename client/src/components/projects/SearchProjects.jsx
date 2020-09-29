@@ -1,6 +1,7 @@
-import React from 'react'
-import { Link } from "react-router-dom"
+import React from 'react';
+import { NavLink } from "react-router-dom";
 
+import { FaRegListAlt } from 'react-icons/fa'
 
 const SearchProjects = ({ userProjects }) => {
     return (
@@ -8,7 +9,11 @@ const SearchProjects = ({ userProjects }) => {
             <div className="projects">
 				{userProjects &&
 					userProjects.map((project, index) => 
-                    <Link to={`/project/${index + 1}`} key={ project.ID }><p>{ project.name }</p></Link>
+                    <NavLink to={`/project/${index + 1}`} key={ project.ID } activeClassName="active-project">
+                        <p>{ project.name }</p> 
+                        <FaRegListAlt /> 
+                        { project.Issues && project.Issues.length > 0 ? <span className="count center">{project.Issues.length}</span> : ''}
+                    </NavLink>
                 )}
 			</div>
         </div>
