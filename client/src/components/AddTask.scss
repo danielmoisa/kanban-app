@@ -1,0 +1,32 @@
+.add-issue {
+    padding: 30px 10%;
+    .add-issue-form {
+        form {
+            display: flex;
+            flex-direction: column;
+            label {
+                color: #0d0c22;
+                text-transform: uppercase;
+                font-size: 13px;
+                font-weight: 800;
+                margin-bottom: 8px;
+            }
+            input, textarea {
+                border: 1px solid #0d0c22;
+                padding: 8px;
+                margin-bottom: 20px;
+                border-radius: 2px;
+                background-color: #f5f6f8;
+                &:focus {
+                    outline: none;
+                    background-color: #e2e8f5;
+                    border: 1px solid #2a60e4;
+                }
+            }
+            textarea {
+                resize: none;
+                min-height: 100px;
+            }
+        }
+    }
+}

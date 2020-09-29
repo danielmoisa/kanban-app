@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.scss';
 import axios from 'axios';
 
@@ -8,11 +8,13 @@ import TasksBoard from './components/TasksBoard'
 import TasksBoard2 from './components/TasksBoard2'
 import AddTask from './components/AddTask'
 import SingleProject from './components/projects/SingleProject'
+import SingleIssue from './components/issues/SingleIssue'
+import Login from './components/Login'
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App() {
-	
+
 	return (
 		<Router>
 			<Layout>
@@ -36,6 +38,16 @@ function App() {
 						exact
 						path="/project/:projectId"
 						component={SingleProject}
+					/>
+					<Route 
+						exact 
+						path="/issue/:issueId"
+						component={SingleIssue}
+					/>
+					<Route
+						exact
+						path="/login"
+						component={Login}
 					/>
 				</Switch>
 			</Layout>
