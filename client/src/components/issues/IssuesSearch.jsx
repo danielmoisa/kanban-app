@@ -14,7 +14,7 @@ const IssuesSearch = ({ setIssuesModal }) => {
     useEffect(() => {
 		const fetchData = async () => {
 			const result = await axios('http://127.0.0.1:8080/api/issues');
-
+    
 			setData(result.data);
 		};
 

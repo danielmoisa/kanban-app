@@ -5,6 +5,16 @@
     border-radius: 5px;
     text-align: center;
     margin: 10% auto;
+    position: relative;
+    .back-home {
+        a {
+            color: #000;
+            font-weight: bold;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+        }
+    }
     h1 {
         margin: 0;
         font-size: 50px;
