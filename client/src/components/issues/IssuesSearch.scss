@@ -1,4 +1,17 @@
 .search-issues-modal  {
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #0d0c22;
+        border-radius: 5px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555; 
+    }
     .search-issues-wrapper {
         position: fixed;
         top: 0;
@@ -71,10 +84,13 @@
             }
             .search-issues {
                 margin-top: 25px;
+                max-height: 70vh;
+                overflow-y: scroll;
                 .single-issue {
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
+                    padding-right: 15px;
                     h4 {
                         color: #0d0c22;
                         font-weight: 400;

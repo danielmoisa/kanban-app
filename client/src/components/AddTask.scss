@@ -12,11 +12,11 @@
                 margin-bottom: 8px;
             }
             input, textarea {
-                border: 1px solid #0d0c22;
+                border: 1px solid hsl(0,0%,80%);
                 padding: 8px;
                 margin-bottom: 20px;
-                border-radius: 2px;
-                background-color: #f5f6f8;
+                border-radius: 4px;
+                background-color: #fff;
                 &:focus {
                     outline: none;
                     background-color: #e2e8f5;
@@ -26,6 +26,17 @@
             textarea {
                 resize: none;
                 min-height: 100px;
+            }
+            #progress, #priority, #project {
+                margin-bottom: 20px;
+                .css-g1d714-ValueContainer {
+                    height: 36px;
+                }
+                .css-z3bmqt-control {
+                    border: 1px solid #2a60e4;
+                    background-color: #e2e8f5;
+                    box-shadow: none;
+                }
             }
         }
     }

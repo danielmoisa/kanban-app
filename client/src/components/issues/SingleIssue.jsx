@@ -57,7 +57,7 @@ const SingleIssue = ({  match }) => {
     return (
         <>
             { issue && (
-                <div className="single-issue-wrapper">
+                <div className="single-issue-wrapper" key={issue.ID}>
                    <div className="main-col">
                    <textarea className="title" >{ issue.title }</textarea>
                         <div className="description">

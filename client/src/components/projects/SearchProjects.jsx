@@ -9,7 +9,7 @@ const SearchProjects = ({ userProjects }) => {
             <div className="projects">
 				{userProjects &&
 					userProjects.map((project, index) => 
-                    <NavLink to={`/project/${index + 1}`} key={ project.ID } activeClassName="active-project">
+                    <NavLink to={`/project/${project.ID}`} key={ project.ID } activeClassName="active-project">
                         <p>{ project.name }</p> 
                         <FaRegListAlt /> 
                         { project.Issues && project.Issues.length > 0 ? <span className="count center">{project.Issues.length}</span> : ''}
