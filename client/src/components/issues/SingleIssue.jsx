@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react'
-import axios from 'axios'
+import React, { useEffect, useState, useRef } from 'react';
+import axios from 'axios';
 
 import services from './issues';
 
