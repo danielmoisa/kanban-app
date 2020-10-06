@@ -6,10 +6,6 @@ import services from './issues/issues';
 import './AddTask.scss';
 
 
-//Select input
-import Select from 'react-select';
-import AsyncSelect from 'react-select/async';
-import makeAnimated from 'react-select/animated';
 
 import { BsController, BsPlus } from 'react-icons/bs';
 
@@ -26,9 +22,7 @@ const AddTask = () => {
 
        }
    );
-   const [newProgress, setNewProgress] = useState('');
-   const [newPriority, setNewPriority] = useState('');
-   const [newProject, setNewProject] = useState('');
+   const [newProject, setNewProject] = useState([]);
    
     
    //Get all projects
@@ -42,21 +36,7 @@ const AddTask = () => {
         fetchData();
     }, []);
 
-    const projectOptions = [...newProject];
-    console.log(projectOptions)
-
-    const filterProjects = (inputValue: string) => {
-        return projectOptions.filter(i =>
-          i.name.toLowerCase().includes(inputValue.toLowerCase())
-        );
-      };
-      
-      const promiseOptions = inputValue =>
-        new Promise(resolve => {
-          setTimeout(() => {
-            resolve(filterProjects(inputValue));
-          }, 1000);
-        });
+   
 
 
     //Select status data
@@ -70,21 +50,8 @@ const AddTask = () => {
       { value: 'Low', label: 'Low' },
       { value: 'Medium', label: 'Medium' },
       { value: 'High', label: 'High' }
-   ]
+    ]
 
-  //Select style
-  const selectStyle = {
-      control: styles => ({ ...styles, backgroundColor: '#fff' }),
-      option: (styles, { data, isDisabled, isFocused, isSelected }) => {
-        return {
-          ...styles,
-          backgroundColor: isSelected ? '#2a60e4' : isFocused ? '#e2e8f5' : '#fff',
-          color: isSelected ? '#fff' : '#0d0c22',
-          cursor: 'pointer'
-        };
-      },
-      
-    };
 
     
    const handleChange = e => {
@@ -102,8 +69,8 @@ const AddTask = () => {
             description: issueInput.description,
             timelog: 0,
             estimated: Number(issueInput.estimated),
-            progress: newProgress,
-            priority: newPriority,
+            progress: issueInput.progress,
+            priority: issueInput.priority,
             ProjectID: newProject,
         }
 
@@ -113,17 +80,9 @@ const AddTask = () => {
             title: '',
             description: '',
             estimated: '',
+            progress: '',
             priority: ''
         });
-        setNewProgress('')
-
-
-     
-
-        // setNotification({ content: 'Issue successfully added.', type: 'success' });
-        // setTimeout(() => {
-        //     setNotification({content: null})
-        //   }, 3000);
 
     }
 
@@ -145,45 +104,31 @@ const AddTask = () => {
                     <input type="text" name="estimated" id="estimated" value={issueInput.estimated} onChange={handleChange}/>
                     {/* progress */}
                     <label htmlFor="progress">Issue status</label>
-                    <Select
-                        name="progress"
-                        id="progress"
-                        value={ progressOptions.find(x => x.value === newProgress)}
-                        onChange={ e => setNewProgress(e.value)}
-                        options={progressOptions}
-                        placeholder="Select status"
-                        noOptionsMessage={ () => 'No available status for your search' }
-                        clearable={false}
-                        styles={selectStyle}
-                    />
+                   <select name="progress" id="progress" value={issueInput.progress} onChange={handleChange}>
+                       {    progressOptions.map(progress => (
+                           <option value={progress.value}>{ progress.label }</option>
+                            ))
+
+                       }
+                   </select>
                     {/* priority */}
                     <label htmlFor="priority">Issue priority</label>
-                    <Select
-                        name="priority"
-                        id="priority"
-                        value={ priorityOptions.find(x => x.value === newPriority)}
-                        onChange={ e => setNewPriority(e.value)}
-                        options={priorityOptions}
-                        placeholder="Select priority"
-                        noOptionsMessage={ () => 'No available priority for your search' }
-                        clearable={false}
-                        styles={selectStyle}
-                    />
+                    <select name="priority" id="priority" value={issueInput.priority} onChange={handleChange}>
+                       {    priorityOptions.map(priority => (
+                           <option value={priority.value}>{ priority.label }</option>
+                       ))
+
+                       }
+                   </select>
                      {/* project */}
                      <label htmlFor="project">Issue project</label>
-                    <AsyncSelect
-                        name="project"
-                        id="project"
-                        getOptionLabel={project => project.name}
-                        getOptionValue={project => project.ID}
-                        value={ projectOptions.find(x => x.name === newProject) }
-                        onChange={ value => setNewProject(value) }
-                        placeholder="Select project"
-                        noOptionsMessage={ () => 'Search project' }
-                        clearable={false}
-                        styles={selectStyle}
-                        loadOptions={promiseOptions}
-                    />
+                     <select name="project" id="project" value={newProject} onChange={ e => setNewProject(e.target.value) }>
+                       {    newProject.map(project => (
+                           <option value={project.ID}>{ project.name }</option>
+                       ))
+
+                       }
+                   </select>
                     {/* submit */}
                     <button type="submit" className="submit-btn center"><div className="icon"><BsPlus /></div> Add issue</button>
                 </form>
