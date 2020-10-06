@@ -23,21 +23,35 @@
                     border: 1px solid #2a60e4;
                 }
             }
+            select {
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                height: 36px;
+                padding: 0 10px;
+                &:focus {
+                    outline: none;
+                    background-color: #e2e8f5;
+                    border: 1px solid #2a60e4;
+                }
+            }
             textarea {
                 resize: none;
                 min-height: 100px;
             }
-            #progress, #priority, #project {
-                margin-bottom: 20px;
-                .css-g1d714-ValueContainer {
-                    height: 36px;
+            .project-results {
+                background-color: #fff;
+                padding: 10px 0;
+                border-radius: 4px;
+                margin-top: -10px;
+                margin-bottom: 30px;
+                .single-project {
+                    padding: 5px 10px;
+                    &:hover {
+                        background-color: #f5f6f8;
+                        cursor: pointer;
+                    }
                 }
-                .css-z3bmqt-control {
-                    border: 1px solid #2a60e4;
-                    background-color: #e2e8f5;
-                    box-shadow: none;
-                }
-            }
+            } 
         }
     }
 }

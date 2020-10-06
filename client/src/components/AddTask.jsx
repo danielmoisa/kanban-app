@@ -5,6 +5,8 @@ import services from './issues/issues';
 
 import './AddTask.scss';
 
+import ProjectsFilter from './projects/projectsFilter';
+
 
 
 import { BsController, BsPlus } from 'react-icons/bs';
@@ -23,6 +25,7 @@ const AddTask = () => {
        }
    );
    const [newProject, setNewProject] = useState([]);
+   const [searchProject, setSearchProject] = useState('');
    
     
    //Get all projects
@@ -36,7 +39,22 @@ const AddTask = () => {
         fetchData();
     }, []);
 
-   
+   //Search Project
+   const projectsSearch = (e) => {
+    if(searchProject === '') {
+        return newProject;
+    } 
+
+    return [...newProject].filter(
+        project => project.name.toLowerCase().includes(searchProject.toLowerCase())
+    );
+    
+    }
+
+    const insertProjectValue = (e, id) => {
+        
+    }
+
 
 
     //Select status data
@@ -71,7 +89,7 @@ const AddTask = () => {
             estimated: Number(issueInput.estimated),
             progress: issueInput.progress,
             priority: issueInput.priority,
-            ProjectID: newProject,
+            ProjectID: Number(newProject),
         }
 
         services.addIssue(newIssue);
@@ -81,9 +99,9 @@ const AddTask = () => {
             description: '',
             estimated: '',
             progress: '',
-            priority: ''
+            priority: '',
         });
-
+        setNewProject('');
     }
 
     
@@ -122,15 +140,17 @@ const AddTask = () => {
                    </select>
                      {/* project */}
                      <label htmlFor="project">Issue project</label>
-                     <select name="project" id="project" value={newProject} onChange={ e => setNewProject(e.target.value) }>
+                     {/* <select name="project" id="project" value={newProject} onChange={ e => setNewProject(e.target.value) }>
                        {    newProject.map(project => (
                            <option value={project.ID}>{ project.name }</option>
                        ))
 
                        }
-                   </select>
+                   </select> */}
+                   <input type="text" name="project" value={searchProject} onChange={ e => setSearchProject(e.target.value) } />
+                   { searchProject.length === 0 ? '' : <ProjectsFilter projects={projectsSearch()}  insertProjectValue={insertProjectValue}/>  }
                     {/* submit */}
-                    <button type="submit" className="submit-btn center"><div className="icon"><BsPlus /></div> Add issue</button>
+                    <button type="submit" className="submit-btn center" disabled><div className="icon"><BsPlus /></div> Add issue</button>
                 </form>
             </div>
         </div>
