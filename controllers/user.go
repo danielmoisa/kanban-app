@@ -38,9 +38,9 @@ func NewUser(c *fiber.Ctx) error {
 
 func UpdateUser(c *fiber.Ctx) error {
 	type DataUpdateUser struct {
-		Username string `gorm:"unique_index;not null" json:"username"`
-		Email    string `gorm:"unique_index;not null" json:"email"`
-		Password string `gorm:"not null" json:"password"`
+		Username string `json:"username"`
+		Email    string `json:"email"`
+		Password string `json:"password"`
 	}
 	var dataUB DataUpdateUser
 	if err := c.BodyParser(&dataUB); err != nil {
