@@ -11,6 +11,9 @@ import SingleProject from './components/projects/SingleProject'
 import SingleIssue from './components/issues/SingleIssue'
 import Login from './components/Login'
 
+//Notification box
+import { ToastContainer } from 'react-toastify';
+
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App() {
@@ -51,6 +54,15 @@ function App() {
 					/>
 				</Switch>
 			</Layout>
+			<ToastContainer 
+				position="bottom-right"
+				autoClose={5000}
+				hideProgressBar={false}
+				newestOnTop={true}
+				closeOnClick
+				rtl={false}
+				pauseOnHover
+			/>
 		</Router>
 	);
 }

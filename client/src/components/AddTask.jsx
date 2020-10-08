@@ -7,6 +7,10 @@ import './AddTask.scss';
 
 import ProjectsFilter from './projects/projectsFilter';
 
+//Notification box
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 import { BsController, BsPlus } from 'react-icons/bs';
@@ -79,32 +83,36 @@ const AddTask = () => {
    }
 
 
-    const addNewIssue = e => {
-        e.preventDefault();
-
-        const newIssue = {
-            title: issueInput.title,
-            description: issueInput.description,
-            timelog: 0,
-            estimated: Number(issueInput.estimated),
-            progress: issueInput.progress,
-            priority: issueInput.priority,
-            ProjectID: Number(newProject),
+        const addNewIssue = e => {
+            e.preventDefault();
+                if(issueInput.title !== '' && issueInput.description !== '' && issueInput.estimated !== '' ) {
+        
+                const newIssue = {
+                    title: issueInput.title,
+                    description: issueInput.description,
+                    timelog: 0,
+                    estimated: Number(issueInput.estimated),
+                    progress: issueInput.progress,
+                    priority: issueInput.priority,
+                    ProjectID: Number(newProject),
+                }
+        
+                services.addIssue(newIssue);
+        
+                setIssueInput({ 
+                    title: '',
+                    description: '',
+                    estimated: '',
+                    progress: '',
+                    priority: '',
+                });
+                setNewProject('');
+                toast.success('Task successfully added!')
+                } else {
+                    toast.error('All fields are required!')
+                }
+        
         }
-
-        services.addIssue(newIssue);
-
-        setIssueInput({ 
-            title: '',
-            description: '',
-            estimated: '',
-            progress: '',
-            priority: '',
-        });
-        setNewProject('');
-    }
-
-    
 
     return (
         <div className="add-issue">
@@ -116,7 +124,7 @@ const AddTask = () => {
                     <input type="text" name="title" id="title" value={issueInput.title} onChange={handleChange} />
                     {/* description */}
                     <label htmlFor="description">Issue description</label>
-                    <textarea name="description" id="description" value={issueInput.description} onChange={handleChange} />
+                    <textarea name="description" id="description" value={issueInput.description} onChange={handleChange} /> 
                     {/* estimated */}
                     <label htmlFor="estimated">Issue estimated</label>
                     <input type="text" name="estimated" id="estimated" value={issueInput.estimated} onChange={handleChange}/>
@@ -124,7 +132,7 @@ const AddTask = () => {
                     <label htmlFor="progress">Issue status</label>
                    <select name="progress" id="progress" value={issueInput.progress} onChange={handleChange}>
                        {    progressOptions.map(progress => (
-                           <option value={progress.value}>{ progress.label }</option>
+                           <option value={progress.value} key={progress.value}>{ progress.label }</option>
                             ))
 
                        }
@@ -133,7 +141,7 @@ const AddTask = () => {
                     <label htmlFor="priority">Issue priority</label>
                     <select name="priority" id="priority" value={issueInput.priority} onChange={handleChange}>
                        {    priorityOptions.map(priority => (
-                           <option value={priority.value}>{ priority.label }</option>
+                           <option value={priority.value} key={priority.value}>{ priority.label }</option>
                        ))
 
                        }
@@ -150,7 +158,7 @@ const AddTask = () => {
                    <input type="text" name="project" value={searchProject} onChange={ e => setSearchProject(e.target.value) } />
                    { searchProject.length === 0 ? '' : <ProjectsFilter projects={projectsSearch()}  insertProjectValue={insertProjectValue}/>  }
                     {/* submit */}
-                    <button type="submit" className="submit-btn center" disabled><div className="icon"><BsPlus /></div> Add issue</button>
+                    <button type="submit" className="submit-btn center"><div className="icon"><BsPlus /></div> Add issue</button>
                 </form>
             </div>
         </div>
