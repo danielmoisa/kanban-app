@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import axios from 'axios';
 import CONSTANTS from '../constants/constants';
+import NaturalDragAnimation from 'natural-drag-animation-rbdnd';
+
+import { AiOutlinePlus } from 'react-icons/ai';
+
+import { Link } from 'react-router-dom';
 
 const onDragEnd = (result, columns, setColumns) => {
 	if (!result.destination) return;
@@ -111,22 +116,13 @@ function App() {
 	}, [dataFromBackend]);
 
 	return (
-		<div
-			style={{
-				display: 'flex',
-				justifyContent: 'center',
-				height: '100%',
-			}}>
+		<div className="board-columns">
 			<DragDropContext
 				onDragEnd={(result) => onDragEnd(result, columns, setColumns)}>
 				{Object.entries(columns).map(([columnId, column], index) => {
 					return (
 						<div
-							style={{
-								display: 'flex',
-								flexDirection: 'column',
-								alignItems: 'center',
-							}}
+							className="board-single-column"
 							key={columnId}>
 							<h2>{column.name}</h2>
 							<div style={{ margin: 8 }}>
@@ -136,16 +132,16 @@ function App() {
 									{(provided, snapshot) => {
 										return (
 											<div
+												className="column-tasks-wrapper"
 												{...provided.droppableProps}
 												ref={provided.innerRef}
 												style={{
-													background: snapshot.isDraggingOver
-														? 'lightblue'
-														: 'lightgrey',
-													padding: 4,
-													width: 250,
-													minHeight: 500,
-												}}>
+                                                    backgroundColor: snapshot.isDraggingOver ? '#afb8ea' : '#e0e3f5',
+                                                    padding: 10,
+                                                    minHeight: 500,
+                                                    boxShadow: snapshot.isDraggingOver ? '0px 2px 7px 1px rgba(0, 0, 0, 0.1)' : 'none',
+                                                }}
+												>
 												{column.items.map(
 													(item, index) => {
 														return (
@@ -158,33 +154,38 @@ function App() {
 																	snapshot
 																) => {
 																	return (
-																		<div
+																		<NaturalDragAnimation
+																		style={provided.draggableProps.style}
+																		snapshot={snapshot}
+																	  >
+																		{ style => (
+																			<div
 																			ref={
 																				provided.innerRef
 																			}
 																			{...provided.draggableProps}
 																			{...provided.dragHandleProps}
 																			style={{
-																				userSelect:
-																					'none',
+																				userSelect: 'none',
 																				padding: 16,
-																				margin:
-																					'0 0 8px 0',
-																				minHeight:
-																					'50px',
-																				backgroundColor: snapshot.isDragging
-																					? '#263B4A'
-																					: '#456C86',
-																				color:
-																					'white',
+																				margin: '0 0 8px 0',
+																				minHeight: '50px',
+																				borderRadius: '5px',
+																				backgroundColor: snapshot.isDragging ? '#f5f6f8' : '#fff',
+																				boxShadow: snapshot.isDragging ? '0px 2px 7px 1px rgba(0, 0, 0, 0.1)' : 'none',
+																				...style,
 																				...provided
-																					.draggableProps
-																					.style,
+																					.draggableProps,
+																			
 																			}}>
 																			{
 																				item.title
 																			}
 																		</div>
+																		)
+
+																		}
+																		</NaturalDragAnimation>	
 																	);
 																}}
 															</Draggable>
@@ -192,6 +193,14 @@ function App() {
 													}
 												)}
 												{provided.placeholder}
+												{ column.items.length > 0 ?
+												<Link to="/add-task" className="center add-task-btn">
+													<span className="icon"><AiOutlinePlus /></span>Add task
+												</Link>
+												: 
+												''
+
+												}
 											</div>
 										);
 									}}
