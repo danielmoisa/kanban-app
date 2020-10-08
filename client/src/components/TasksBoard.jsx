@@ -1,142 +1,208 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
-import { DndProvider, useDrag, useDrop } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import update from 'immutability-helper';
+import React, { useEffect, useState } from 'react';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import axios from 'axios';
+import CONSTANTS from '../constants/constants';
 
-import './TasksBoard.scss';
+const onDragEnd = (result, columns, setColumns) => {
+	if (!result.destination) return;
+	const { source, destination } = result;
 
-const channels = ['backlog', 'new', 'In progress', 'Done'];
-
-const labelsMap = {
-	backlog: 'Backlog',
-	new: 'To Do',
-	'In progress': 'In Progress',
-	Done: 'Done',
+	if (source.droppableId !== destination.droppableId) {
+		const sourceColumn = columns[source.droppableId];
+		const destColumn = columns[destination.droppableId];
+		const sourceItems = [...sourceColumn.items];
+		const destItems = [...destColumn.items];
+		const [removed] = sourceItems.splice(source.index, 1);
+		destItems.splice(destination.index, 0, removed);
+		setColumns({
+			...columns,
+			[source.droppableId]: {
+				...sourceColumn,
+				items: sourceItems,
+			},
+			[destination.droppableId]: {
+				...destColumn,
+				items: destItems,
+			},
+		});
+	} else {
+		const column = columns[source.droppableId];
+		const copiedItems = [...column.items];
+		const [removed] = copiedItems.splice(source.index, 1);
+		copiedItems.splice(destination.index, 0, removed);
+		setColumns({
+			...columns,
+			[source.droppableId]: {
+				...column,
+				items: copiedItems,
+			},
+		});
+	}
 };
 
-const classes = {
-	board: {
-		display: 'flex',
-		margin: '0 auto',
-	},
-	column: {
-		minWidth: 200,
-		width: '18vw',
-		height: '80vh',
-		margin: '0 auto',
-		backgroundColor: '#FCC8B2',
-		border: '1px solid #fff',
-	},
-	columnHead: {
-		textAlign: 'center',
-		padding: 10,
-		fontSize: '1.2em',
-		backgroundColor: '#C6D8AF',
-	},
-	item: {
-		padding: 10,
-		margin: 10,
-		fontSize: '0.8em',
-		cursor: 'pointer',
-		backgroundColor: 'white',
-	},
-};
+function App() {
+	const [columns, setColumns] = useState({
+		requested: {
+			name: CONSTANTS.REQUESTED,
+			items: [],
+		},
+		todo: {
+			name: CONSTANTS.TODO,
+			items: [],
+		},
+		inProgress: {
+			name: CONSTANTS.INPROGRESS,
+			items: [],
+		},
+		done: {
+			name: CONSTANTS.DONE,
+			items: [],
+		},
+	});
 
-const Kanban = () => {
-	const [tasks, setTaskStatus] = useState();
+	const [dataFromBackend, setDataFromBackend] = useState([]);
 
 	useEffect(() => {
 		const fetchData = async () => {
 			const result = await axios('http://127.0.0.1:8080/api/projects/1');
 
-			setTaskStatus(result.data.Issues);
+			setDataFromBackend(result.data.Issues);
 		};
 
 		fetchData();
 	}, []);
 
-	const changeTaskStatus = useCallback(
-		(id, progress) => {
-			let task = tasks.find((task) => task.ID === id);
-			const taskIndex = tasks.indexOf(task);
-			task = { ...task, progress };
-			let newTasks = update(tasks, {
-				[taskIndex]: { $set: task },
-			});
-			setTaskStatus(newTasks);
-		},
-		[tasks]
-	);
+	useEffect(() => {
+		const requestedColumn = dataFromBackend.filter(
+			(item) => item.progress === CONSTANTS.REQUESTED
+		);
+
+		const todoColumn = dataFromBackend.filter(
+			(item) => item.progress === CONSTANTS.TODO
+		);
+
+		const inProgressColumn = dataFromBackend.filter(
+			(item) => item.progress === CONSTANTS.INPROGRESS
+		);
+
+		const doneColumn = dataFromBackend.filter(
+			(item) => item.progress === CONSTANTS.DONE
+		);
+
+		setColumns({
+			...columns,
+			requested: {
+				name: CONSTANTS.REQUESTED,
+				items: requestedColumn,
+			},
+			todo: {
+				name: CONSTANTS.TODO,
+				items: todoColumn,
+			},
+			inProgress: {
+				name: CONSTANTS.INPROGRESS,
+				items: inProgressColumn,
+			},
+			done: {
+				name: CONSTANTS.DONE,
+				items: doneColumn,
+			},
+		});
+	}, [dataFromBackend]);
 
 	return (
-		<main>
-			<DndProvider backend={HTML5Backend}>
-				<section className="board-columns">
-					{channels.map((channel) => (
-						<KanbanColumn
-							key={channel}
-							status={channel}
-							changeTaskStatus={changeTaskStatus}>
-							<div className="board-single-column">
-								<h3>{labelsMap[channel]}</h3>
-
-								<div>
-									{tasks &&
-										tasks
-											.filter(
-												(item) =>
-													item.progress === channel
-											)
-											.map((item) => (
-												<KanbanItem
-													key={item.ID}
-													id={item.ID}>
-													<div className="column-tasks-wrapper">
-														<div className="task-card">
-															{item.title} <br />
-															{item.description}
-														</div>
-													</div>
-												</KanbanItem>
-											))}
-								</div>
+		<div
+			style={{
+				display: 'flex',
+				justifyContent: 'center',
+				height: '100%',
+			}}>
+			<DragDropContext
+				onDragEnd={(result) => onDragEnd(result, columns, setColumns)}>
+				{Object.entries(columns).map(([columnId, column], index) => {
+					return (
+						<div
+							style={{
+								display: 'flex',
+								flexDirection: 'column',
+								alignItems: 'center',
+							}}
+							key={columnId}>
+							<h2>{column.name}</h2>
+							<div style={{ margin: 8 }}>
+								<Droppable
+									droppableId={columnId}
+									key={columnId}>
+									{(provided, snapshot) => {
+										return (
+											<div
+												{...provided.droppableProps}
+												ref={provided.innerRef}
+												style={{
+													background: snapshot.isDraggingOver
+														? 'lightblue'
+														: 'lightgrey',
+													padding: 4,
+													width: 250,
+													minHeight: 500,
+												}}>
+												{column.items.map(
+													(item, index) => {
+														return (
+															<Draggable
+																key={item.ID.toString()}
+																draggableId={item.ID.toString()}
+																index={index}>
+																{(
+																	provided,
+																	snapshot
+																) => {
+																	return (
+																		<div
+																			ref={
+																				provided.innerRef
+																			}
+																			{...provided.draggableProps}
+																			{...provided.dragHandleProps}
+																			style={{
+																				userSelect:
+																					'none',
+																				padding: 16,
+																				margin:
+																					'0 0 8px 0',
+																				minHeight:
+																					'50px',
+																				backgroundColor: snapshot.isDragging
+																					? '#263B4A'
+																					: '#456C86',
+																				color:
+																					'white',
+																				...provided
+																					.draggableProps
+																					.style,
+																			}}>
+																			{
+																				item.title
+																			}
+																		</div>
+																	);
+																}}
+															</Draggable>
+														);
+													}
+												)}
+												{provided.placeholder}
+											</div>
+										);
+									}}
+								</Droppable>
 							</div>
-						</KanbanColumn>
-					))}
-				</section>
-			</DndProvider>
-		</main>
-	);
-};
-
-export default Kanban;
-
-const KanbanColumn = ({ status, changeTaskStatus, children }) => {
-	const ref = useRef(null);
-	const [, drop] = useDrop({
-		accept: 'card',
-		drop(item) {
-			changeTaskStatus(item.id, status);
-		},
-	});
-	drop(ref);
-	return <div ref={ref}> {children}</div>;
-};
-
-const KanbanItem = ({ id, children }) => {
-	const ref = useRef(null);
-	const [{ isDragging }, drag] = useDrag({
-		item: { type: 'card', id },
-		collect: (monitor) => ({
-			isDragging: monitor.isDragging(),
-		}),
-	});
-	const opacity = isDragging ? 0 : 1;
-	drag(ref);
-	return (
-		<div ref={ref} style={{ opacity }}>
-			{children}
+						</div>
+					);
+				})}
+			</DragDropContext>
 		</div>
 	);
-};
+}
+
+export default App;
