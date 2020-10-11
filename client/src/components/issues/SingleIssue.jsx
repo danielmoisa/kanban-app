@@ -16,7 +16,7 @@ import { toast } from 'react-toastify';
 
 const SingleIssue = ({ match }) => {
 	const [issue, setIssue] = useState('');
-	const [newIssue, setNewIssue] = useState('');
+
 	const {
 		params: { issueId },
 	} = match;
@@ -28,7 +28,6 @@ const SingleIssue = ({ match }) => {
 			);
 
 			setIssue(result.data);
-			setNewIssue(result.data);
 		};
 
 		fetchData();
@@ -71,14 +70,33 @@ const SingleIssue = ({ match }) => {
 
 	//Update title
 	const updateTitle = (id) => {
-
-		const updateTitle = { ...issue, title: newIssue.title }
+		const updateTitle = { ...issue, title: issue.title }
 		services.updateIssue(id, updateTitle)
-		.then(response => {
-			setNewIssue('')
-		})
 	}
 
+	//Update description
+	const updateDescription = (id) => {
+		const updateDescription = { ...issue, description: issue.description }
+		services.updateIssue(id, updateDescription)
+	}
+
+	//Update status
+	const updateProgress = (id) => {
+		const updateProgress = { ...issue, progress: issue.progress }
+		services.updateIssue(id, updateProgress)
+	}
+
+	//Update priority
+	const updatePriority = (id) => {
+		const updatePriority = { ...issue, priority: issue.priority }
+		services.updateIssue(id, updatePriority)
+	}
+	//Update estimated
+	const updateEstimated = (id) => {
+		const updateEstimated = { ...issue, estimated: Number(issue.estimated) }
+		services.updateIssue(id, updateEstimated)
+	}
+	
 	return (
 		<>
 			{issue && (
@@ -87,20 +105,20 @@ const SingleIssue = ({ match }) => {
 						{/* Title */}
 						<div className="input-wrapper">
 							<input type="text" defaultValue={issue.title} 
-								onChange={ e => setNewIssue({ ...newIssue, title: e.target.value }) } 
+								onChange={ e => setIssue({ ...issue, title: e.target.value }) } 
 							/>
-							<div className="icon" onClick={updateTitle(issue.ID)}>
-								<BiCheck />
+							<div className="icon" >
+								<BiCheck onClick={updateTitle(issue.ID)}/>
 							</div>
 						</div>
 						{/* Description */}
 						<div className="input-wrapper">
 							<b>Description</b>
 							<textarea name="description" id="description" defaultValue={issue.description} 
-								onChange={ e => setNewIssue({ ...newIssue, description: e.target.value }) } 
+								onChange={ e => setIssue({ ...issue, description: e.target.value }) }
 							/>
 							<div className="icon description">
-								<BiCheck />
+								<BiCheck onClick={updateDescription(issue.ID)}/>
 							</div>
 						</div>
 						<div className="comments-wrapper">
@@ -176,7 +194,12 @@ const SingleIssue = ({ match }) => {
 						<div className="status">
 							<h4 className="side-title">Status</h4>
 							<div className="side-content side-btn">
-								<select name="status" id="status">
+							<div className="icon" >
+								<BiCheck onClick={updateProgress(issue.ID)}/>
+							</div>
+								<select name="status" id="status" defaultValue={issue.progress}
+									onChange={ e => setIssue({ ...issue, progress: e.target.value }) }
+								>
 									{ progressOptions.map(singleIssue => (
 										<option 
 										value={singleIssue.value} 
@@ -192,7 +215,10 @@ const SingleIssue = ({ match }) => {
 						<div className="priority">
 							<h4 className="side-title">Priority</h4>
 							<div className="side-content side-btn">
-							<select name="status" id="status">
+							<BiCheck onClick={updateProgress(issue.ID)}/>
+							<select name="status" id="status" defaultValue={issue.priority}
+								onChange={ e => setIssue({ ...issue, priority: e.target.value }) }
+							>
 									{ priorityOptions.map(singleIssue => (
 										<option 
 										value={singleIssue.value} 
@@ -209,10 +235,10 @@ const SingleIssue = ({ match }) => {
 							<h4 className="side-title">Estimated (Hours)</h4>
 							<div className="side-content input-wrapper">
 								<input type="text" defaultValue={issue.estimated} 
-									onChange={ e => setNewIssue({ ...newIssue, estimated: Number(e.target.value) }) }
+									onChange={ e => setIssue({ ...issue, estimated: Number(e.target.value) }) }
 								/>
 								<div className="icon">
-									<BiCheck />
+									<BiCheck onClick={updateEstimated(issue.ID)}/>
 								</div>
 							</div>
 						</div>
