@@ -3,11 +3,27 @@
     margin-top: 35px;
     .main-col {
         flex: 3;
-        .title, .description textarea {
+        .input-wrapper {
+            margin-bottom: 25px;
+            position: relative;
+            .icon {
+                position: absolute;
+                right: 10px;
+                top: 5px;
+                font-size: 25px;
+                opacity: 0;
+                cursor: pointer;
+                color: #00bf00;
+                transition: all .4s ease-in-out;
+            }
+            .icon.description {
+                top: 25px;
+            }
+        }
+        input, textarea {
             font-weight: 400;
             font-size: 24px;
             margin: 0;
-            margin-bottom: 25px;
             resize: none;
             width: 100%!important;
             height: 37px!important;
@@ -18,8 +34,12 @@
                 outline: none;
                 border: 2px solid #2a60e4;
             }
+            &:focus + .icon {
+                opacity: 1;
+            }
+
         }
-        .description textarea {
+        textarea {
             height: 100px!important;
             font-weight: 400;
             font-size: 14px;
@@ -42,13 +62,28 @@
         }
         .side-btn {
             background-color: rgba(9, 30, 66, 0.54);
-            max-width: 150px;
             padding: 10px 20px;
             border-radius: 5px;
             font-size: 14px;
             text-transform: uppercase;
             color: #fff;
             cursor: pointer;
+            select {
+                background: transparent;
+                border: none;
+                width: 100%;
+                font-size: 14px;
+                text-transform: uppercase;
+                color: #fff;
+                cursor: pointer;
+                &:focus {
+                    outline: none;
+                    border: none;
+                }
+                option {
+                    color: #0d0c22;
+                }
+            }
         }
         .copy-delete {
             display: flex;
@@ -97,8 +132,82 @@
                 padding: 15px;
             }
         }
-        .status {
-            
+        .estimated {
+            input {
+                border: 1px solid #cccccc;
+                background-color: #f5f6f8;
+                padding: 8px 10px;
+                border-radius: 5px;
+                width: 100%;
+                max-width: 188px;
+                &:focus {
+                    border: 2px solid #2a60e4;
+                    outline: none;
+                }
+                &:focus + .icon {
+                    opacity: 1;
+                }
+            }
+        }
+        .input-wrapper {
+            margin-bottom: 25px;
+            position: relative;
+            .icon {
+                position: absolute;
+                right: 10px;
+                top: 5px;
+                font-size: 25px;
+                opacity: 0;
+                cursor: pointer;
+                color: #00bf00;
+                transition: all .4s ease-in-out;
+            }
+            .icon.description {
+                top: 25px;
+            }
+        }
+        .time-tracking {
+            .side-content {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                .icon {
+                    font-size: 30px;
+                    flex: 1;
+                }
+                .hours {
+                    flex: 3;
+                    .meter { 
+                        height: 6px; 
+                        position: relative;
+                        background: #fff;
+                        -moz-border-radius: 25px;
+                        -webkit-border-radius: 25px;
+                        border-radius: 25px;
+                        padding: 0;
+                        span {
+                            display: block;
+                            height: 100%;
+                            border-top-right-radius: 8px;
+                            border-bottom-right-radius: 8px;
+                            border-top-left-radius: 20px;
+                            border-bottom-left-radius: 20px;
+                            background-color:#2a60e4;
+                            position: relative;
+                            overflow: hidden;
+                          }
+                    }
+                    .logged-estimated {
+                        display: flex;
+                        justify-content: space-between;
+                        span {
+                            color: #0d0c22;
+                            font-size: 12px;
+                            margin-top: 5px;
+                        }
+                    }
+                }
+            }
         }
     }
 }

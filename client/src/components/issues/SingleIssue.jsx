@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useReducer } from 'react';
 import axios from 'axios';
 
 import services from './issues';
@@ -9,18 +9,17 @@ import './SingleIssue.scss';
 
 import { BsLink45Deg, BsCheckAll } from 'react-icons/bs';
 import { AiOutlineDelete } from 'react-icons/ai';
+import { BiTimer, BiCheck } from 'react-icons/bi';
+
+//Notification box
+import { toast } from 'react-toastify';
 
 const SingleIssue = ({ match }) => {
-	const [issue, setIssue] = useState();
+	const [issue, setIssue] = useState('');
+	const [newIssue, setNewIssue] = useState('');
 	const {
 		params: { issueId },
 	} = match;
-	const [deleteModal, setDeleteModal] = useState(false);
-
-	//Copy page url
-	const [copySuccess, setCopySuccess] = useState(false);
-	const urlInputRef = useRef(null);
-
 	//Fetching single issue
 	useEffect(() => {
 		const fetchData = async () => {
@@ -29,11 +28,32 @@ const SingleIssue = ({ match }) => {
 			);
 
 			setIssue(result.data);
+			setNewIssue(result.data);
 		};
 
 		fetchData();
 	}, [issueId]);
+	const [deleteModal, setDeleteModal] = useState(false);
 
+
+	//Copy page url
+	const [copySuccess, setCopySuccess] = useState(false);
+	const urlInputRef = useRef(null);
+
+
+	//Default status & priority data
+	 const progressOptions = [ 
+        { value: 'Backlog', label: 'Backlog' },
+        { value: 'To do', label: 'To do' },
+        { value: 'In progress', label: 'In progress' },
+        { value: 'Done', label: 'Done' }
+     ]
+     const priorityOptions = [ 
+      { value: 'Low', label: 'Low' },
+      { value: 'Medium', label: 'Medium' },
+      { value: 'High', label: 'High' }
+	]
+	
 	//Copy page url
 	const handleCopyUrl = (e) => {
 		urlInputRef.current.select();
@@ -49,18 +69,39 @@ const SingleIssue = ({ match }) => {
 		});
 	};
 
+	//Update title
+	const updateTitle = (id) => {
+
+		const updateTitle = { ...issue, title: newIssue.title }
+		services.updateIssue(id, updateTitle)
+		.then(response => {
+			setNewIssue('')
+		})
+	}
+
 	return (
 		<>
 			{issue && (
 				<div className="single-issue-wrapper" key={issue.ID}>
 					<div className="main-col">
-						<textarea className="title">{issue.title}</textarea>
-						<div className="description">
+						{/* Title */}
+						<div className="input-wrapper">
+							<input type="text" defaultValue={issue.title} 
+								onChange={ e => setNewIssue({ ...newIssue, title: e.target.value }) } 
+							/>
+							<div className="icon" onClick={updateTitle(issue.ID)}>
+								<BiCheck />
+							</div>
+						</div>
+						{/* Description */}
+						<div className="input-wrapper">
 							<b>Description</b>
-							<textarea name="" id="">
-								{issue.description}
-							</textarea>
-							<div></div>
+							<textarea name="description" id="description" defaultValue={issue.description} 
+								onChange={ e => setNewIssue({ ...newIssue, description: e.target.value }) } 
+							/>
+							<div className="icon description">
+								<BiCheck />
+							</div>
 						</div>
 						<div className="comments-wrapper">
 							{issue.Comments && issue.Comments.length > 0 ? (
@@ -68,7 +109,7 @@ const SingleIssue = ({ match }) => {
 							) : (
 								<h4>Add first comment</h4>
 							)}
-							{issue.Comments.map((comment) => (
+							{issue.Comments && issue.Comments.map((comment) => (
 								<p key={comment.ID}>{comment.content}</p>
 							))}
 						</div>
@@ -135,19 +176,59 @@ const SingleIssue = ({ match }) => {
 						<div className="status">
 							<h4 className="side-title">Status</h4>
 							<div className="side-content side-btn">
-								{issue.progress}
+								<select name="status" id="status">
+									{ progressOptions.map(singleIssue => (
+										<option 
+										value={singleIssue.value} 
+										key={singleIssue.value} 
+										selected = { singleIssue.value === issue.progress ? 'selected' : ''  }
+										>
+											{ singleIssue.label }
+										</option>
+									)) }
+								</select>
 							</div>
 						</div>
 						<div className="priority">
 							<h4 className="side-title">Priority</h4>
 							<div className="side-content side-btn">
-								{issue.priority}
+							<select name="status" id="status">
+									{ priorityOptions.map(singleIssue => (
+										<option 
+										value={singleIssue.value} 
+										key={singleIssue.value} 
+										selected = { singleIssue.value === issue.priority ? 'selected' : ''  }
+										>
+											{ singleIssue.label }
+										</option>
+									)) }
+								</select>
 							</div>
 						</div>
 						<div className="estimated">
-							<h4 className="side-title">Estimated</h4>
+							<h4 className="side-title">Estimated (Hours)</h4>
+							<div className="side-content input-wrapper">
+								<input type="text" defaultValue={issue.estimated} 
+									onChange={ e => setNewIssue({ ...newIssue, estimated: Number(e.target.value) }) }
+								/>
+								<div className="icon">
+									<BiCheck />
+								</div>
+							</div>
+						</div>
+						<div className="time-tracking">
+							<h4 className="side-title">Time tracking</h4>
 							<div className="side-content">
-								{issue.estimated}
+								<div className="icon"><BiTimer /></div>
+								<div className="hours">
+									<div className="meter">
+										<span style={{ width: `${issue.timelog * 100 / issue.estimated}%` }}></span>
+									</div>
+									<div className="logged-estimated">
+										<span>{issue.timelog} logged</span>
+										<span>{issue.estimated} estimated</span>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
