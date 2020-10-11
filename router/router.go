@@ -9,11 +9,11 @@ import (
 func SetupRoutes(app *fiber.App) {
 
 	// Users
-	app.Get("/", controllers.GetUsers)
-	app.Get("/:id", controllers.GetUser)
-	app.Post("/", controllers.NewUser)
-	app.Patch("/:id", controllers.UpdateUser)
-	app.Delete("/:id", controllers.DeleteUser)
+	app.Get("/api/users", controllers.GetUsers)
+	app.Get("/api/users/:id", controllers.GetUser)
+	app.Post("/api/users/", controllers.NewUser)
+	app.Patch("/api/users/:id", controllers.UpdateUser)
+	app.Delete("/api/users/:id", controllers.DeleteUser)
 
 	// Projects
 	app.Get("/api/projects", controllers.GetProjects)
