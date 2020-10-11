@@ -8,7 +8,7 @@ import './AddTask.scss';
 import ProjectsFilter from './projects/projectsFilter';
 
 //Notification box
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -90,7 +90,7 @@ const AddTask = () => {
                 const newIssue = {
                     title: issueInput.title,
                     description: issueInput.description,
-                    timelog: 0,
+                    timelog: 2,
                     estimated: Number(issueInput.estimated),
                     progress: issueInput.progress,
                     priority: issueInput.priority,
@@ -107,7 +107,7 @@ const AddTask = () => {
                     priority: '',
                 });
                 setNewProject('');
-                toast.success('Task successfully added!')
+                    toast.success('Task successfully added!')
                 } else {
                     toast.error('All fields are required!')
                 }

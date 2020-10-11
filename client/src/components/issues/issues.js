@@ -15,4 +15,9 @@ const deleteIssue = (issueId) => {
     return request.then(response => response.data)
 }
 
-export default { getIssues, addIssue, deleteIssue }
+const updateIssue = (id, newUpdatedIssue) => {
+    const request = axios.patch(`${url}/${id}`, newUpdatedIssue)
+    return request.then( response => response.data)
+}
+
+export default { getIssues, addIssue, deleteIssue, updateIssue }
