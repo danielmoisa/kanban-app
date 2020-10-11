@@ -33,7 +33,7 @@ const SingleIssue = ({ match }) => {
 		fetchData();
 	}, [issueId]);
 	const [deleteModal, setDeleteModal] = useState(false);
-
+	const [logTime, setLogTime] = useState(false);
 
 	//Copy page url
 	const [copySuccess, setCopySuccess] = useState(false);
@@ -96,6 +96,11 @@ const SingleIssue = ({ match }) => {
 		const updateEstimated = { ...issue, estimated: Number(issue.estimated) }
 		services.updateIssue(id, updateEstimated)
 	}
+	//Update estimated
+	const updateTimeLog = (id) => {
+		const updateTimeLog = { ...issue, timelog: Number(issue.timelog) }
+		services.updateIssue(id, updateTimeLog)
+	}
 	
 	return (
 		<>
@@ -107,7 +112,7 @@ const SingleIssue = ({ match }) => {
 							<input type="text" defaultValue={issue.title} 
 								onChange={ e => setIssue({ ...issue, title: e.target.value }) } 
 							/>
-							<div className="icon" >
+							<div className="icon description">
 								<BiCheck onClick={updateTitle(issue.ID)}/>
 							</div>
 						</div>
@@ -117,7 +122,7 @@ const SingleIssue = ({ match }) => {
 							<textarea name="description" id="description" defaultValue={issue.description} 
 								onChange={ e => setIssue({ ...issue, description: e.target.value }) }
 							/>
-							<div className="icon description">
+							<div className="icon">
 								<BiCheck onClick={updateDescription(issue.ID)}/>
 							</div>
 						</div>
@@ -215,7 +220,9 @@ const SingleIssue = ({ match }) => {
 						<div className="priority">
 							<h4 className="side-title">Priority</h4>
 							<div className="side-content side-btn">
-							<BiCheck onClick={updateProgress(issue.ID)}/>
+							<div className="icon">
+								<BiCheck onClick={updateProgress(issue.ID)}/>
+							</div>
 							<select name="status" id="status" defaultValue={issue.priority}
 								onChange={ e => setIssue({ ...issue, priority: e.target.value }) }
 							>
@@ -242,13 +249,36 @@ const SingleIssue = ({ match }) => {
 								</div>
 							</div>
 						</div>
-						<div className="time-tracking">
+						{/* Log time modal */}
+						{ logTime ?
+								<div className="log-time-modal">
+									<div className="title">
+										<h3><BiTimer /> Log Time</h3>
+									</div>
+									<div className="content">
+										<input type="text" defaultValue={issue.timelog} 
+										onChange={ e => setIssue({ ...issue, timelog: Number(e.target.value) }) }
+										/>
+										<div className="icon">
+											<BiCheck onClick={updateTimeLog(issue.ID)}/>
+										</div>
+										<div class="buttons center">
+											<button class="delete primary-btn" onClick={ e => setLogTime(false) }>Done</button>
+										</div>
+									</div>
+								</div>
+							:
+								''
+							}
+						<div className={`time-tracking ${ logTime ? 'active-log' : '' }`} onClick={ e => setLogTime(!logTime) }>
 							<h4 className="side-title">Time tracking</h4>
 							<div className="side-content">
 								<div className="icon"><BiTimer /></div>
 								<div className="hours">
 									<div className="meter">
-										<span style={{ width: `${issue.timelog * 100 / issue.estimated}%` }}></span>
+										<span className={`${issue.timelog > issue.estimated ? 'done' : ''}`}
+											style={{ width: `${issue.timelog * 100 / issue.estimated}%` }}
+										></span>
 									</div>
 									<div className="logged-estimated">
 										<span>{issue.timelog} logged</span>
