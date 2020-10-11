@@ -195,7 +195,7 @@ const SingleIssue = ({ match }) => {
 								</div>
 							)}
 						</div>
-
+						{/* Status */}
 						<div className="status">
 							<h4 className="side-title">Status</h4>
 							<div className="side-content side-btn">
@@ -209,7 +209,6 @@ const SingleIssue = ({ match }) => {
 										<option 
 										value={singleIssue.value} 
 										key={singleIssue.value} 
-										selected = { singleIssue.value === issue.progress ? 'selected' : ''  }
 										>
 											{ singleIssue.label }
 										</option>
@@ -217,6 +216,7 @@ const SingleIssue = ({ match }) => {
 								</select>
 							</div>
 						</div>
+						{/* Priority */}
 						<div className="priority">
 							<h4 className="side-title">Priority</h4>
 							<div className="side-content side-btn">
@@ -230,7 +230,6 @@ const SingleIssue = ({ match }) => {
 										<option 
 										value={singleIssue.value} 
 										key={singleIssue.value} 
-										selected = { singleIssue.value === issue.priority ? 'selected' : ''  }
 										>
 											{ singleIssue.label }
 										</option>
@@ -238,6 +237,7 @@ const SingleIssue = ({ match }) => {
 								</select>
 							</div>
 						</div>
+						{/* Estimated */}
 						<div className="estimated">
 							<h4 className="side-title">Estimated (Hours)</h4>
 							<div className="side-content input-wrapper">
