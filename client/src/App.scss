@@ -1,5 +1,6 @@
 * {
-	font-family: 'Open Sans', sans-serif;
+	font-family: "Open Sans", sans-serif;
+	font-size: 14px;
 }
 
 .center {
@@ -59,7 +60,7 @@ a {
 	letter-spacing: 1.2px;
 	margin: 0 5px;
 	border: none;
-	transition: all .3s ease-in-out;
+	transition: all 0.3s ease-in-out;
 	&:hover {
 		cursor: pointer;
 		background-color: #1343bb;
@@ -78,7 +79,7 @@ a {
 	letter-spacing: 1.2px;
 	margin: 0 5px;
 	border: 0;
-	transition: all .3s ease-in-out;
+	transition: all 0.3s ease-in-out;
 	&:hover {
 		cursor: pointer;
 		background-color: #dfe3ea;
@@ -123,7 +124,7 @@ a {
 	text-transform: uppercase;
 	font-weight: 600;
 	letter-spacing: 1.5px;
-	transition: all .3s ease-in-out;
+	transition: all 0.3s ease-in-out;
 	&:focus {
 		outline: none;
 	}
@@ -134,7 +135,7 @@ a {
 		display: flex;
 		margin-right: 10px;
 		border-radius: 50%;
-		transition: all .3s ease-in-out;
+		transition: all 0.3s ease-in-out;
 	}
 	&:hover {
 		background-color: #2a60e4;

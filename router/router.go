@@ -44,8 +44,7 @@ func SetupRoutes(app *fiber.App) {
 			return err
 		}
 
-		//(uploads_relative)folder must be created before hand:
 		//Save file using a relative path:
-		return c.SaveFile(file, fmt.Sprintf("./client/public/uploads/%s", file.Filename))
+		return c.SaveFile(file, fmt.Sprintf("./client/public/uploads/%s", "aaaaa"))
 	})
 }
