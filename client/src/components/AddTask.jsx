@@ -107,8 +107,9 @@ const AddTask = () => {
 		// add file
 		const formData = new FormData();
 		formData.append("file", selectedFile);
+		console.log(formData);
 		axios
-			.post("http://localhost:8000/upload", formData, {
+			.post("http://127.0.0.1:8080/api/upload", formData, {
 				headers: {
 					"Content-Type": "multipart/form-data",
 				},
@@ -122,13 +123,11 @@ const AddTask = () => {
 		setSelectedFile(e.target.files[0]);
 	};
 
-	console.log(selectedFile);
-
 	return (
 		<div className="add-issue">
 			<h2>Create new issue</h2>
 			<div className="add-issue-form">
-				<form onSubmit={addNewIssue} enctype="multipart/form-data">
+				<form onSubmit={addNewIssue} encType="multipart/form-data">
 					{/* title */}
 					<label htmlFor="title">Issue title</label>
 					<input
