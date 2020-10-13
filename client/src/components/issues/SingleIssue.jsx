@@ -11,6 +11,9 @@ import { BsLink45Deg, BsCheckAll } from 'react-icons/bs';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { BiTimer, BiCheck } from 'react-icons/bi';
 
+//Import constants
+import CONSTANTS from '../../constants/constants';
+
 //Notification box
 import { toast } from 'react-toastify';
 
@@ -42,11 +45,12 @@ const SingleIssue = ({ match }) => {
 
 	//Default status & priority data
 	 const progressOptions = [ 
-        { value: 'Backlog', label: 'Backlog' },
-        { value: 'To do', label: 'To do' },
-        { value: 'In progress', label: 'In progress' },
-        { value: 'Done', label: 'Done' }
-     ]
+        { value: CONSTANTS.REQUESTED, label: CONSTANTS.REQUESTED },
+        { value: CONSTANTS.TODO, label: CONSTANTS.TODO },
+        { value: CONSTANTS.INPROGRESS, label: CONSTANTS.INPROGRESS },
+        { value: CONSTANTS.DONE, label: CONSTANTS.DONE }
+	 ]
+	 
      const priorityOptions = [ 
       { value: 'Low', label: 'Low' },
       { value: 'Medium', label: 'Medium' },

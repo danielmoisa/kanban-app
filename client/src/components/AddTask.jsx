@@ -5,15 +5,16 @@ import services from './issues/issues';
 
 import './AddTask.scss';
 
-import ProjectsFilter from './projects/projectsFilter';
 
 //Notification box
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+//Import constants
+import CONSTANTS from '../constants/constants';
 
 
-import { BsController, BsPlus } from 'react-icons/bs';
+import { BsPlus } from 'react-icons/bs';
 
 const AddTask = () => {
 
@@ -24,12 +25,12 @@ const AddTask = () => {
             description: '',
             estimated: '',
             progress: '',
-            priority: ''
+            priority: '',
+            project: ''
 
        }
    );
-   const [newProject, setNewProject] = useState([]);
-   const [searchProject, setSearchProject] = useState('');
+   const [newProject, setNewProject] = useState(null);
    
     
    //Get all projects
@@ -43,31 +44,14 @@ const AddTask = () => {
         fetchData();
     }, []);
 
-   //Search Project
-   const projectsSearch = (e) => {
-    if(searchProject === '') {
-        return newProject;
-    } 
-
-    return [...newProject].filter(
-        project => project.name.toLowerCase().includes(searchProject.toLowerCase())
-    );
-    
-    }
-
-    const insertProjectValue = (e, id) => {
-        
-    }
-
-
-
     //Select status data
     const progressOptions = [ 
-        { value: 'Backlog', label: 'Backlog' },
-        { value: 'To do', label: 'To do' },
-        { value: 'In progress', label: 'In progress' },
-        { value: 'Done', label: 'Done' }
+        { value: CONSTANTS.REQUESTED, label: CONSTANTS.REQUESTED },
+        { value: CONSTANTS.TODO, label: CONSTANTS.TODO },
+        { value: CONSTANTS.INPROGRESS, label: CONSTANTS.INPROGRESS },
+        { value: CONSTANTS.DONE, label: CONSTANTS.DONE }
      ]
+
      const priorityOptions = [ 
       { value: 'Low', label: 'Low' },
       { value: 'Medium', label: 'Medium' },
@@ -94,7 +78,7 @@ const AddTask = () => {
                     estimated: Number(issueInput.estimated),
                     progress: issueInput.progress,
                     priority: issueInput.priority,
-                    ProjectID: Number(newProject),
+                    ProjectID: Number(issueInput.project),
                 }
         
                 services.addIssue(newIssue);
@@ -139,7 +123,7 @@ const AddTask = () => {
                    </select>
                     {/* priority */}
                     <label htmlFor="priority">Issue priority</label>
-                    <select name="priority" id="priority" value={issueInput.priority} onChange={handleChange}>
+                    <select name="priority" id="priority" defaultValue={issueInput.priority} onChange={handleChange}>
                        {    priorityOptions.map(priority => (
                            <option value={priority.value} key={priority.value}>{ priority.label }</option>
                        ))
@@ -148,15 +132,12 @@ const AddTask = () => {
                    </select>
                      {/* project */}
                      <label htmlFor="project">Issue project</label>
-                     {/* <select name="project" id="project" value={newProject} onChange={ e => setNewProject(e.target.value) }>
-                       {    newProject.map(project => (
-                           <option value={project.ID}>{ project.name }</option>
-                       ))
-
+                     <select name="project" id="project" defaultValue={issueInput.project} onChange={ handleChange }>
+                       { newProject && newProject.map(project => (
+                           <option value={project.ID} key={project.ID}>{ project.name }</option>
+                        ))
                        }
-                   </select> */}
-                   <input type="text" name="project" value={searchProject} onChange={ e => setSearchProject(e.target.value) } />
-                   { searchProject.length === 0 ? '' : <ProjectsFilter projects={projectsSearch()}  insertProjectValue={insertProjectValue}/>  }
+                   </select>
                     {/* submit */}
                     <button type="submit" className="submit-btn center"><div className="icon"><BsPlus /></div> Add issue</button>
                 </form>
