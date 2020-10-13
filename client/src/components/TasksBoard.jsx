@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import axios from 'axios';
-import CONSTANTS from '../constants/constants';
-import NaturalDragAnimation from 'natural-drag-animation-rbdnd';
+import React, { useEffect, useState } from "react";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import axios from "axios";
+import CONSTANTS from "../constants/constants";
+import NaturalDragAnimation from "natural-drag-animation-rbdnd";
 
-import { AiOutlinePlus } from 'react-icons/ai';
+import { AiOutlinePlus } from "react-icons/ai";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const onDragEnd = (result, columns, setColumns) => {
 	if (!result.destination) return;
@@ -69,7 +69,7 @@ function App() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await axios('http://127.0.0.1:8080/api/projects/1');
+			const result = await axios("http://127.0.0.1:8080/api/projects/1");
 
 			setDataFromBackend(result.data.Issues);
 		};
@@ -121,9 +121,7 @@ function App() {
 				onDragEnd={(result) => onDragEnd(result, columns, setColumns)}>
 				{Object.entries(columns).map(([columnId, column], index) => {
 					return (
-						<div
-							className="board-single-column"
-							key={columnId}>
+						<div className="board-single-column" key={columnId}>
 							<h2>{column.name}</h2>
 							<div style={{ margin: 8 }}>
 								<Droppable
@@ -136,12 +134,15 @@ function App() {
 												{...provided.droppableProps}
 												ref={provided.innerRef}
 												style={{
-                                                    backgroundColor: snapshot.isDraggingOver ? '#afb8ea' : '#e0e3f5',
-                                                    padding: 10,
-                                                    minHeight: 500,
-                                                    boxShadow: snapshot.isDraggingOver ? '0px 2px 7px 1px rgba(0, 0, 0, 0.1)' : 'none',
-                                                }}
-												>
+													backgroundColor: snapshot.isDraggingOver
+														? "#afb8ea"
+														: "#e0e3f5",
+													padding: 10,
+													minHeight: 500,
+													boxShadow: snapshot.isDraggingOver
+														? "0px 2px 7px 1px rgba(0, 0, 0, 0.1)"
+														: "none",
+												}}>
 												{column.items.map(
 													(item, index) => {
 														return (
@@ -155,37 +156,58 @@ function App() {
 																) => {
 																	return (
 																		<NaturalDragAnimation
-																		style={provided.draggableProps.style}
-																		snapshot={snapshot}
-																	  >
-																		{ style => (
-																			<div
-																			ref={
-																				provided.innerRef
+																			style={
+																				provided
+																					.draggableProps
+																					.style
 																			}
-																			{...provided.draggableProps}
-																			{...provided.dragHandleProps}
-																			style={{
-																				userSelect: 'none',
-																				padding: 16,
-																				margin: '0 0 8px 0',
-																				minHeight: '50px',
-																				borderRadius: '5px',
-																				backgroundColor: snapshot.isDragging ? '#f5f6f8' : '#fff',
-																				boxShadow: snapshot.isDragging ? '0px 2px 7px 1px rgba(0, 0, 0, 0.1)' : 'none',
-																				...style,
-																				...provided
-																					.draggableProps,
-																			
-																			}}>
-																			{
-																				item.title
-																			}
-																		</div>
-																		)
-
-																		}
-																		</NaturalDragAnimation>	
+																			snapshot={
+																				snapshot
+																			}>
+																			{(
+																				style
+																			) => (
+																				<div
+																					ref={
+																						provided.innerRef
+																					}
+																					{...provided.draggableProps}
+																					{...provided.dragHandleProps}
+																					style={{
+																						userSelect:
+																							"none",
+																						padding: 16,
+																						margin:
+																							"0 0 8px 0",
+																						minHeight:
+																							"50px",
+																						borderRadius:
+																							"5px",
+																						backgroundColor: snapshot.isDragging
+																							? "#f5f6f8"
+																							: "#fff",
+																						boxShadow: snapshot.isDragging
+																							? "0px 2px 7px 1px rgba(0, 0, 0, 0.1)"
+																							: "none",
+																						...style,
+																						...provided.draggableProps,
+																					}}>
+																					<>
+																						<div>
+																							{
+																								item.title
+																							}
+																						</div>
+																						<img
+																							src={`./uploads/${item.imgid}`}
+																							alt={
+																								item.name
+																							}
+																						/>
+																					</>
+																				</div>
+																			)}
+																		</NaturalDragAnimation>
 																	);
 																}}
 															</Draggable>
@@ -193,14 +215,18 @@ function App() {
 													}
 												)}
 												{provided.placeholder}
-												{ column.items.length > 0 ?
-												<Link to="/add-task" className="center add-task-btn">
-													<span className="icon"><AiOutlinePlus /></span>Add task
-												</Link>
-												: 
-												''
-
-												}
+												{/* {column.items.length > 0 ? (
+													<Link
+														to="/add-task"
+														className="center add-task-btn">
+														<span className="icon">
+															<AiOutlinePlus />
+														</span>
+														Add task
+													</Link>
+												) : (
+													""
+												)} */}
 											</div>
 										);
 									}}

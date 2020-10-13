@@ -1,6 +1,7 @@
 package router
 
 import (
+	"fmt"
 	"jira-clone/controllers"
 
 	"github.com/gofiber/fiber/v2"
@@ -35,4 +36,15 @@ func SetupRoutes(app *fiber.App) {
 	app.Post("/api/comments", controllers.NewComment)
 	app.Patch("/api/comments/:id", controllers.UpdateComment)
 	app.Delete("/api/comments/:id", controllers.DeleteComment)
+
+	app.Post("/api/upload", func(c *fiber.Ctx) error {
+		// Get first file from form field "file":
+		file, err := c.FormFile("file")
+		if err != nil {
+			return err
+		}
+
+		//Save file using a relative path:
+		return c.SaveFile(file, fmt.Sprintf("./client/public/uploads/%s", file.Filename))
+	})
 }
