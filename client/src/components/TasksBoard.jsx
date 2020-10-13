@@ -154,71 +154,83 @@ function App() {
 												{column.items.map(
 													(item, index) => {
 														return (
-															<Draggable
-																key={item.ID.toString()}
-																draggableId={item.ID.toString()}
-																index={index}>
-																{(
-																	provided,
-																	snapshot
-																) => {
-																	return (
-																		<NaturalDragAnimation
-																			style={
-																				provided
-																					.draggableProps
-																					.style
-																			}
-																			snapshot={
-																				snapshot
-																			}>
-																			{(
-																				style
-																			) => (
-																				<div
-																					ref={
-																						provided.innerRef
-																					}
-																					{...provided.draggableProps}
-																					{...provided.dragHandleProps}
-																					style={{
-																						userSelect:
-																							"none",
-																						padding: 16,
-																						margin:
-																							"0 0 8px 0",
-																						minHeight:
-																							"50px",
-																						borderRadius:
-																							"5px",
-																						backgroundColor: snapshot.isDragging
-																							? "#f5f6f8"
-																							: "#fff",
-																						boxShadow: snapshot.isDragging
-																							? "0px 2px 7px 1px rgba(0, 0, 0, 0.1)"
-																							: "none",
-																						...style,
-																						...provided.draggableProps,
-																					}}>
-																					<>
-																						<div>
-																							{
-																								item.title
-																							}
-																						</div>
-																						<img
-																							src={`./uploads/${item.imgid}`}
-																							alt={
-																								item.name
-																							}
-																						/>
-																					</>
-																				</div>
-																			)}
-																		</NaturalDragAnimation>
-																	);
+															<Link
+																style={{
+																	color:
+																		"#000",
 																}}
-															</Draggable>
+																to={`/issue/${item.ID}`}>
+																<Draggable
+																	style={{
+																		cursor:
+																			"pointer",
+																	}}
+																	key={item.ID.toString()}
+																	draggableId={item.ID.toString()}
+																	index={
+																		index
+																	}>
+																	{(
+																		provided,
+																		snapshot
+																	) => {
+																		return (
+																			<NaturalDragAnimation
+																				style={
+																					provided
+																						.draggableProps
+																						.style
+																				}
+																				snapshot={
+																					snapshot
+																				}>
+																				{(
+																					style
+																				) => (
+																					<div
+																						ref={
+																							provided.innerRef
+																						}
+																						{...provided.draggableProps}
+																						{...provided.dragHandleProps}
+																						style={{
+																							userSelect:
+																								"none",
+																							padding: 16,
+																							margin:
+																								"0 0 8px 0",
+																							minHeight:
+																								"50px",
+																							borderRadius:
+																								"5px",
+																							backgroundColor: snapshot.isDragging
+																								? "#f5f6f8"
+																								: "#fff",
+																							boxShadow: snapshot.isDragging
+																								? "0px 2px 7px 1px rgba(0, 0, 0, 0.1)"
+																								: "none",
+																							...style,
+																							...provided.draggableProps,
+																						}}>
+																						<>
+																							<div className="issue-title">
+																								{
+																									item.title
+																								}
+																							</div>
+																							<div className="issue-desc">
+																								{
+																									item.description
+																								}
+																							</div>
+																						</>
+																					</div>
+																				)}
+																			</NaturalDragAnimation>
+																		);
+																	}}
+																</Draggable>
+															</Link>
 														);
 													}
 												)}

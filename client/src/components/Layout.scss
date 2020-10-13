@@ -17,7 +17,7 @@
 			width: 5vw;
 			transition: all 0.1s ease-in-out;
 			position: absolute;
-			height: 100vh;
+			height: 100%;
 			top: 0;
 			left: 0;
 			-webkit-box-shadow: 9px 0px 11px -4px rgba(0, 0, 0, 0.15);
@@ -90,5 +90,6 @@
 	.content {
 		flex: 4;
 		padding: 20px;
+		height: 100%;
 	}
 }

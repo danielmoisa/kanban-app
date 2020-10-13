@@ -1,24 +1,24 @@
-import React, { useEffect, useState, useRef, useReducer } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState, useRef, useReducer } from "react";
+import axios from "axios";
 
-import services from './issues';
+import services from "./issues";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-import './SingleIssue.scss';
+import "./SingleIssue.scss";
 
-import { BsLink45Deg, BsCheckAll } from 'react-icons/bs';
-import { AiOutlineDelete } from 'react-icons/ai';
-import { BiTimer, BiCheck } from 'react-icons/bi';
+import { BsLink45Deg, BsCheckAll } from "react-icons/bs";
+import { AiOutlineDelete } from "react-icons/ai";
+import { BiTimer, BiCheck } from "react-icons/bi";
 
 //Import constants
-import CONSTANTS from '../../constants/constants';
+import CONSTANTS from "../../constants/constants";
 
 //Notification box
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 const SingleIssue = ({ match }) => {
-	const [issue, setIssue] = useState('');
+	const [issue, setIssue] = useState("");
 
 	const {
 		params: { issueId },
@@ -42,25 +42,24 @@ const SingleIssue = ({ match }) => {
 	const [copySuccess, setCopySuccess] = useState(false);
 	const urlInputRef = useRef(null);
 
-
 	//Default status & priority data
-	 const progressOptions = [ 
-        { value: CONSTANTS.REQUESTED, label: CONSTANTS.REQUESTED },
-        { value: CONSTANTS.TODO, label: CONSTANTS.TODO },
-        { value: CONSTANTS.INPROGRESS, label: CONSTANTS.INPROGRESS },
-        { value: CONSTANTS.DONE, label: CONSTANTS.DONE }
-	 ]
-	 
-     const priorityOptions = [ 
-      { value: 'Low', label: 'Low' },
-      { value: 'Medium', label: 'Medium' },
-      { value: 'High', label: 'High' }
-	]
-	
+	const progressOptions = [
+		{ value: CONSTANTS.REQUESTED, label: CONSTANTS.REQUESTED },
+		{ value: CONSTANTS.TODO, label: CONSTANTS.TODO },
+		{ value: CONSTANTS.INPROGRESS, label: CONSTANTS.INPROGRESS },
+		{ value: CONSTANTS.DONE, label: CONSTANTS.DONE },
+	];
+
+	const priorityOptions = [
+		{ value: "Low", label: "Low" },
+		{ value: "Medium", label: "Medium" },
+		{ value: "High", label: "High" },
+	];
+
 	//Copy page url
 	const handleCopyUrl = (e) => {
 		urlInputRef.current.select();
-		document.execCommand('copy');
+		document.execCommand("copy");
 
 		setCopySuccess(true);
 	};
@@ -74,38 +73,41 @@ const SingleIssue = ({ match }) => {
 
 	//Update title
 	const updateTitle = (id) => {
-		const updateTitle = { ...issue, title: issue.title }
-		services.updateIssue(id, updateTitle)
-	}
+		const updateTitle = { ...issue, title: issue.title };
+		services.updateIssue(id, updateTitle);
+	};
 
 	//Update description
 	const updateDescription = (id) => {
-		const updateDescription = { ...issue, description: issue.description }
-		services.updateIssue(id, updateDescription)
-	}
+		const updateDescription = { ...issue, description: issue.description };
+		services.updateIssue(id, updateDescription);
+	};
 
 	//Update status
 	const updateProgress = (id) => {
-		const updateProgress = { ...issue, progress: issue.progress }
-		services.updateIssue(id, updateProgress)
-	}
+		const updateProgress = { ...issue, progress: issue.progress };
+		services.updateIssue(id, updateProgress);
+	};
 
 	//Update priority
 	const updatePriority = (id) => {
-		const updatePriority = { ...issue, priority: issue.priority }
-		services.updateIssue(id, updatePriority)
-	}
+		const updatePriority = { ...issue, priority: issue.priority };
+		services.updateIssue(id, updatePriority);
+	};
 	//Update estimated
 	const updateEstimated = (id) => {
-		const updateEstimated = { ...issue, estimated: Number(issue.estimated) }
-		services.updateIssue(id, updateEstimated)
-	}
+		const updateEstimated = {
+			...issue,
+			estimated: Number(issue.estimated),
+		};
+		services.updateIssue(id, updateEstimated);
+	};
 	//Update estimated
 	const updateTimeLog = (id) => {
-		const updateTimeLog = { ...issue, timelog: Number(issue.timelog) }
-		services.updateIssue(id, updateTimeLog)
-	}
-	
+		const updateTimeLog = { ...issue, timelog: Number(issue.timelog) };
+		services.updateIssue(id, updateTimeLog);
+	};
+
 	return (
 		<>
 			{issue && (
@@ -113,21 +115,46 @@ const SingleIssue = ({ match }) => {
 					<div className="main-col">
 						{/* Title */}
 						<div className="input-wrapper">
-							<input type="text" defaultValue={issue.title} 
-								onChange={ e => setIssue({ ...issue, title: e.target.value }) } 
+							<input
+								type="text"
+								defaultValue={issue.title}
+								onChange={(e) =>
+									setIssue({
+										...issue,
+										title: e.target.value,
+									})
+								}
 							/>
 							<div className="icon description">
-								<BiCheck onClick={updateTitle(issue.ID)}/>
+								<BiCheck onClick={updateTitle(issue.ID)} />
 							</div>
 						</div>
+						{/* Image */}
+						<div className="image">
+							<img
+								style={{ width: "100%" }}
+								src={`/uploads/${issue.imgid}`}
+							/>
+						</div>
+
 						{/* Description */}
 						<div className="input-wrapper">
 							<b>Description</b>
-							<textarea name="description" id="description" defaultValue={issue.description} 
-								onChange={ e => setIssue({ ...issue, description: e.target.value }) }
+							<textarea
+								name="description"
+								id="description"
+								defaultValue={issue.description}
+								onChange={(e) =>
+									setIssue({
+										...issue,
+										description: e.target.value,
+									})
+								}
 							/>
 							<div className="icon">
-								<BiCheck onClick={updateDescription(issue.ID)}/>
+								<BiCheck
+									onClick={updateDescription(issue.ID)}
+								/>
 							</div>
 						</div>
 						<div className="comments-wrapper">
@@ -136,15 +163,16 @@ const SingleIssue = ({ match }) => {
 							) : (
 								<h4>Add first comment</h4>
 							)}
-							{issue.Comments && issue.Comments.map((comment) => (
-								<p key={comment.ID}>{comment.content}</p>
-							))}
+							{issue.Comments &&
+								issue.Comments.map((comment) => (
+									<p key={comment.ID}>{comment.content}</p>
+								))}
 						</div>
 					</div>
 					<div className="side-col">
 						<div className="copy-delete">
 							{/* Copy url */}
-							{document.queryCommandSupported('copy') && (
+							{document.queryCommandSupported("copy") && (
 								<div
 									className="copy-url"
 									onClick={handleCopyUrl}>
@@ -168,7 +196,7 @@ const SingleIssue = ({ match }) => {
 							{/* Delete issue */}
 							<div
 								className={`delete-issue center ${
-									deleteModal ? 'delete-active' : ''
+									deleteModal ? "delete-active" : ""
 								}`}
 								onClick={() => setDeleteModal(!deleteModal)}>
 								<AiOutlineDelete />
@@ -203,20 +231,28 @@ const SingleIssue = ({ match }) => {
 						<div className="status">
 							<h4 className="side-title">Status</h4>
 							<div className="side-content side-btn">
-							<div className="icon" >
-								<BiCheck onClick={updateProgress(issue.ID)}/>
-							</div>
-								<select name="status" id="status" defaultValue={issue.progress}
-									onChange={ e => setIssue({ ...issue, progress: e.target.value }) }
-								>
-									{ progressOptions.map(singleIssue => (
-										<option 
-										value={singleIssue.value} 
-										key={singleIssue.value} 
-										>
-											{ singleIssue.label }
+								<div className="icon">
+									<BiCheck
+										onClick={updateProgress(issue.ID)}
+									/>
+								</div>
+								<select
+									name="status"
+									id="status"
+									defaultValue={issue.progress}
+									onChange={(e) =>
+										setIssue({
+											...issue,
+											progress: e.target.value,
+										})
+									}>
+									{progressOptions.map((singleIssue) => (
+										<option
+											value={singleIssue.value}
+											key={singleIssue.value}>
+											{singleIssue.label}
 										</option>
-									)) }
+									))}
 								</select>
 							</div>
 						</div>
@@ -224,20 +260,28 @@ const SingleIssue = ({ match }) => {
 						<div className="priority">
 							<h4 className="side-title">Priority</h4>
 							<div className="side-content side-btn">
-							<div className="icon">
-								<BiCheck onClick={updateProgress(issue.ID)}/>
-							</div>
-							<select name="status" id="status" defaultValue={issue.priority}
-								onChange={ e => setIssue({ ...issue, priority: e.target.value }) }
-							>
-									{ priorityOptions.map(singleIssue => (
-										<option 
-										value={singleIssue.value} 
-										key={singleIssue.value} 
-										>
-											{ singleIssue.label }
+								<div className="icon">
+									<BiCheck
+										onClick={updateProgress(issue.ID)}
+									/>
+								</div>
+								<select
+									name="status"
+									id="status"
+									defaultValue={issue.priority}
+									onChange={(e) =>
+										setIssue({
+											...issue,
+											priority: e.target.value,
+										})
+									}>
+									{priorityOptions.map((singleIssue) => (
+										<option
+											value={singleIssue.value}
+											key={singleIssue.value}>
+											{singleIssue.label}
 										</option>
-									)) }
+									))}
 								</select>
 							</div>
 						</div>
@@ -245,44 +289,83 @@ const SingleIssue = ({ match }) => {
 						<div className="estimated">
 							<h4 className="side-title">Estimated (Hours)</h4>
 							<div className="side-content input-wrapper">
-								<input type="text" defaultValue={issue.estimated} 
-									onChange={ e => setIssue({ ...issue, estimated: Number(e.target.value) }) }
+								<input
+									type="text"
+									defaultValue={issue.estimated}
+									onChange={(e) =>
+										setIssue({
+											...issue,
+											estimated: Number(e.target.value),
+										})
+									}
 								/>
 								<div className="icon">
-									<BiCheck onClick={updateEstimated(issue.ID)}/>
+									<BiCheck
+										onClick={updateEstimated(issue.ID)}
+									/>
 								</div>
 							</div>
 						</div>
 						{/* Log time modal */}
-						{ logTime ?
-								<div className="log-time-modal">
-									<div className="title">
-										<h3><BiTimer /> Log Time</h3>
-									</div>
-									<div className="content">
-										<input type="text" defaultValue={issue.timelog} 
-										onChange={ e => setIssue({ ...issue, timelog: Number(e.target.value) }) }
+						{logTime ? (
+							<div className="log-time-modal">
+								<div className="title">
+									<h3>
+										<BiTimer /> Log Time
+									</h3>
+								</div>
+								<div className="content">
+									<input
+										type="text"
+										defaultValue={issue.timelog}
+										onChange={(e) =>
+											setIssue({
+												...issue,
+												timelog: Number(e.target.value),
+											})
+										}
+									/>
+									<div className="icon">
+										<BiCheck
+											onClick={updateTimeLog(issue.ID)}
 										/>
-										<div className="icon">
-											<BiCheck onClick={updateTimeLog(issue.ID)}/>
-										</div>
-										<div class="buttons center">
-											<button class="delete primary-btn" onClick={ e => setLogTime(false) }>Done</button>
-										</div>
+									</div>
+									<div class="buttons center">
+										<button
+											class="delete primary-btn"
+											onClick={(e) => setLogTime(false)}>
+											Done
+										</button>
 									</div>
 								</div>
-							:
-								''
-							}
-						<div className={`time-tracking ${ logTime ? 'active-log' : '' }`} onClick={ e => setLogTime(!logTime) }>
+							</div>
+						) : (
+							""
+						)}
+						<div
+							className={`time-tracking ${
+								logTime ? "active-log" : ""
+							}`}
+							onClick={(e) => setLogTime(!logTime)}>
 							<h4 className="side-title">Time tracking</h4>
 							<div className="side-content">
-								<div className="icon"><BiTimer /></div>
+								<div className="icon">
+									<BiTimer />
+								</div>
 								<div className="hours">
 									<div className="meter">
-										<span className={`${issue.timelog > issue.estimated ? 'done' : ''}`}
-											style={{ width: `${issue.timelog * 100 / issue.estimated}%` }}
-										></span>
+										<span
+											className={`${
+												issue.timelog > issue.estimated
+													? "done"
+													: ""
+											}`}
+											style={{
+												width: `${
+													(issue.timelog * 100) /
+													issue.estimated
+												}%`,
+											}}></span>
 									</div>
 									<div className="logged-estimated">
 										<span>{issue.timelog} logged</span>
