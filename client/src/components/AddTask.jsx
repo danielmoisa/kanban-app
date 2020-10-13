@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useReducer } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect, useReducer } from "react";
+import axios from "axios";
 
-import services from './issues/issues';
+import services from "./issues/issues";
 
-import './AddTask.scss';
+import "./AddTask.scss";
 
 
 //Notification box
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 //Import constants
 import CONSTANTS from '../constants/constants';

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import './App.scss';
-import axios from 'axios';
+import React, { useState } from "react";
+import "./App.scss";
+import axios from "axios";
 
 import Layout from './components/Layout'
 import KanbanBoard from './components/KanbanBoard'
@@ -11,12 +11,11 @@ import SingleIssue from './components/issues/SingleIssue'
 import Login from './components/Login'
 
 //Notification box
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
 
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
-
 	return (
 		<Router>
 			<Layout>
@@ -36,19 +35,15 @@ function App() {
 						path="/project/:projectId"
 						component={SingleProject}
 					/>
-					<Route 
-						exact 
+					<Route
+						exact
 						path="/issue/:issueId"
 						component={SingleIssue}
 					/>
-					<Route
-						exact
-						path="/login"
-						component={Login}
-					/>
+					<Route exact path="/login" component={Login} />
 				</Switch>
 			</Layout>
-			<ToastContainer 
+			<ToastContainer
 				position="bottom-right"
 				autoClose={5000}
 				hideProgressBar={false}
