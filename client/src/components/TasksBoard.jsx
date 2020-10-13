@@ -4,7 +4,9 @@ import axios from "axios";
 import CONSTANTS from "../constants/constants";
 import NaturalDragAnimation from "natural-drag-animation-rbdnd";
 
-import { AiOutlinePlus } from "react-icons/ai";
+import './TasksBoard.scss'
+
+import { AiOutlinePlus } from 'react-icons/ai';
 
 import { Link } from "react-router-dom";
 
