@@ -1,26 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Link, NavLink } from "react-router-dom";
 
-import SearchProjects from './projects/SearchProjects'
+import SearchProjects from "./projects/SearchProjects";
 
-import axios from 'axios';
-import './Sidebar.scss';
+import axios from "axios";
+import "./Sidebar.scss";
 
-import { FcTrademark } from 'react-icons/fc';
-import {
-	BsGrid3X3,
-	BsSearch,
-} from 'react-icons/bs';
-import { GrClose } from 'react-icons/gr';
+import { FcTrademark } from "react-icons/fc";
+import { BsGrid3X3, BsSearch } from "react-icons/bs";
+import { GrClose } from "react-icons/gr";
 
 const Sidebar = () => {
 	const [searchProjectsInput, setSearchProjectsInput] = useState(false);
-	const [searchProjects, setSearchProjects] = useState('');
+	const [searchProjects, setSearchProjects] = useState("");
 	const [data, setData] = useState([]);
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await axios('http://127.0.0.1:8080/api/users/1');
+			const result = await axios("http://127.0.0.1:8080/api/users/1");
 
 			setData(result.data);
 		};
@@ -29,28 +26,27 @@ const Sidebar = () => {
 	}, []);
 
 	const handleProjectsSearch = (e) => {
-		setSearchProjects(e.target.value)
-	  }
-	  const userProjects = data.Projects
+		setSearchProjects(e.target.value);
+	};
+	const userProjects = data.Projects;
 
-	  const results = () => {
-		if(searchProjects === '') {
-		  return userProjects;
+	const results = () => {
+		if (searchProjects === "") {
+			return userProjects;
 		}
-		return [...userProjects].filter(
-			project => project.name.toLowerCase().includes(searchProjects.toLowerCase())
-		)
-	  }
+		return [...userProjects].filter((project) =>
+			project.name.toLowerCase().includes(searchProjects.toLowerCase())
+		);
+	};
 
 	return (
 		<>
-			<div
-				className="account">
+			<div className="account">
 				<div className="account-wrapper">
 					<div className="avatar">
 						<div className="info center">
 							<FcTrademark />
-							<p>{data.name}</p>
+							<p>{data.username}</p>
 						</div>
 					</div>
 				</div>
@@ -65,7 +61,7 @@ const Sidebar = () => {
 			</NavLink>
 			<div
 				className={`sidebar-item search-issues ${
-					searchProjectsInput ? 'dropdown-active' : ''
+					searchProjectsInput ? "dropdown-active" : ""
 				}`}
 				onClick={() => setSearchProjectsInput(!searchProjectsInput)}>
 				{searchProjectsInput ? (
@@ -84,8 +80,8 @@ const Sidebar = () => {
 						type="text"
 						autoFocus
 						placeholder="Search projects here..."
-						value={ searchProjects }
-						onChange={ handleProjectsSearch }
+						value={searchProjects}
+						onChange={handleProjectsSearch}
 					/>
 				)}
 			</div>
