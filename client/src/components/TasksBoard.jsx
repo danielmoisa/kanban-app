@@ -199,7 +199,7 @@ function App() {
 																							}
 																						</div>
 																						<img
-																							src={`./uploads/${item.name}.png`}
+																							src={`./uploads/${item.imgid}`}
 																							alt={
 																								item.name
 																							}

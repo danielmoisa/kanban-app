@@ -45,6 +45,6 @@ func SetupRoutes(app *fiber.App) {
 		}
 
 		//Save file using a relative path:
-		return c.SaveFile(file, fmt.Sprintf("./client/public/uploads/%s", "aaaaa"))
+		return c.SaveFile(file, fmt.Sprintf("./client/public/uploads/%s", file.Filename))
 	})
 }

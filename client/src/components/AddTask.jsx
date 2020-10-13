@@ -14,6 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { BsController, BsPlus } from "react-icons/bs";
 
 const AddTask = () => {
+	const [selectedFile, setSelectedFile] = useState(null);
 	const [issueInput, setIssueInput] = useReducer(
 		(state, newState) => ({ ...state, ...newState }),
 		{
@@ -22,6 +23,7 @@ const AddTask = () => {
 			estimated: "",
 			progress: "",
 			priority: "",
+			imgid: selectedFile && selectedFile.name,
 		}
 	);
 	const [newProject, setNewProject] = useState([]);
@@ -64,8 +66,6 @@ const AddTask = () => {
 		{ value: "High", label: "High" },
 	];
 
-	const [selectedFile, setSelectedFile] = useState(null);
-
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 
@@ -87,6 +87,7 @@ const AddTask = () => {
 				progress: issueInput.progress,
 				priority: issueInput.priority,
 				ProjectID: Number(newProject),
+				imgid: selectedFile && selectedFile.name,
 			};
 
 			services.addIssue(newIssue);
@@ -107,7 +108,6 @@ const AddTask = () => {
 		// add file
 		const formData = new FormData();
 		formData.append("file", selectedFile);
-		console.log(formData);
 		axios
 			.post("http://127.0.0.1:8080/api/upload", formData, {
 				headers: {
@@ -122,6 +122,8 @@ const AddTask = () => {
 	const onChangeFile = (e) => {
 		setSelectedFile(e.target.files[0]);
 	};
+
+	console.log();
 
 	return (
 		<div className="add-issue">
