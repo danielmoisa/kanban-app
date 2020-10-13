@@ -127,106 +127,103 @@ function App() {
 		<div className="board-columns">
 			<DragDropContext
 				onDragEnd={(result) => onDragEnd(result, columns, setColumns)}>
-				{columns.items &&
-					Object.entries(columns).map(([columnId, column], index) => {
-						return (
-							<div className="board-single-column" key={columnId}>
-								<h2>{column.name}</h2>
-								<div style={{ margin: 8 }}>
-									<Droppable
-										droppableId={columnId}
-										key={columnId}>
-										{(provided, snapshot) => {
-											return (
-												<div
-													className="column-tasks-wrapper"
-													{...provided.droppableProps}
-													ref={provided.innerRef}
-													style={{
-														backgroundColor: snapshot.isDraggingOver
-															? "#afb8ea"
-															: "#e0e3f5",
-														padding: 10,
-														minHeight: 500,
-														boxShadow: snapshot.isDraggingOver
-															? "0px 2px 7px 1px rgba(0, 0, 0, 0.1)"
-															: "none",
-													}}>
-													{column.items.map(
-														(item, index) => {
-															return (
-																<Draggable
-																	key={item.ID.toString()}
-																	draggableId={item.ID.toString()}
-																	index={
-																		index
-																	}>
-																	{(
-																		provided,
-																		snapshot
-																	) => {
-																		return (
-																			<NaturalDragAnimation
-																				style={
-																					provided
-																						.draggableProps
-																						.style
-																				}
-																				snapshot={
-																					snapshot
-																				}>
-																				{(
-																					style
-																				) => (
-																					<div
-																						ref={
-																							provided.innerRef
-																						}
-																						{...provided.draggableProps}
-																						{...provided.dragHandleProps}
-																						style={{
-																							userSelect:
-																								"none",
-																							padding: 16,
-																							margin:
-																								"0 0 8px 0",
-																							minHeight:
-																								"50px",
-																							borderRadius:
-																								"5px",
-																							backgroundColor: snapshot.isDragging
-																								? "#f5f6f8"
-																								: "#fff",
-																							boxShadow: snapshot.isDragging
-																								? "0px 2px 7px 1px rgba(0, 0, 0, 0.1)"
-																								: "none",
-																							...style,
-																							...provided.draggableProps,
-																						}}>
-																						<>
-																							<div>
-																								{
-																									item.title
-																								}
-																							</div>
-																							<img
-																								src={`./uploads/${item.imgid}`}
-																								alt={
-																									item.name
-																								}
-																							/>
-																						</>
-																					</div>
-																				)}
-																			</NaturalDragAnimation>
-																		);
-																	}}
-																</Draggable>
-															);
-														}
-													)}
-													{provided.placeholder}
-													{/* {column.items.length > 0 ? (
+				{Object.entries(columns).map(([columnId, column], index) => {
+					return (
+						<div className="board-single-column" key={columnId}>
+							<h2>{column.name}</h2>
+							<div style={{ margin: 8 }}>
+								<Droppable
+									droppableId={columnId}
+									key={columnId}>
+									{(provided, snapshot) => {
+										return (
+											<div
+												className="column-tasks-wrapper"
+												{...provided.droppableProps}
+												ref={provided.innerRef}
+												style={{
+													backgroundColor: snapshot.isDraggingOver
+														? "#afb8ea"
+														: "#e0e3f5",
+													padding: 10,
+													minHeight: 500,
+													boxShadow: snapshot.isDraggingOver
+														? "0px 2px 7px 1px rgba(0, 0, 0, 0.1)"
+														: "none",
+												}}>
+												{column.items.map(
+													(item, index) => {
+														return (
+															<Draggable
+																key={item.ID.toString()}
+																draggableId={item.ID.toString()}
+																index={index}>
+																{(
+																	provided,
+																	snapshot
+																) => {
+																	return (
+																		<NaturalDragAnimation
+																			style={
+																				provided
+																					.draggableProps
+																					.style
+																			}
+																			snapshot={
+																				snapshot
+																			}>
+																			{(
+																				style
+																			) => (
+																				<div
+																					ref={
+																						provided.innerRef
+																					}
+																					{...provided.draggableProps}
+																					{...provided.dragHandleProps}
+																					style={{
+																						userSelect:
+																							"none",
+																						padding: 16,
+																						margin:
+																							"0 0 8px 0",
+																						minHeight:
+																							"50px",
+																						borderRadius:
+																							"5px",
+																						backgroundColor: snapshot.isDragging
+																							? "#f5f6f8"
+																							: "#fff",
+																						boxShadow: snapshot.isDragging
+																							? "0px 2px 7px 1px rgba(0, 0, 0, 0.1)"
+																							: "none",
+																						...style,
+																						...provided.draggableProps,
+																					}}>
+																					<>
+																						<div>
+																							{
+																								item.title
+																							}
+																						</div>
+																						<img
+																							src={`./uploads/${item.imgid}`}
+																							alt={
+																								item.name
+																							}
+																						/>
+																					</>
+																				</div>
+																			)}
+																		</NaturalDragAnimation>
+																	);
+																}}
+															</Draggable>
+														);
+													}
+												)}
+												{provided.placeholder}
+												{/* {column.items.length > 0 ? (
 													<Link
 														to="/add-task"
 														className="center add-task-btn">
@@ -238,14 +235,14 @@ function App() {
 												) : (
 													""
 												)} */}
-												</div>
-											);
-										}}
-									</Droppable>
-								</div>
+											</div>
+										);
+									}}
+								</Droppable>
 							</div>
-						);
-					})}
+						</div>
+					);
+				})}
 			</DragDropContext>
 		</div>
 	);
