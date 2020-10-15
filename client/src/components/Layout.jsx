@@ -5,7 +5,7 @@ import Spinner from '../widgets/Spinner';
 
 import { BsPeople, BsSearch } from 'react-icons/bs';
 import { FcGenealogy } from 'react-icons/fc';
-import { AiOutlinePlus } from 'react-icons/ai';
+import { AiOutlinePlus, AiOutlineProject } from 'react-icons/ai';
 import { GrClose } from 'react-icons/gr';
 
 import './Layout.scss';
@@ -44,9 +44,16 @@ const Layout = ({ children }) => {
 							</li>
 							<li>
 								<NavLink
-									to="/add-task"
+									to="/add-issue"
 									activeClassName="active-link">
-									<AiOutlinePlus /> <span>Add task</span>
+									<AiOutlinePlus /> <span>Add issue</span>
+								</NavLink>
+							</li>
+							<li>
+								<NavLink
+									to="/add-project"
+									activeClassName="active-link">
+									<AiOutlineProject /> <span>Add project</span>
 								</NavLink>
 							</li>
 							<li>

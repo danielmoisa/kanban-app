@@ -42,7 +42,7 @@ const Header = () => {
                             <BsPeople />
                         </div>
                     </div>
-                    <Link to="/add-task" className="add-task center">
+                    <Link to="/add-issue" className="add-task center">
                         <BsPlus />
                         <span>Add Task</span>
                     </Link>

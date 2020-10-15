@@ -13,9 +13,8 @@ import { BiTimer, BiCheck } from 'react-icons/bi';
 
 //Import constants
 import CONSTANTS from '../../constants/constants';
-
-//Notification box
 import { toast } from 'react-toastify';
+
 
 const SingleIssue = ({ match }) => {
 	const [issue, setIssue] = useState('');
@@ -67,9 +66,9 @@ const SingleIssue = ({ match }) => {
 
 	//Delete issue
 	const deleteSingleIssue = (issueId) => {
-		services.deleteIssue(issueId).then((response) => {
-			setIssue(issue.issueId !== issue.ID);
-		});
+		services.deleteIssue(issueId);
+
+		toast.success('Issue successfully deleted');
 	};
 
 	//Update title
