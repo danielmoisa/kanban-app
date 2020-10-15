@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import "./App.scss";
 import axios from "axios";
 
-import Layout from './components/Layout'
-import KanbanBoard from './components/KanbanBoard'
-import TasksBoard from './components/TasksBoard'
-import AddTask from './components/AddTask'
-import SingleProject from './components/projects/SingleProject'
-import SingleIssue from './components/issues/SingleIssue'
-import Login from './components/Login'
+import Layout from './components/Layout';
+import KanbanBoard from './components/KanbanBoard';
+import TasksBoard from './components/TasksBoard';
+import AddTask from './components/AddTask';
+import SingleProject from './components/projects/SingleProject';
+import SingleIssue from './components/issues/SingleIssue';
+import Login from './components/Login';
+import AddProject from './components/projects/AddProject';
 
 //Notification box
 import { ToastContainer } from "react-toastify";
@@ -27,8 +28,13 @@ function App() {
 					/>
 					<Route
 						exact
-						path="/add-task"
+						path="/add-issue"
 						component={AddTask}
+					/>
+					<Route
+						exact
+						path="/add-project"
+						component={AddProject}
 					/>
 					<Route
 						exact
@@ -40,7 +46,11 @@ function App() {
 						path="/issue/:issueId"
 						component={SingleIssue}
 					/>
-					<Route exact path="/login" component={Login} />
+					<Route 
+						exact 
+						path="/login" 
+						component={Login} 
+					/>
 				</Switch>
 			</Layout>
 			<ToastContainer
