@@ -8,7 +8,7 @@ const SearchProjects = ({ userProjects }) => {
         <div>
             <div className="projects">
 				{userProjects &&
-					userProjects.map((project, index) => 
+					userProjects.map((project) => 
                     <NavLink to={`/project/${project.ID}`} key={ project.ID } activeClassName="active-project">
                         <p>{ project.name }</p> 
                         <FaRegListAlt /> 

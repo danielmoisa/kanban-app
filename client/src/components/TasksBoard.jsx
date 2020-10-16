@@ -176,6 +176,7 @@ function App() {
 																				style
 																			) => (
 																				<div
+																					className="task-card"
 																					ref={
 																						provided.innerRef
 																					}
@@ -200,19 +201,25 @@ function App() {
 																						...style,
 																						...provided.draggableProps,
 																					}}>
-																					<>
-																						<div>
-																							{
-																								item.title
-																							}
+																					<Link to={`/issue${item.ID}`}>
+																						<div className="status">
+																							<div className={`progress ${item.progress.split(" ").join("")}`}>
+																								<span>{ item.progress }</span>
+																							</div>
+																							<div className={`priority ${item.priority.split(" ").join("")}`}>
+																								<span>{ item.priority }</span>
+																							</div>
 																						</div>
-																						<img
-																							src={`./uploads/${item.imgid}`}
-																							alt={
-																								item.name
-																							}
-																						/>
-																					</>
+																						<div className="image">
+																							<img src={`./uploads/${item.imgid ? 
+																								item.imgid : 
+																								'default-project.svg'}`} 
+																								alt={item.title}
+																							/>
+																						</div>
+																						<h5>{item.title}</h5>
+																						<p>{item.description}</p>
+																					</Link>
 																				</div>
 																			)}
 																		</NaturalDragAnimation>
@@ -223,18 +230,6 @@ function App() {
 													}
 												)}
 												{provided.placeholder}
-												{/* {column.items.length > 0 ? (
-													<Link
-														to="/add-task"
-														className="center add-task-btn">
-														<span className="icon">
-															<AiOutlinePlus />
-														</span>
-														Add task
-													</Link>
-												) : (
-													""
-												)} */}
 											</div>
 										);
 									}}
