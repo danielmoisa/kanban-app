@@ -5,6 +5,8 @@ import services from './projects';
 
 import { Link } from 'react-router-dom';
 
+import './SingleProject.scss';
+
 //Icons
 import { BsLink45Deg, BsCheckAll } from 'react-icons/bs';
 import { AiOutlineDelete } from 'react-icons/ai';
@@ -43,7 +45,7 @@ const urlInputRef = useRef(null);
 	];
 	
 	//Copy page url
-	const handleCopyUrl = (e) => {
+	const handleCopyUrl = () => {
 		urlInputRef.current.select();
 		document.execCommand('copy');
 
@@ -79,6 +81,7 @@ const urlInputRef = useRef(null);
 	return (
 		<>
 			{project && (
+			<div>
 				<div className="single-issue-wrapper" key={project.ID}>
 					<div className="main-col">
 						{/* Name */}
@@ -182,6 +185,35 @@ const urlInputRef = useRef(null);
 						</div>
 					</div>
 				</div>
+				{/* Project issues */}
+				<div className="project-issues">
+					{ project.Issues.length > 0 ? <h2>Project issues</h2> : '' }
+					<div className="wrapper">
+						{ project.Issues && 
+							project.Issues.map(issue => (
+								<Link to={`/issue/${issue.ID}`} className="single-issue" key={issue.ID}>
+									<div className="issue-wrapper">
+										<div className="status">
+											<div className={`progress ${issue.progress.split(" ").join("")}`}>
+												<span>{ issue.progress }</span>
+											</div>
+											<div className={`priority ${issue.priority.split(" ").join("")}`}>
+												<span>{ issue.priority }</span>
+											</div>
+										</div>
+										<div className="image">
+											<img src={`../../uploads/${issue.imgid ? issue.imgid : 'default-project.svg'}`} alt={issue.title}/>
+										</div>
+										<div className="title">
+										<h4>{ issue.title }</h4>
+										</div>
+									</div>
+								</Link>
+							))
+						}
+					</div>
+				</div>
+			</div>
 			)}
 		</>
 	);

@@ -1,0 +1,95 @@
+.project-issues {
+    h2 {
+        text-transform: uppercase;
+        font-size: 18px;
+        color: #0d0c22;
+    }
+    .wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        .single-issue {
+            flex: 0 23%;
+            box-shadow: 0px 0 5px 1px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            transition: all .3s ease-in-out;
+            .issue-wrapper {
+                padding: 20px 10px;
+                .status {
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
+					margin-bottom: 15px;
+					.progress, .priority {
+						padding: 3px 15px;
+						border-radius: 25px;
+						span {
+							font-size: 12px;
+							text-transform: uppercase;
+							font-weight: bold;
+						}
+					}
+					.Requested {
+						background-color: #a7a9ae1c;
+						span {
+							color: #929294;
+						}
+					}
+					.Todo {
+						background-color: #2a60e447;
+						span {
+							color: #2a60e4;
+						}
+					}
+					.Inprogress {
+						background-color: #f5005726;
+						span {
+							color: #F50057;
+						}
+					}
+					.Done {
+						background-color: #00bfa62e;
+						span {
+							color: #00BFA6;
+						}
+					}
+					.Low {
+						background-color: #00b0ff26;
+						span {
+							color: #00B0FF;
+						}
+					}
+					.Medium {
+						background-color: #f9a8261f;
+						span {
+							color: #f0990d;
+						}
+					}
+					.High {
+						background-color: #6c63ff24;
+						span {
+							color: #6C63FF;
+						}
+					}
+				}
+                .image {
+                    text-align: center;
+                    img {
+                        max-width: 180px;
+                        width: 100%;
+                    }
+                }
+                .title {
+                    h4 {
+                        margin-bottom: 0;
+                        text-align: center;
+                        color: #0d0c22;
+                    }
+                }
+            }
+            &:hover {
+                background-color: #f5f6f8;
+            }
+        }
+    }
+}
