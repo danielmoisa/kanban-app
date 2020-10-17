@@ -140,7 +140,7 @@ const urlInputRef = useRef(null);
 								<div className="delete-issues-modal">
 									<h4>
 										Are you sure you want to delete this
-										issue?
+										project?
 									</h4>
 									<div className="buttons center">
 										<button

@@ -22,9 +22,9 @@ const AddTask = () => {
 			title: "",
 			description: "",
 			estimated: "",
-			progress: "",
-			priority: "",
-			project: "",
+			progress: "Requested",
+			priority: "Low",
+			project: Number(1),
 		}
 	);
 	const [newProject, setNewProject] = useState(null);
@@ -70,7 +70,7 @@ const AddTask = () => {
 			const newIssue = {
 				title: issueInput.title,
 				description: issueInput.description,
-				timelog: 2,
+				timelog: 0,
 				estimated: Number(issueInput.estimated),
 				progress: issueInput.progress,
 				priority: issueInput.priority,
@@ -146,7 +146,7 @@ const AddTask = () => {
 					<select
 						name="progress"
 						id="progress"
-						value={issueInput.progress}
+						defaultValue={issueInput.progress}
 						onChange={handleChange}>
 						{progressOptions.map((progress) => (
 							<option value={progress.value} key={progress.value}>

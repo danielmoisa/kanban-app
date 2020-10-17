@@ -20,7 +20,7 @@ const AddProject = () => {
 		{
 			name: "",
 			description: "",
-			category: "",
+			category: "Web Development",
 		}
 	);
 	const [newProject, setNewProject] = useState(null);
@@ -54,7 +54,7 @@ const AddProject = () => {
 			services.addProject(newProject);
 
 			setProjectInput({
-				title: "",
+				name: "",
 				description: "",
                 category: "",
 			});
@@ -91,7 +91,7 @@ const AddProject = () => {
 					<select
 						name="category"
 						id="category"
-						value={projectInput.category}
+						defaultValue={projectInput.category}
 						onChange={handleChange}>
 						{categoryOptions.map((category) => (
 							<option value={category.value} key={category.value}>
