@@ -2,7 +2,7 @@
 	display: flex;
 	justify-content: space-around;
 	height: 100%;
-	margin-top: 30px;
+	margin-top: 20px;
 	margin-bottom: 0;
 	::-webkit-scrollbar {
         width: 6px;
@@ -149,6 +149,34 @@
 						color: #0d0c22;
 					}
 				}
+			}
+		}
+	}
+}
+.board-search-input {
+	margin-top: 40px;
+	position: relative;
+	.search-icon {
+		position: absolute;
+		top: 8px;
+		left: 15px;
+		svg {
+			font-size: 20px;
+		}
+	}
+	input {
+		border: none;
+		border-radius: 25px;
+		background-color: #a7a9ae21;
+		padding: 10px 25px 10px 45px;
+		&::placeholder {
+			color: #0d0c22;
+		}
+		&:focus {
+			outline: none;
+			background-color: #63f3e93b;
+			&::placeholder {
+				color: #029C88;
 			}
 		}
 	}

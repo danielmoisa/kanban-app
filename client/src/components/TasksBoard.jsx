@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import axios from "axios";
+
 import CONSTANTS from "../constants/constants";
+
 import NaturalDragAnimation from "natural-drag-animation-rbdnd";
 
 import "./TasksBoard.scss";
 
 import { AiOutlinePlus } from "react-icons/ai";
+import { BsSearch } from 'react-icons/bs'
 
-import { Link } from "react-router-dom";
+import TaskBoardSearch from '../components/issues/TaskBoardSearch';
 
 const onDragEnd = (result, columns, setColumns) => {
 	if (!result.destination) return;
@@ -68,12 +71,13 @@ function App() {
 	});
 
 	const [dataFromBackend, setDataFromBackend] = useState([]);
+	const [searchIssues, setSearchIssues] = useState('');
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await axios("http://127.0.0.1:8080/api/projects/1");
+			const result = await axios("http://127.0.0.1:8080/api/issues");
 
-			setDataFromBackend(result.data.Issues);
+			setDataFromBackend(result.data);
 		};
 
 		fetchData();
@@ -121,10 +125,37 @@ function App() {
 		});
 	}, [dataFromBackend]);
 
-	console.log(columns);
+    // console.log(dataFromBackend)
+    // const BoardFilter = (e) => {
+	// 	const userIssues = dataFromBackend;
+    //     if(searchIssues === '') {
+    //         return userIssues;
+    //     } 
+
+    //     return [...userIssues].filter(
+    //         issue => issue.title.toLowerCase().includes(searchIssues.toLowerCase())
+    //     );
+        
+	// }
 
 	return (
+		<>
+		{/* Search issues */}
+		<div className="board-search-input">
+			<div className="search-icon">
+				<BsSearch />
+			</div>
+			<input 
+				type="text" 
+				autoFocus 
+				placeholder="Search issues by title..." 
+				value={ searchIssues } 
+				onChange={ e => setSearchIssues(e.target.value) }
+			/>
+		</div>
+	
 		<div className="board-columns">
+			{/* Issues columns */}
 			<DragDropContext
 				onDragEnd={(result) => onDragEnd(result, columns, setColumns)}>
 				{Object.entries(columns).map(([columnId, column], index) => {
@@ -201,25 +232,10 @@ function App() {
 																						...style,
 																						...provided.draggableProps,
 																					}}>
-																					<Link to={`/issue${item.ID}`}>
-																						<div className="status">
-																							<div className={`progress ${item.progress.split(" ").join("")}`}>
-																								<span>{ item.progress }</span>
-																							</div>
-																							<div className={`priority ${item.priority.split(" ").join("")}`}>
-																								<span>{ item.priority }</span>
-																							</div>
-																						</div>
-																						<div className="image">
-																							<img src={`./uploads/${item.imgid ? 
-																								item.imgid : 
-																								'default-project.svg'}`} 
-																								alt={item.title}
-																							/>
-																						</div>
-																						<h5>{item.title}</h5>
-																						<p>{item.description}</p>
-																					</Link>
+																					<TaskBoardSearch 
+																						item={ item }
+																					/>
+																					
 																				</div>
 																			)}
 																		</NaturalDragAnimation>
@@ -240,6 +256,7 @@ function App() {
 				})}
 			</DragDropContext>
 		</div>
+		</>
 	);
 }
 
