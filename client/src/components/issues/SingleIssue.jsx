@@ -15,6 +15,9 @@ import { BiTimer, BiCheck } from 'react-icons/bi';
 import CONSTANTS from '../../constants/constants';
 import { toast } from 'react-toastify';
 
+//Comments component
+import CommentsList from "./../comments/CommentsList";
+
 
 const SingleIssue = ({ match }) => {
 	const [issue, setIssue] = useState('');
@@ -129,16 +132,8 @@ const SingleIssue = ({ match }) => {
 								<BiCheck onClick={updateDescription(issue.ID)}/>
 							</div>
 						</div>
-						<div className="comments-wrapper">
-							{issue.Comments && issue.Comments.length > 0 ? (
-								<h4>Issue comments</h4>
-							) : (
-								<h4>Add first comment</h4>
-							)}
-							{issue.Comments && issue.Comments.map((comment) => (
-								<p key={comment.ID}>{comment.content}</p>
-							))}
-						</div>
+						{/* Comments */}
+						<CommentsList issue={issue} issueId={issueId} />
 					</div>
 					<div className="side-col">
 						<div className="copy-delete">
@@ -265,14 +260,14 @@ const SingleIssue = ({ match }) => {
 										<div className="icon">
 											<BiCheck onClick={updateTimeLog(issue.ID)}/>
 										</div>
-										<div class="buttons center">
-											<button class="delete primary-btn" onClick={ e => setLogTime(false) }>Done</button>
+										<div className="buttons center">
+											<button className="delete primary-btn" onClick={ e => setLogTime(false) }>Done</button>
 										</div>
 									</div>
 								</div>
 							:
-								''
-							}
+							''
+						}
 						<div className={`time-tracking ${ logTime ? 'active-log' : '' }`} onClick={ e => setLogTime(!logTime) }>
 							<h4 className="side-title">Time tracking</h4>
 							<div className="side-content">
