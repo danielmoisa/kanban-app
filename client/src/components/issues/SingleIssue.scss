@@ -1,6 +1,20 @@
 .single-issue-wrapper {
     display: flex;
     margin-top: 35px;
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #00bfa62e;
+        margin: 5px 0;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #00BFA6;
+        border-radius: 5px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555; 
+    }
     .main-col {
         flex: 3;
         .input-wrapper {
@@ -32,6 +46,61 @@
             font-size: 14px;
             margin-top: 5px;
             padding: 5px;
+        }
+        /*comments*/
+        .comments-wrapper {
+            border-top: 2px solid #eceaea;
+            max-height: 100vh;
+            overflow-y: scroll;
+            padding-right: 40px;
+            h4 {
+                font-size: 16px;
+                text-transform: uppercase;
+            }
+            .add-comment-input {
+                margin-bottom: 30px;
+                textarea {
+                    height: 30px!important;
+                    &:focus, &:hover {
+                        border-color: #00BFA6;
+                    }
+                    &::placeholder {
+                        color: #0d0c22;
+                    }
+                }
+            }
+            .single-comment {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 10px 20px;
+                margin: 10px 0;
+                border-radius: 5px;
+                .author {
+                    display: flex;
+                    h5 {
+                        margin: 0;
+                        color: rgb(66, 82, 110);
+                    }
+                    span {
+                        margin-left: 10px;
+                        font-size: 12px;
+                        font-weight: 400;
+                    }
+                }
+                .right {
+                    display: flex;
+                    flex-direction: column;
+                    svg {
+                        font-size: 16px;
+                        margin: 5px 0;
+                        cursor: pointer;
+                    }
+                }
+                &:hover {
+                    background-color: #00bfa61a;
+                }
+            }
         }
     }
     .side-col {
