@@ -5,18 +5,18 @@
 	margin-top: 30px;
 	margin-bottom: 0;
 	::-webkit-scrollbar {
-        width: 6px;
-    }
-    ::-webkit-scrollbar-track {
-        background: #f1f1f1; 
-    }
-    ::-webkit-scrollbar-thumb {
-        background: #0d0c22;
-        border-radius: 5px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-        background: #555; 
-    }
+		width: 6px;
+	}
+	::-webkit-scrollbar-track {
+		background: #f1f1f1;
+	}
+	::-webkit-scrollbar-thumb {
+		background: #0d0c22;
+		border-radius: 5px;
+	}
+	::-webkit-scrollbar-thumb:hover {
+		background: #555;
+	}
 	.board-single-column {
 		flex: 1;
 		height: 100%;
@@ -32,7 +32,7 @@
 			border-radius: 2px;
 			margin-bottom: 15px;
 			max-height: 60vh;
-    		overflow-y: scroll;
+			overflow-y: scroll;
 			.task-card {
 				background-color: #fff;
 				margin: 10px 0;
@@ -45,18 +45,20 @@
 					display: flex;
 					align-items: center;
 					justify-content: space-between;
-					margin-bottom: 15px;
-					.progress, .priority {
-						padding: 3px 15px;
-						border-radius: 25px;
+					margin-bottom: 8px;
+					.progress,
+					.priority {
+						padding: 1px 7px;
+						border-radius: 5px;
 						span {
-							font-size: 12px;
+							font-size: 11px;
 							text-transform: uppercase;
 							font-weight: bold;
 						}
 					}
 					.Requested {
 						background-color: #a7a9ae1c;
+						font-size: 10px;
 						span {
 							color: #929294;
 						}
@@ -70,19 +72,19 @@
 					.Inprogress {
 						background-color: #f5005726;
 						span {
-							color: #F50057;
+							color: #f50057;
 						}
 					}
 					.Done {
 						background-color: #00bfa62e;
 						span {
-							color: #00BFA6;
+							color: #00bfa6;
 						}
 					}
 					.Low {
 						background-color: #00b0ff26;
 						span {
-							color: #00B0FF;
+							color: #00b0ff;
 						}
 					}
 					.Medium {
@@ -94,7 +96,7 @@
 					.High {
 						background-color: #6c63ff24;
 						span {
-							color: #6C63FF;
+							color: #6c63ff;
 						}
 					}
 				}
@@ -105,11 +107,14 @@
 						width: 100%;
 					}
 				}
-				h5, p {
-					text-align: center;
+				h5,
+				p {
+					text-align: left;
 					color: #0d0c22;
 					margin-top: 5px;
-    				margin-bottom: 0;
+					margin-bottom: 0;
+					text-transform: capitalize;
+					font-size: 14px;
 				}
 				p {
 					width: 100%;
@@ -130,7 +135,7 @@
 				text-transform: uppercase;
 				font-size: 14px;
 				margin-top: 15px;
-				transition: all .3s ease-in-out;
+				transition: all 0.3s ease-in-out;
 				.icon {
 					background-color: #2a60e4;
 					color: #fff;
@@ -139,7 +144,7 @@
 					border-radius: 50%;
 					margin-right: 5px;
 					padding: 2px;
-					transition: all .3s ease-in-out;
+					transition: all 0.3s ease-in-out;
 				}
 				&:hover {
 					background-color: #2a60e4;

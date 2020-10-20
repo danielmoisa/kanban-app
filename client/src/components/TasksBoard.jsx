@@ -185,7 +185,7 @@ function App() {
 																					style={{
 																						userSelect:
 																							"none",
-																						padding: 16,
+																						padding: 10,
 																						margin:
 																							"0 0 8px 0",
 																						minHeight:
@@ -201,24 +201,60 @@ function App() {
 																						...style,
 																						...provided.draggableProps,
 																					}}>
-																					<Link to={`/issue${item.ID}`}>
+																					<Link
+																						to={`/issue/${item.ID}`}>
 																						<div className="status">
-																							<div className={`progress ${item.progress.split(" ").join("")}`}>
-																								<span>{ item.progress }</span>
+																							<div
+																								className={`progress ${item.progress
+																									.split(
+																										" "
+																									)
+																									.join(
+																										""
+																									)}`}>
+																								<span>
+																									{
+																										item.progress
+																									}
+																								</span>
 																							</div>
-																							<div className={`priority ${item.priority.split(" ").join("")}`}>
-																								<span>{ item.priority }</span>
+																							<div
+																								className={`priority ${item.priority
+																									.split(
+																										" "
+																									)
+																									.join(
+																										""
+																									)}`}>
+																								<span>
+																									{
+																										item.priority
+																									}
+																								</span>
 																							</div>
 																						</div>
 																						<div className="image">
-																							<img src={`./uploads/${item.imgid ? 
-																								item.imgid : 
-																								'default-project.svg'}`} 
-																								alt={item.title}
-																							/>
+																							{/* <img
+																								src={`./uploads/${
+																									item.imgid
+																										? item.imgid
+																										: "default-project.svg"
+																								}`}
+																								alt={
+																									item.title
+																								}
+																							/> */}
 																						</div>
-																						<h5>{item.title}</h5>
-																						<p>{item.description}</p>
+																						<h5>
+																							{
+																								item.title
+																							}
+																						</h5>
+																						<p>
+																							{
+																								item.description
+																							}
+																						</p>
 																					</Link>
 																				</div>
 																			)}
