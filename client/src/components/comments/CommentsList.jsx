@@ -9,19 +9,21 @@ import { toast } from "react-toastify";
 
 //Icons
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
+import comments from './comments';
 
 const CommentsList = ({ issue, issueId }) => {
-    const [comment, setComment] = useState([]);
+    const [comment, setComment] = useState('');
     const [existingComments, setExistingComments] = useState('');
+    const [activeEdit, setActiveEdit] = useState(false);
 
     //Fetching single issue comments
 	useEffect(() => {
 		const fetchData = async () => {
 			const result = await axios(
-				`http://localhost:8080/api/comments`
+				`http://localhost:8080/api/issues/${issueId}`
 			);
 
-			setExistingComments(result.data);
+			setExistingComments(result.data.Comments);
 		};
 
         fetchData();
@@ -37,8 +39,8 @@ const CommentsList = ({ issue, issueId }) => {
             IssueID: issue.ID
           }
           services.addComment(newComment).then(response => {
-            setComment(issue.Comments.push(response.data))
-            setComment("");
+            setExistingComments(existingComments.concat(response.data))
+            setComment("")
           })
           toast.success("Comment successfully added!");
         } else {
@@ -54,12 +56,19 @@ const CommentsList = ({ issue, issueId }) => {
 
     //Delete comment
     const deleteSingleComment = (commentId) => {
-        // const commentToDelete = existingComments.find(comment => comment.id === commentId)
-
-        services.deleteComment(commentId)
-
+        
+        services.deleteComment(commentId).then(response => {
+            const updatedCommentsList = issue.Comments.filter(comment => comment.ID !== commentId)
+            setExistingComments(updatedCommentsList);
+          })
 		toast.success('Comment successfully deleted');
-	};
+    };
+    
+    //Enable edit mode
+    const enableEdit = (commentId) => {
+        setActiveEdit(!activeEdit);
+        
+    }
 
     return (
         <>
@@ -83,21 +92,26 @@ const CommentsList = ({ issue, issueId }) => {
                     ''
                     }
                 </div>
-                {issue.Comments && issue.Comments.map((singleComment) => (
+                {existingComments && existingComments.map((singleComment) => (
                     <div className="single-comment" key={singleComment.ID}>
                       <div className="left">
                         <div className="author">
                                 <h5>John Doe</h5>
                                 <span>3 days ago</span>
                             </div>
-                            <p>{singleComment.content}</p>
+                           { activeEdit ? 
+                                <textarea defaultValue={singleComment.content} autoFocus />
+                             :
+                                <p>{singleComment.content}</p>
+                            }
                         </div>
                         <div className="right">
-                            <AiOutlineDelete onClick={deleteSingleComment}/>
-                            <AiOutlineEdit />
+                            <AiOutlineDelete className="delete" onClick={ () => deleteSingleComment(singleComment.ID) }/>
+                            <AiOutlineEdit className="edit" onClick={ () => enableEdit(singleComment.ID) }/>
                         </div>
                     </div>
                 ))}
+            {console.log(comment)}
             </div>
         </>
     )
