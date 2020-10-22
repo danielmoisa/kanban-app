@@ -14,7 +14,7 @@ import comments from './comments';
 const CommentsList = ({ issue, issueId }) => {
     const [comment, setComment] = useState('');
     const [existingComments, setExistingComments] = useState('');
-    const [activeEdit, setActiveEdit] = useState(false);
+    const [activeEdit, setActiveEdit] = useState(true);
 
     //Fetching single issue comments
 	useEffect(() => {
@@ -70,6 +70,12 @@ const CommentsList = ({ issue, issueId }) => {
         
     }
 
+    //Edit comment
+    const updateSingleComment = (id) => {
+        const updateContent = {...existingComments, content: existingComments.content};
+        services.updateComment(id, updateSingleComment);
+    }
+
     return (
         <>
             <div className="comments-wrapper">
@@ -85,7 +91,7 @@ const CommentsList = ({ issue, issueId }) => {
                     />
                     { comment.length > 0 ?
                         <div className="buttons">
-                            <button className="secondary-btn" onClick={ closeAddComment}>Cancel</button>
+                            <button className="secondary-btn" onClick={closeAddComment}>Cancel</button>
                             <button className="primary-btn" onClick={addNewComment}>Add</button>
                         </div>
                     :
@@ -100,18 +106,25 @@ const CommentsList = ({ issue, issueId }) => {
                                 <span>3 days ago</span>
                             </div>
                            { activeEdit ? 
-                                <textarea defaultValue={singleComment.content} autoFocus />
+                            <div>
+                                <textarea defaultValue={singleComment.content} autoFocus 
+                                    onChange={ (e) => setExistingComments({
+                                        ...existingComments,
+                                        content: e.target.value
+                                    }) }
+                                />
+                                <a onClick={updateSingleComment(singleComment.ID)}></a>
+                                </div>
                              :
                                 <p>{singleComment.content}</p>
                             }
                         </div>
                         <div className="right">
                             <AiOutlineDelete className="delete" onClick={ () => deleteSingleComment(singleComment.ID) }/>
-                            <AiOutlineEdit className="edit" onClick={ () => enableEdit(singleComment.ID) }/>
+                            <AiOutlineEdit className="edit" />
                         </div>
                     </div>
                 ))}
-            {console.log(comment)}
             </div>
         </>
     )
