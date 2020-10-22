@@ -109,7 +109,6 @@ const SingleIssue = ({ match }) => {
 		services.updateIssue(id, updateTimeLog);
 	};
 
-	console.log(issue);
 
 	return (
 		<>
