@@ -6,46 +6,12 @@ import NaturalDragAnimation from "natural-drag-animation-rbdnd";
 
 import "./TasksBoard.scss";
 
-import { AiOutlinePlus } from "react-icons/ai";
-
 import { Link } from "react-router-dom";
 
-const onDragEnd = (result, columns, setColumns) => {
-	if (!result.destination) return;
-	const { source, destination } = result;
+import services from '../components/issues/issues';
 
-	if (source.droppableId !== destination.droppableId) {
-		const sourceColumn = columns[source.droppableId];
-		const destColumn = columns[destination.droppableId];
-		const sourceItems = [...sourceColumn.items];
-		const destItems = [...destColumn.items];
-		const [removed] = sourceItems.splice(source.index, 1);
-		destItems.splice(destination.index, 0, removed);
-		setColumns({
-			...columns,
-			[source.droppableId]: {
-				...sourceColumn,
-				items: sourceItems,
-			},
-			[destination.droppableId]: {
-				...destColumn,
-				items: destItems,
-			},
-		});
-	} else {
-		const column = columns[source.droppableId];
-		const copiedItems = [...column.items];
-		const [removed] = copiedItems.splice(source.index, 1);
-		copiedItems.splice(destination.index, 0, removed);
-		setColumns({
-			...columns,
-			[source.droppableId]: {
-				...column,
-				items: copiedItems,
-			},
-		});
-	}
-};
+import { toast } from "react-toastify";
+
 
 function App() {
 	const [columns, setColumns] = useState({
@@ -71,9 +37,9 @@ function App() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await axios("http://127.0.0.1:8080/api/projects/1");
+			const result = await axios("http://127.0.0.1:8080/api/issues");
 
-			setDataFromBackend(result.data.Issues);
+			setDataFromBackend(result.data);
 		};
 
 		fetchData();
@@ -121,7 +87,51 @@ function App() {
 		});
 	}, [dataFromBackend]);
 
-	console.log(columns);
+	const onDragEnd = (result, columns, setColumns) => {
+		if (!result.destination) return;
+		const { source, destination } = result;
+	
+		if (source.droppableId !== destination.droppableId) {
+			const sourceColumn = columns[source.droppableId];
+			const destColumn = columns[destination.droppableId];
+			const sourceItems = [...sourceColumn.items];
+			const destItems = [...destColumn.items];
+			const [removed] = sourceItems.splice(source.index, 1);
+			destItems.splice(destination.index, 0, removed);
+			setColumns({
+				...columns,
+				[source.droppableId]: {
+					...sourceColumn,
+					items: sourceItems,
+				},
+				[destination.droppableId]: {
+					...destColumn,
+					items: destItems,
+				},
+			});
+			//Update status
+			const updateProgress = (id) => {
+				const updateProgress = { ...dataFromBackend, progress: destColumn.name };
+				services.updateIssue(id, updateProgress).then(response => {
+					toast.info(`Status changed in ${result.destination.droppableId}`)
+				})
+			};
+			updateProgress(result.draggableId);
+		} else {
+			const column = columns[source.droppableId];
+			const copiedItems = [...column.items];
+			const [removed] = copiedItems.splice(source.index, 1);
+			copiedItems.splice(destination.index, 0, removed);
+			setColumns({
+				...columns,
+				[source.droppableId]: {
+					...column,
+					items: copiedItems,
+				},
+			});
+		}
+	};
+
 
 	return (
 		<div className="board-columns">
@@ -202,18 +212,15 @@ function App() {
 																						...provided.draggableProps,
 																					}}>
 																					<Link
-																						to={`/issue/${item.ID}`}>
+																						to={`/issue/${item.ID}`} 
+																					>
 																						<div className="status">
 																							<div
-																								className={`progress ${item.progress
-																									.split(
-																										" "
-																									)
-																									.join(
-																										""
-																									)}`}>
+																								className={`progress ${columnId
+																									.toLowerCase()}`}>
 																								<span>
-																									{
+																									{ columnId ?
+																									columnId :
 																										item.progress
 																									}
 																								</span>
@@ -232,18 +239,6 @@ function App() {
 																									}
 																								</span>
 																							</div>
-																						</div>
-																						<div className="image">
-																							{/* <img
-																								src={`./uploads/${
-																									item.imgid
-																										? item.imgid
-																										: "default-project.svg"
-																								}`}
-																								alt={
-																									item.title
-																								}
-																							/> */}
 																						</div>
 																						<h5>
 																							{

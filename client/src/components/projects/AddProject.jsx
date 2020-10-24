@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useReducer } from "react";
-import axios from "axios";
+import React, { useState, useReducer } from "react";
 
 import services from "../projects/projects";
 
@@ -8,9 +7,6 @@ import "./AddProject.scss";
 //Notification box
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-//Import constants
-import CONSTANTS from "../../constants/constants";
 
 import { BsPlus } from "react-icons/bs";
 

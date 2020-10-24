@@ -8,20 +8,20 @@ import services from './comments';
 import { toast } from "react-toastify";
 
 //Icons
-import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
+import { AiOutlineDelete } from 'react-icons/ai';
 
 const CommentsList = ({ issue, issueId }) => {
-    const [comment, setComment] = useState([]);
+    const [comment, setComment] = useState('');
     const [existingComments, setExistingComments] = useState('');
 
     //Fetching single issue comments
 	useEffect(() => {
 		const fetchData = async () => {
 			const result = await axios(
-				`http://localhost:8080/api/comments`
+				`http://localhost:8080/api/issues/${issueId}`
 			);
 
-			setExistingComments(result.data);
+			setExistingComments(result.data.Comments);
 		};
 
         fetchData();
@@ -37,8 +37,8 @@ const CommentsList = ({ issue, issueId }) => {
             IssueID: issue.ID
           }
           services.addComment(newComment).then(response => {
-            setComment(issue.Comments.push(response.data))
-            setComment("");
+            setExistingComments(existingComments.concat(response.data))
+            setComment("")
           })
           toast.success("Comment successfully added!");
         } else {
@@ -54,21 +54,19 @@ const CommentsList = ({ issue, issueId }) => {
 
     //Delete comment
     const deleteSingleComment = (commentId) => {
-        // const commentToDelete = existingComments.find(comment => comment.id === commentId)
-
-        services.deleteComment(commentId)
-
+        
+        services.deleteComment(commentId).then(response => {
+            const updatedCommentsList = existingComments.filter(comment => comment.ID !== commentId)
+            setExistingComments(updatedCommentsList);
+          })
 		toast.success('Comment successfully deleted');
-	};
+    };
+    
 
     return (
         <>
             <div className="comments-wrapper">
-                {issue.Comments && issue.Comments.length > 0 ? (
-                    <h4>Issue comments</h4>
-                ) : (
-                    <h4>Add first comment</h4>
-                )}
+                 <h4>Issue comments</h4>
                 <div className="add-comment-input">
                     <textarea name="content" placeholder="Add new comment..." 
                         value={comment} 
@@ -76,25 +74,26 @@ const CommentsList = ({ issue, issueId }) => {
                     />
                     { comment.length > 0 ?
                         <div className="buttons">
-                            <button className="secondary-btn" onClick={ closeAddComment}>Cancel</button>
+                            <button className="secondary-btn" onClick={closeAddComment}>Cancel</button>
                             <button className="primary-btn" onClick={addNewComment}>Add</button>
                         </div>
                     :
                     ''
                     }
                 </div>
-                {issue.Comments && issue.Comments.map((singleComment) => (
+                {existingComments && existingComments.map((singleComment) => (
                     <div className="single-comment" key={singleComment.ID}>
                       <div className="left">
                         <div className="author">
                                 <h5>John Doe</h5>
                                 <span>3 days ago</span>
                             </div>
-                            <p>{singleComment.content}</p>
+                          
+                                <p>{singleComment.content}</p>
+                            
                         </div>
                         <div className="right">
-                            <AiOutlineDelete onClick={deleteSingleComment}/>
-                            <AiOutlineEdit />
+                            <AiOutlineDelete className="delete" onClick={ () => deleteSingleComment(singleComment.ID) }/>
                         </div>
                     </div>
                 ))}

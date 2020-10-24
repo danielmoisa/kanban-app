@@ -95,10 +95,27 @@
                         font-size: 16px;
                         margin: 5px 0;
                         cursor: pointer;
+                        opacity: 0;
+                        transition: all .3s ease-in-out;
+                    }
+                    svg.delete {
+                        &:hover {
+                            color: #da0000;
+                        }
+                    }
+                    svg.edit {
+                       &:hover {
+                        color: #2a60e4;
+                       }
                     }
                 }
                 &:hover {
                     background-color: #00bfa61a;
+                    .right {
+                        svg {
+                            opacity: 1;
+                        }
+                    }
                 }
             }
         }
@@ -106,6 +123,19 @@
     .side-col {
         flex: 1;
         padding-left: 60px;
+        .image-wrapper {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eceaea;
+            img {
+                max-width: 50px;
+            }
+            h5 {
+                font-weight: 400;
+                font-size: 16px;
+                margin-left: 10px;
+            }
+        }
         .side-title {
             text-transform: uppercase;
             font-size: 14px;
