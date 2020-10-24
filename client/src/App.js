@@ -9,6 +9,7 @@ import withAuth from "./services/withAuth";
 import SingleProject from "./components/projects/SingleProject";
 import SingleIssue from "./components/issues/SingleIssue";
 import Login from "./components/Login";
+import AddProject from "./components/projects/AddProject";
 
 //Notification box
 import { ToastContainer } from "react-toastify";
@@ -36,6 +37,11 @@ function App() {
 							exact
 							path="/issue/:issueId"
 							component={withAuth(SingleIssue)}
+						/>
+						<Route
+							exact
+							path="/add-project"
+							component={withAuth(AddProject)}
 						/>
 						<Route exact path="/login" component={Login} />
 					</Switch>
