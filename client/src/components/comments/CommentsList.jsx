@@ -8,13 +8,11 @@ import services from './comments';
 import { toast } from "react-toastify";
 
 //Icons
-import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
-import comments from './comments';
+import { AiOutlineDelete } from 'react-icons/ai';
 
 const CommentsList = ({ issue, issueId }) => {
     const [comment, setComment] = useState('');
     const [existingComments, setExistingComments] = useState('');
-    const [activeEdit, setActiveEdit] = useState(true);
 
     //Fetching single issue comments
 	useEffect(() => {
@@ -58,32 +56,17 @@ const CommentsList = ({ issue, issueId }) => {
     const deleteSingleComment = (commentId) => {
         
         services.deleteComment(commentId).then(response => {
-            const updatedCommentsList = issue.Comments.filter(comment => comment.ID !== commentId)
+            const updatedCommentsList = existingComments.filter(comment => comment.ID !== commentId)
             setExistingComments(updatedCommentsList);
           })
 		toast.success('Comment successfully deleted');
     };
     
-    //Enable edit mode
-    const enableEdit = (commentId) => {
-        setActiveEdit(!activeEdit);
-        
-    }
-
-    //Edit comment
-    const updateSingleComment = (id) => {
-        const updateContent = {...existingComments, content: existingComments.content};
-        services.updateComment(id, updateSingleComment);
-    }
 
     return (
         <>
             <div className="comments-wrapper">
-                {issue.Comments && issue.Comments.length > 0 ? (
-                    <h4>Issue comments</h4>
-                ) : (
-                    <h4>Add first comment</h4>
-                )}
+                 <h4>Issue comments</h4>
                 <div className="add-comment-input">
                     <textarea name="content" placeholder="Add new comment..." 
                         value={comment} 
@@ -105,23 +88,12 @@ const CommentsList = ({ issue, issueId }) => {
                                 <h5>John Doe</h5>
                                 <span>3 days ago</span>
                             </div>
-                           { activeEdit ? 
-                            <div>
-                                <textarea defaultValue={singleComment.content} autoFocus 
-                                    onChange={ (e) => setExistingComments({
-                                        ...existingComments,
-                                        content: e.target.value
-                                    }) }
-                                />
-                                <a onClick={updateSingleComment(singleComment.ID)}></a>
-                                </div>
-                             :
+                          
                                 <p>{singleComment.content}</p>
-                            }
+                            
                         </div>
                         <div className="right">
                             <AiOutlineDelete className="delete" onClick={ () => deleteSingleComment(singleComment.ID) }/>
-                            <AiOutlineEdit className="edit" />
                         </div>
                     </div>
                 ))}

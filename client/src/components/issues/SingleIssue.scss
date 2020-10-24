@@ -123,6 +123,19 @@
     .side-col {
         flex: 1;
         padding-left: 60px;
+        .image-wrapper {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eceaea;
+            img {
+                max-width: 50px;
+            }
+            h5 {
+                font-weight: 400;
+                font-size: 16px;
+                margin-left: 10px;
+            }
+        }
         .side-title {
             text-transform: uppercase;
             font-size: 14px;

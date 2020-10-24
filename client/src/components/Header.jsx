@@ -1,16 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 
 import './Header.scss'
  
 import { HiOutlineArrowLeft } from 'react-icons/hi'
-import { FcRegisteredTrademark } from 'react-icons/fc'
 import { BsPerson, BsPeople, BsPlus } from 'react-icons/bs'
 import { AiOutlineSetting } from 'react-icons/ai'
 
 const Header = () => {
-
-    const [settings, setSettings] = useState(false)
 
     return (
         <div className="header">
@@ -21,15 +18,12 @@ const Header = () => {
                     </Link>
                     <div className="avatar-wrapper">
                         <div className="avatar">
-                            <FcRegisteredTrademark />
+                            <img src="../../logo.svg" alt="platform logo"/>
                         </div>
                         <div className="project-info">
                             <h4 className="name">
-                                Covet Cast
+                                Projects Management Platform
                             </h4>
-                            <p className="status">
-                                In Progress
-                            </p>
                         </div>
                     </div>
                 </div>
@@ -44,18 +38,12 @@ const Header = () => {
                     </div>
                     <Link to="/add-issue" className="add-task center">
                         <BsPlus />
-                        <span>Add Task</span>
+                        <span>Add Issue</span>
                     </Link>
-                    <div className="settings center" onClick={ () => setSettings(!settings) }>
+                    <Link to="/add-project" className="settings center">
                         <AiOutlineSetting />
-                    </div>
-                    { settings && 
-                        <div className="settings-menu">
-                            <a>Item 1</a>
-                            <a>Item 2</a>
-                            <a>Item 3</a>
-                        </div>
-                    }                   
+                        <span>Add Project</span>
+                    </Link>            
                 </div>
             </div>
         </div>
