@@ -10,6 +10,7 @@ import SingleProject from "./components/projects/SingleProject";
 import SingleIssue from "./components/issues/SingleIssue";
 import Login from "./components/Login";
 import AddProject from "./components/projects/AddProject";
+import EditAccount from "./components/account/EditAccount";
 
 //Notification box
 import { ToastContainer } from "react-toastify";
@@ -42,6 +43,11 @@ function App() {
 							exact
 							path="/add-project"
 							component={withAuth(AddProject)}
+						/>
+						<Route 
+							exact
+							path="/edit-account"
+							component={withAuth(EditAccount)}
 						/>
 						<Route exact path="/login" component={Login} />
 					</Switch>

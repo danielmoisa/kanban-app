@@ -57,7 +57,9 @@ const Layout = ({ children }) => {
 								</NavLink>
 							</li>
 							<li>
-								<NavLink to="/">
+								<NavLink to="/edit-account"
+									activeClassName="active-link"
+								>
 									<BsPeople /> <span>Account</span>
 								</NavLink>
 							</li>

@@ -28,14 +28,14 @@ const Header = () => {
                     </div>
                 </div>
                 <div className="header-right">
-                    <div className="me">
+                    <Link to="/edit-account" className="me">
                         <div className="left center">
                             <BsPerson /><span>Me</span>
                         </div>
                         <div className="right center">
                             <BsPeople />
                         </div>
-                    </div>
+                    </Link>
                     <Link to="/add-issue" className="add-task center">
                         <BsPlus />
                         <span>Add Issue</span>
