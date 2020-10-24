@@ -4,14 +4,8 @@ import "./App.scss";
 import Layout from "./components/Layout";
 import TasksBoard from "./components/TasksBoard";
 import AddTask from "./components/AddTask";
-import SingleProject from "./components/projects/SingleProject";
-import SingleIssue from "./components/issues/SingleIssue";
-import Login from "./components/Login";
 import { CookiesProvider } from "react-cookie";
 import withAuth from "./services/withAuth";
-import Layout from "./components/Layout";
-import TasksBoard from "./components/TasksBoard";
-import AddTask from "./components/AddTask";
 import SingleProject from "./components/projects/SingleProject";
 import SingleIssue from "./components/issues/SingleIssue";
 import Login from "./components/Login";
@@ -32,11 +26,7 @@ function App() {
 							path="/"
 							component={withAuth(TasksBoard)}
 						/>
-						<Route
-							exact
-							path="/add-task"
-							component={withAuth(AddTask)}
-						/>
+						<Route exact path="/add-issue" component={AddTask} />
 						<Route
 							exact
 							path="/project/:projectId"

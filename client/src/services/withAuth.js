@@ -32,9 +32,8 @@ export default function withAuth(ComponentToProtect) {
 			//   });
 		}
 		render() {
-			console.log(this.state);
 			if (!this.state.accessToken) {
-				return <Redirect to="login" />;
+				return <Redirect to="/login" />;
 			}
 
 			return <ComponentToProtect {...this.props} />;
