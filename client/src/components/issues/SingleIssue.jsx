@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useReducer } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 
 import services from "./issues";
@@ -131,14 +131,6 @@ const SingleIssue = ({ match }) => {
 								<BiCheck onClick={updateTitle(issue.ID)} />
 							</div>
 						</div>
-						{/* Image */}
-						<div className="input-wrapper">
-							<img
-								style={{ width: "100%" }}
-								src={`/uploads/${issue.imgid}`}
-								alt={issue.title}
-							/>
-						</div>
 						{/* Description */}
 						<div className="input-wrapper">
 							<b>Description</b>
@@ -163,6 +155,15 @@ const SingleIssue = ({ match }) => {
 						<CommentsList issue={issue} issueId={issueId} />
 					</div>
 					<div className="side-col">
+						{/* Image */}
+						<div className="image-wrapper">
+							<img
+								style={{ width: "100%" }}
+								src={`/uploads/${issue.imgid}`}
+								alt={issue.title}
+							/>
+							<h5>{ issue.title } issue</h5>
+						</div>
 						<div className="copy-delete">
 							{/* Copy url */}
 							{document.queryCommandSupported("copy") && (
@@ -255,7 +256,7 @@ const SingleIssue = ({ match }) => {
 							<div className="side-content side-btn">
 								<div className="icon">
 									<BiCheck
-										onClick={updateProgress(issue.ID)}
+										onClick={updatePriority(issue.ID)}
 									/>
 								</div>
 								<select

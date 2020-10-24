@@ -1,9 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import "./App.scss";
-import axios from "axios";
-
 import Layout from './components/Layout';
-import KanbanBoard from './components/KanbanBoard';
 import TasksBoard from './components/TasksBoard';
 import AddTask from './components/AddTask';
 import SingleProject from './components/projects/SingleProject';

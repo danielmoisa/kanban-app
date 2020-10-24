@@ -6,8 +6,6 @@ import NaturalDragAnimation from "natural-drag-animation-rbdnd";
 
 import "./TasksBoard.scss";
 
-import { AiOutlinePlus } from "react-icons/ai";
-
 import { Link } from "react-router-dom";
 
 import services from '../components/issues/issues';

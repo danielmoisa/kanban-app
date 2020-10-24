@@ -4,7 +4,6 @@ import { Link, NavLink, useLocation  } from 'react-router-dom';
 import Spinner from '../widgets/Spinner';
 
 import { BsPeople, BsSearch } from 'react-icons/bs';
-import { FcGenealogy } from 'react-icons/fc';
 import { AiOutlinePlus, AiOutlineProject } from 'react-icons/ai';
 import { GrClose } from 'react-icons/gr';
 
@@ -34,12 +33,13 @@ const Layout = ({ children }) => {
 						<ul>
 							<li className="logo">
 								<Link to="/">
-									<FcGenealogy />
+									<img src="../../logo-sidemenu.svg" alt="platform logo"/>
 								</Link>
 							</li>
 							<li onClick={ () => setIssuesModal(!issuesModal) }>
 								<a>
-									<BsSearch /> <span>Search issues</span>
+									<BsSearch />
+									<span>Search issues</span>
 								</a>
 							</li>
 							<li>
@@ -57,9 +57,9 @@ const Layout = ({ children }) => {
 								</NavLink>
 							</li>
 							<li>
-								<a>
+								<NavLink to="/">
 									<BsPeople /> <span>Account</span>
-								</a>
+								</NavLink>
 							</li>
 						</ul>
 					</div>

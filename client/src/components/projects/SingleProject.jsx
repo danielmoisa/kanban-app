@@ -10,7 +10,7 @@ import './SingleProject.scss';
 //Icons
 import { BsLink45Deg, BsCheckAll } from 'react-icons/bs';
 import { AiOutlineDelete } from 'react-icons/ai';
-import { BiTimer, BiCheck } from 'react-icons/bi';
+import { BiCheck } from 'react-icons/bi';
 
 //Notification box
 import { toast } from 'react-toastify';
