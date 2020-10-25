@@ -21,7 +21,6 @@
 		flex: 1;
 		height: 100%;
 		background-color: #f2f1f8;
-		width: 13vw;
 		border-radius: 2px;
 		h2 {
 			text-align: center;
@@ -154,6 +153,19 @@
 						color: #0d0c22;
 					}
 				}
+			}
+		}
+	}
+}
+
+@media(max-width: 768px) {
+	.board-columns {
+		margin-left: 40px;
+		flex-direction: column;
+		.board-single-column {
+			margin-top: 25px;
+			.column-tasks-wrapper {
+				min-height: auto!important;
 			}
 		}
 	}
