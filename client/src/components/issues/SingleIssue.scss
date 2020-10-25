@@ -351,3 +351,14 @@
         }
     }
 }
+
+@media(max-width: 768px) {
+    .single-issue-wrapper {
+        flex-direction: column;
+        margin-left: 40px;
+        .side-col {
+            padding-left: 0;
+            padding-top: 35px;
+        }
+    }
+}

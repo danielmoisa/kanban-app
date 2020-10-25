@@ -98,3 +98,38 @@
 		height: 100%;
 	}
 }
+
+@media(max-width: 768px) {
+	.main {
+		flex-direction: column;
+		.side {
+			.side-menu {
+				width: 50px;
+				&:hover {
+					width: 180px;
+				}
+			}
+			.sidebar {
+				width: 100%;
+				margin-left: 40px;
+			}
+		}
+		.content {
+			.header {
+				margin-left: 40px;
+				.header-wrapper {
+					.header-left {
+						display: none;
+					}
+					.header-right {
+						flex-wrap: wrap;
+						flex: 33%;
+						a {
+							margin: 5px;
+						}
+					}
+				}
+			}
+		}
+	}
+}
