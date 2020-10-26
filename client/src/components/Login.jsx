@@ -1,24 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Login.scss";
 import {
 	RiEyeCloseLine,
 	RiEyeLine,
 	RiLoginCircleLine,
-	RiArrowGoBackFill,
+	RiLockUnlockLine,
 } from "react-icons/ri";
 
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useHistory } from "react-router-dom";
 
+//Box notification
+import { toast } from "react-toastify";
+
 const Login = () => {
+	const [demoAccount, setDemoAccount] = useState('');
 	const [showPassword, setShowPassword] = useState(false);
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 
+	//Fetching user data
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await axios(
+                'http://localhost:8080/api/users/1'
+            );
+            setDemoAccount(result.data);
+        };
+        fetchData()
+    }, []);
+
 	const [cookies, setCookie] = useCookies(["access_token"]);
 	const history = useHistory();
+
+	//Add user demo account data
+	const handleDemoAccount = () => {
+		setUsername(demoAccount.email);
+		setPassword('demo')
+	}
 
 	const handleLoginForm = (e) => {
 		e.preventDefault();
@@ -37,19 +58,15 @@ const Login = () => {
 				}
 			})
 			.catch((error) => {
-				console.log(error.response.data.error);
+				toast.error("Wrong email or password.")
 			});
 	};
 
 	return (
 		<div className="login-page">
-			<div className="back-home">
-				<Link to="/" className="center">
-					<RiArrowGoBackFill /> Back to Home
-				</Link>
-			</div>
 			<h1>Login page</h1>
 			<p>Enter your username and password below.</p>
+			<button onClick={(e) => handleDemoAccount(e)} className="demo-account-btn"><RiLockUnlockLine /> Use demo account</button>
 			<div className="login-form-wrapper">
 				<form onSubmit={(e) => handleLoginForm(e)}>
 					{/* username */}

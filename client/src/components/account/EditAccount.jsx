@@ -25,6 +25,7 @@ const EditAccount = () => {
         fetchData()
     }, []);
 
+
     const updateAccount = (id, newUpdatedAccount) => {
         const request = axios.patch(`http://localhost:8080/api/users/${id}`, newUpdatedAccount)
         return request.then( response => response.data)
@@ -45,7 +46,7 @@ const EditAccount = () => {
                     <div className="edit-account-form" key={singleUser.ID}>
                         {/* Name */}
                         <label htmlFor="account-name">Account username</label>
-                        <input type="text" name="account-name" defaultValue={singleUser.username} onChange={ e => setNewUsername(e.target.value) }/>
+                        <input type="text" name="account-name" defaultValue={singleUser.username} onChange={ e => setNewUsername(e.target.value) } />
                         {/* Email */}
                         <label htmlFor="account-email">Account email</label>
                         <input type="text" name="account-email" defaultValue={singleUser.email} onChange={ e => setNewEmail(e.target.value) }/>

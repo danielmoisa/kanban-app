@@ -6,13 +6,16 @@
     text-align: center;
     margin: 10% auto;
     position: relative;
-    .back-home {
-        a {
-            color: #000;
-            font-weight: bold;
-            position: absolute;
-            right: 10px;
-            top: 10px;
+    .demo-account-btn {
+        background: #2a60e4;
+        color: #fff;
+        border: none;
+        padding: 6px 10px;
+        border-radius: 3px;
+        font-size: 16px;
+        cursor: pointer;
+        &:focus {
+            outline: none;
         }
     }
     h1 {
