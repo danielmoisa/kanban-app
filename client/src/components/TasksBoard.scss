@@ -40,6 +40,7 @@
 				color: #27334d;
 				box-shadow: 0px 2px 7px 1px rgba(0, 0, 0, 0.1);
 				border-radius: 6px;
+				max-width: 220px;
 				.status {
 					display: flex;
 					align-items: center;
@@ -120,6 +121,7 @@
 					white-space: nowrap;
 					overflow: hidden;
 					text-overflow: ellipsis;
+					text-transform: none;
 				}
 				&:hover {
 					background-color: #f5f6f8 !important;

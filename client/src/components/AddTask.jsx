@@ -24,7 +24,7 @@ const AddTask = () => {
 			estimated: "",
 			progress: "Requested",
 			priority: "Low",
-			project: Number(1),
+			project: Number(2),
 		}
 	);
 	const [newProject, setNewProject] = useState(null);
