@@ -22,6 +22,9 @@
 		height: 100%;
 		background-color: #f2f1f8;
 		border-radius: 2px;
+		@media(min-width: 768px) {
+			max-width: 18vw;
+		}
 		h2 {
 			text-align: center;
 			text-transform: uppercase;
@@ -40,7 +43,7 @@
 				color: #27334d;
 				box-shadow: 0px 2px 7px 1px rgba(0, 0, 0, 0.1);
 				border-radius: 6px;
-				max-width: 220px;
+				max-width: 100%;
 				.status {
 					display: flex;
 					align-items: center;

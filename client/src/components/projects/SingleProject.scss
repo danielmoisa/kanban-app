@@ -12,7 +12,10 @@
             flex: 0 23%;
             box-shadow: 0px 0 5px 1px rgba(0, 0, 0, 0.1);
             border-radius: 5px;
-            transition: all .3s ease-in-out;
+			transition: all .3s ease-in-out;
+			@media(max-width: 768px) {
+				flex: 0 100%;
+			}
             .issue-wrapper {
                 padding: 20px 10px;
                 .status {
