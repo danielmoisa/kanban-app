@@ -18,7 +18,7 @@ const EditAccount = () => {
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios(
-                'http://localhost:8080/api/users'
+                'http://localhost:8080/api/users/1'
             );
             setUser(result.data);
         };
@@ -42,23 +42,23 @@ const EditAccount = () => {
         <div>
             <div className="edit-account">
                 <h2>Account</h2>
-                {user && user.map(singleUser => (
-                    <div className="edit-account-form" key={singleUser.ID}>
+                {user && 
+                    <div className="edit-account-form" key={user.ID}>
                         {/* Name */}
                         <label htmlFor="account-name">Account username</label>
-                        <input type="text" name="account-name" defaultValue={singleUser.username} onChange={ e => setNewUsername(e.target.value) } />
+                        <input type="text" name="account-name" defaultValue={user.username} onChange={ e => setNewUsername(e.target.value) } />
                         {/* Email */}
                         <label htmlFor="account-email">Account email</label>
-                        <input type="text" name="account-email" defaultValue={singleUser.email} onChange={ e => setNewEmail(e.target.value) }/>
+                        <input type="text" name="account-email" defaultValue={user.email} onChange={ e => setNewEmail(e.target.value) }/>
                        	{/* submit */}
-                        <button type="submit" className="submit-btn center" onClick={() => updateUserInfo(singleUser.ID)}>
+                        <button type="submit" className="submit-btn center" onClick={() => updateUserInfo(user.ID)}>
                             <div className="icon">
                                 <BsPlus />
                             </div>
                             Update Account Info
                         </button>
                     </div>
-                ))}
+                }
             </div>
         </div>
     )
