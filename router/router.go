@@ -9,6 +9,9 @@ import (
 
 func SetupRoutes(app *fiber.App) {
 
+	// Server client app
+	app.Static("/", "./public")
+
 	// Auth
 	app.Post("/api/auth/login", controllers.Login)
 

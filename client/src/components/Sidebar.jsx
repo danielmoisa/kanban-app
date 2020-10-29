@@ -17,7 +17,7 @@ const Sidebar = () => {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await axios("http://127.0.0.1:8080/api/users/1");
+			const result = await axios("/api/users/1");
 
 			setData(result.data);
 		};

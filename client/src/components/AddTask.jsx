@@ -32,7 +32,7 @@ const AddTask = () => {
 	//Get all projects
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await axios("http://127.0.0.1:8080/api/projects");
+			const result = await axios("/api/projects");
 
 			setNewProject(result.data);
 		};
@@ -96,7 +96,7 @@ const AddTask = () => {
 		const formData = new FormData();
 		formData.append("file", selectedFile);
 		axios
-			.post("http://127.0.0.1:8080/api/upload", formData, {
+			.post("/api/upload", formData, {
 				headers: {
 					"Content-Type": "multipart/form-data",
 				},

@@ -8,10 +8,9 @@ import "./TasksBoard.scss";
 
 import { Link } from "react-router-dom";
 
-import services from '../components/issues/issues';
+import services from "../components/issues/issues";
 
 import { toast } from "react-toastify";
-
 
 function App() {
 	const [columns, setColumns] = useState({
@@ -37,7 +36,7 @@ function App() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await axios("http://127.0.0.1:8080/api/issues");
+			const result = await axios("/api/issues");
 
 			setDataFromBackend(result.data);
 		};
@@ -90,7 +89,7 @@ function App() {
 	const onDragEnd = (result, columns, setColumns) => {
 		if (!result.destination) return;
 		const { source, destination } = result;
-	
+
 		if (source.droppableId !== destination.droppableId) {
 			const sourceColumn = columns[source.droppableId];
 			const destColumn = columns[destination.droppableId];
@@ -111,10 +110,15 @@ function App() {
 			});
 			//Update status
 			const updateProgress = (id) => {
-				const updateProgress = { ...dataFromBackend, progress: destColumn.name };
-				services.updateIssue(id, updateProgress).then(response => {
-					toast.info(`Status changed in ${result.destination.droppableId}`)
-				})
+				const updateProgress = {
+					...dataFromBackend,
+					progress: destColumn.name,
+				};
+				services.updateIssue(id, updateProgress).then((response) => {
+					toast.info(
+						`Status changed in ${result.destination.droppableId}`
+					);
+				});
 			};
 			updateProgress(result.draggableId);
 		} else {
@@ -131,7 +135,6 @@ function App() {
 			});
 		}
 	};
-
 
 	return (
 		<div className="board-columns">
@@ -212,17 +215,14 @@ function App() {
 																						...provided.draggableProps,
 																					}}>
 																					<Link
-																						to={`/issue/${item.ID}`} 
-																					>
+																						to={`/issue/${item.ID}`}>
 																						<div className="status">
 																							<div
-																								className={`progress ${columnId
-																									.toLowerCase()}`}>
+																								className={`progress ${columnId.toLowerCase()}`}>
 																								<span>
-																									{ columnId ?
-																									columnId :
-																										item.progress
-																									}
+																									{columnId
+																										? columnId
+																										: item.progress}
 																								</span>
 																							</div>
 																							<div
