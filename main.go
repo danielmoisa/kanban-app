@@ -19,7 +19,7 @@ func main() {
 	database.InitDatabase()
 	router.SetupRoutes(app)
 
-	app.Listen("127.0.0.1:" + config.Config("PORT"))
+	app.Listen(":" + config.Config("PORT"))
 
 	defer database.DBConn.Close()
 }

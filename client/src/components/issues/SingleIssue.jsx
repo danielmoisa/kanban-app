@@ -27,9 +27,7 @@ const SingleIssue = ({ match }) => {
 	//Fetching single issue
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await axios(
-				`http://localhost:8080/api/issues/${issueId}`
-			);
+			const result = await axios(`/api/issues/${issueId}`);
 
 			setIssue(result.data);
 		};
@@ -109,7 +107,6 @@ const SingleIssue = ({ match }) => {
 		services.updateIssue(id, updateTimeLog);
 	};
 
-
 	return (
 		<>
 			{issue && (
@@ -162,7 +159,7 @@ const SingleIssue = ({ match }) => {
 								src={`/uploads/${issue.imgid}`}
 								alt={issue.title}
 							/>
-							<h5>{ issue.title } issue</h5>
+							<h5>{issue.title} issue</h5>
 						</div>
 						<div className="copy-delete">
 							{/* Copy url */}
