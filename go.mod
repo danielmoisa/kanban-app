@@ -1,4 +1,4 @@
-module jira-clone
+module kanban-app
 
 go 1.15
 

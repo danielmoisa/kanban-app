@@ -2,7 +2,7 @@ package database
 
 import (
 	"fmt"
-	"jira-clone/models"
+	"kanban-app/models"
 
 	"github.com/jinzhu/gorm"
 )

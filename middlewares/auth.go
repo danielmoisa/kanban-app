@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"jira-clone/config"
+	"kanban-app/config"
 
 	"github.com/gofiber/fiber/v2"
 	jwtware "github.com/gofiber/jwt/v2"

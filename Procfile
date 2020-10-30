@@ -1,1 +1,1 @@
-web: "jira-clone"
+web: "kanban-app"

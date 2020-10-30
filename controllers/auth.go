@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"jira-clone/config"
-	"jira-clone/database"
-	"jira-clone/models"
+	"kanban-app/config"
+	"kanban-app/database"
+	"kanban-app/models"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"

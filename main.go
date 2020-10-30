@@ -1,9 +1,9 @@
 package main
 
 import (
-	"jira-clone/config"
-	"jira-clone/database"
-	"jira-clone/router"
+	"kanban-app/config"
+	"kanban-app/database"
+	"kanban-app/router"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"

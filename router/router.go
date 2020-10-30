@@ -2,7 +2,7 @@ package router
 
 import (
 	"fmt"
-	"jira-clone/controllers"
+	"kanban-app/controllers"
 
 	"github.com/gofiber/fiber/v2"
 )
