@@ -47,7 +47,6 @@ const Login = () => {
 				password: password,
 			})
 			.then((response) => {
-				console.log(response.data);
 				if (response.data.status === "success") {
 					setCookie("access_token", response.data.data, {
 						path: "/",
