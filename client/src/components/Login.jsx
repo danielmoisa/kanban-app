@@ -24,7 +24,7 @@ const Login = () => {
 	//Fetching user data
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await axios("http://localhost:8080/api/users/1");
+			const result = await axios("/api/users/1");
 			setDemoAccount(result.data);
 		};
 		fetchData();
