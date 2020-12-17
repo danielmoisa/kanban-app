@@ -1,2 +1,5 @@
-## Task management jira like web app
-React js and a REST API made with Golang
+## Task management kanban web app
+Made with React js and Golang
+
+# Live Demo:
+https://kanban-react-app.herokuapp.com
