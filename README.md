@@ -11,15 +11,10 @@ Backend API for a kanban board made with React js
 ## Technologies Used
 
 - React.js: Frontend framework for building user interfaces.
-- [Backend Framework]: Backend technology used for building the API (e.g., Express.js, Django, etc.).
-- [Database]: Database used for storing task information (e.g., PostgreSQL, MongoDB, etc.).
-- [Other Technologies]: Any additional technologies or libraries used in the project.
-
-## Getting Started
-
-Follow these instructions to set up and run the project on your local machine.
+- [Backend Framework]: Backend technology used for building the API is Golang and Fiber framework.
+- [Database]: Database used for storing task information is SQLite.
 
 ### Prerequisites
 
 - Node.js: Make sure Node.js is installed on your machine.
-- [Backend Dependencies]: Install the necessary dependencies for the backend.
+- Go
